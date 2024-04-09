@@ -2,38 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.img-login{
-    width: 50%;
-    height: 100vh;
-    background-image: url('/assets/images/login.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-h1{
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #333;
-}
-
-.input-login{
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.button-login{
-    padding: 10px;
-    margin: 10px 0;
-}
-
-form b{
-    cursor: pointer;
-}
-
-form b:hover{
-    text-decoration: underline;
+.img-login {
+  background-image: url("/assets/images/login.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
