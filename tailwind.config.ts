@@ -13,7 +13,8 @@ const config: Config = {
       secondary_old: "#344454",
       white: "#ffffff",
       black: "#000000",
-      light_bg: "#F6FAFF90"
+      light_bg: "#F6FAFF90",
+      gray_80: "#34445420",
 
     },
     extend: {
