@@ -13,7 +13,9 @@ const config: Config = {
       secondary_old: "#344454",
       white: "#ffffff",
       black: "#000000",
-      light_bg: "#F6FAFF90"
+      light_bg: "#F6FAFF90",
+      dark_bg: "#021c69",
+      dark_bg_hover: "#0443ff",
 
     },
     extend: {
@@ -22,6 +24,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+    },
+    fontFamily: {
+      sans: ["DM Sans", "sans-serif"],
     },
   },
   plugins: [],
