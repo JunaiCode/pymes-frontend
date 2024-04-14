@@ -13,7 +13,7 @@ const LoginPage = () => {
             <h3 className="text-gray-700">
               ¿Tu empresa no tiene cuenta?{" "}
               <b className="text-primary hover:underline cursor-pointer">
-                Crea una aqui
+                <a href="/register">Crea una aqui</a>
               </b>
             </h3>
           </div>
@@ -62,7 +62,7 @@ const LoginPage = () => {
             </div>
 
             <a
-              href="#"
+              href="/login/recovery"
               className="inline-block align-baseline font-bold text-sm text-primary hover:text-blue-800 hover:underline"
             >
               ¿Olvidó su contraseña?
