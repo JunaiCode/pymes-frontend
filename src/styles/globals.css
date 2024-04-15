@@ -8,3 +8,14 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.stepbar {
+  left: 3.4rem;
+  z-index: -1;
+}
+
+@media screen and (max-width: 382px){
+  .stepbar {
+    left: 2.4rem;
+  }
+}

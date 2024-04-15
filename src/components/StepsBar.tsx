@@ -1,20 +1,28 @@
 const StepsBar = ({activeStep}: {activeStep: any}) => {
     const steps = [1, 2 , 3, 4, 5];
     return (
-        <div>
-        <div className="flex justify-center items-center bg-dark">
-            {steps.map((step, index) => (
-            <span className="mr-2 text-lg cursor-pointer  rounded-full border border-gray-300 px-2 py-1 text-gray-700 hover:bg-gray-300 hover:text-gray-900"
-                key={step}
-                style={{
-                color: activeStep === index ? 'blue' : 'black',
-                }}
+        <>
+        <div className="flex justify-around items-center bg-light_bg h-20 overflow-x-auto">
+        {steps.map((step, index) => (
+          <div key={step} className={`relative z-0 flex-shrink-0`}>
+            <span
+              className={`text-lg cursor-pointer rounded-full py-4 px-6 text-center ${
+                index <= activeStep ? 'bg-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-300 hover:text-gray-900'
+                }`}
             >
-                {step}
+              {step}
             </span>
-            ))}
-        </div>
-        </div>
+            {index < steps.length - 1 && (
+              <span
+                className={`pr-20 sm:pr-32 md:pr-36 lg:pr-36 absolute top-1/2 h-3 stepbar w-full    ${
+                  activeStep >= index + 1 ? 'bg-primary' : 'bg-gray_80'
+                  }`}
+              ></span>
+            )}
+          </div>
+        ))}
+      </div>
+        </>
     );
     }
 export default StepsBar;
