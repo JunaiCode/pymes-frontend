@@ -19,7 +19,7 @@ export default function AdminSidebar() {
     const [expanded, setExpanded] = useState(true);
     return (
         <>
-            <aside className={`h-screen flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${expanded ? "w-52" : "w-20"}`}>
+            <aside className={`sticky left-0 h-screen flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${expanded ? "w-52" : "w-20"}`}>
                 <div className="p-4 pb-8 flex justify-between items-center">
                     <p className={`font-sans font-bold text-white text-2xl mx-2
                         overflow-hidden transition-all ${expanded ? "w-full" : "w-0"}

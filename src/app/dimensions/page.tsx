@@ -1,4 +1,5 @@
 'use client'
+import CreateDimension from "@/components/admin/CreateDimension";
 import PageTemplate from "@/components/ui/PageTemplate";
 import SearchBar from "@/components/ui/SearchBar";
 import { useState, useEffect, useMemo } from "react";
@@ -36,6 +37,8 @@ export default function Page() {
 
     const [search, setSearch] = useState<string>("");
     const [filteredData, setFilteredData] = useState(data);
+    const [isOpen, setIsOpen] = useState(false);
+
 
     useEffect(() => {
         setFilteredData(
@@ -47,29 +50,34 @@ export default function Page() {
 
     return (
         <PageTemplate>
-            <main className="w-full flex flex-col items-start justify-center bg-light">
+            <main className="w-full flex flex-col items-start justify-center bg-light max-h-screen">
                 <header className="w-full px-4 py-8" id="title">
                     <p className="font-sans text-2xl">Dimensiones del modelo</p>
                 </header>
                 <section className="flex flex-col w-full" id="content">
                     <header className="flex flex-row w-full p-4 justify-end">
-                        <SearchBar />
+                        <SearchBar setSearch={setSearch} />
                         <section className="ml-auto">
-                            <button className="w-32 h-10 bg-secondary_old text-white rounded-lg">Agregar</button>
+                            <button className="w-32 h-10 bg-secondary_old text-white rounded-lg" onClick={() => setIsOpen(true)}>Crear</button>
                         </section>
                     </header>
                 </section>
-                <div className="h-full w-full flex flex-col border border-red-400 p-4">
-                    <DimensionCard name="Tecnologia" description="Dimension que contempla la madurez tecnologica de la empresa, lo que incluye la infraestructura, la calidad de los sistemas, la capacidad de innovacion, etc." />
+                <div className="h-full w-full flex flex-col border overflow-y-scroll border-red-400 p-4">
+                
+                {filteredData.map((item) => (
+                    <DimensionCard key={item.id} name={item.name} description={item.description} id={item.id.toString()} />
+                ))}
+
                 </div>
             </main>
+            <CreateDimension isOpen={isOpen} onClose={setIsOpen} />
         </PageTemplate>
     )
 }
 
-export function DimensionCard({ name, description }: { name: string, description: string }) {
+export function DimensionCard({ name, description,id}: { name: string, description: string, id:string }) {
     return (
-        <div className="flex flex-row w-full items-start justify-start rounded-lg border border-gray-300">
+        <div id={id} className="flex flex-row w-full items-start justify-start rounded-lg border my-2 border-gray-300">
             <section>
                 <header className="w-full px-4 pt-4">
                     <p className="font-sans text-xl text-secondary_old">{name}</p>
@@ -78,14 +86,16 @@ export function DimensionCard({ name, description }: { name: string, description
                     <p className="font-sans text-sm text-gray-600">{description}</p>
                 </section>
             </section>
-            <section className="ml-auto">
-                <footer className="w-full p-4">
-                    <button className="w-24 h-10 flex flex-row justify-around items-center bg-secondary_old text-white rounded-lg">
-                        <IoIosCreate size={24} className="text-white"/>
-                        Editar
+            <section className="ml-auto h-full">
+                <footer className="w-full h-full flex justify-center items-center p-4">
+                    <button className="w-fit h-fit flex flex-row justify-around items-center border px-2 py-1 border-secondary_old text-secondary_old rounded-2xl">
+                        <IoIosCreate size={20} className="text-secondary_old"/>
+                        <p className="ml-2 text-sm">Editar</p>
                         </button>
                 </footer>
             </section>
+
+            
         </div>
     )
 }
