@@ -25,10 +25,18 @@ const MultiStepsForm = () => {
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        if(name === 'termsAndConditions') {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: !formData.termsAndConditions,
+            }));
+            return;
+        }
         setFormData((prevData) => ({
         ...prevData,
         [name]: value,
         }));
+        
     };
 
     const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {

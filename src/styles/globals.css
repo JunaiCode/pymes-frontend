@@ -19,3 +19,28 @@
     left: 2.4rem;
   }
 }
+
+@media screen and (min-width: 1280px){
+  .stepbar {
+    padding-right: 8rem !important;
+  }
+  
+}
+
+@media screen and (min-width: 1787px){
+  .stepbar {
+    padding-right: 11rem !important;
+  }
+  
+}
+
+@media screen and (min-width: 2290px){
+  .stepbar {
+    padding-right: 13rem !important;
+  }
+  
+}
+
+.h-61 {
+  height: 15.2rem;
+}
