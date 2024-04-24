@@ -72,6 +72,10 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                  <label htmlFor="legalRepTel">Telefono del representante legal</label>
                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="tel" name="legalRepTel" id="legalRepTel" value={formData.legalRepTel} onChange={handleChange} placeholder="300 3030 300" />
                  </div>
+                 <div className="w-full ml-12 mb-8">
+                 <label htmlFor="password">Contraseña</label>
+                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" id="password" value={formData.password} onChange={handleChange} placeholder="********" />
+                 </div>
                  </div>
                  <div className="flex flex-col justify-center items-center mr-12">
                  <Image src="/assets/images/contactRegister.png" alt="contact" width={500} height={500}/>
@@ -148,7 +152,7 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
              <div className="flex justify-between items-center gap-24 mt-2">
                <div className="w-full ml-12 mr-12 mb-8">
                  <div className="flex flex-col items-center w-50">
-                   <p className="bg-gray_80 h-61 p-2 overflow-y-scroll w-50 text-sm mr-24 ml-24">
+                   <p className="bg-gray_80 h-61 p-2 overflow-y-scroll w-full text-sm mr-24 ml-24">
                    ¡Bienvenido a nuestra aplicación de autoevaluación de madurez digital para empresas! Antes de utilizar nuestros servicios, lea detenidamente los siguientes términos y condiciones. Al acceder y utilizar nuestra aplicación, usted acepta cumplir con estos términos. Si no está de acuerdo con alguna parte de estos términos, por favor, absténgase de utilizar nuestra aplicación.
 Uso de la Aplicación: 1.1. Nuestra aplicación está diseñada para ayudar a las empresas a evaluar su nivel de madurez digital mediante cuestionarios y análisis proporcionados. 1.2. Usted acepta utilizar la aplicación únicamente con fines lícitos y de acuerdo con estos términos y condiciones. 1.3. Nos reservamos el derecho de modificar o interrumpir la aplicación en cualquier momento sin previo aviso.
 Propiedad Intelectual: 2.1. Todos los derechos de propiedad intelectual relacionados con la aplicación y su contenido son propiedad nuestra o de nuestros licenciantes. 2.2. Usted acepta no reproducir, distribuir, modificar o crear obras derivadas basadas en nuestra aplicación sin nuestro consentimiento previo por escrito.
@@ -157,9 +161,9 @@ Limitación de Responsabilidad: 4.1. Nos esforzamos por proporcionar una aplicac
 Modificaciones de los Términos: 5.1. Nos reservamos el derecho de modificar estos términos y condiciones en cualquier momento. Las modificaciones entrarán en vigencia inmediatamente después de su publicación en la aplicación. 5.2. Su uso continuado de la aplicación después de la publicación de cualquier modificación constituirá su aceptación de dichas modificaciones.
 Al utilizar nuestra aplicación, usted acepta estos términos y condiciones en su totalidad. Si tiene alguna pregunta sobre estos términos, contáctenos. ¡Gracias por elegir nuestra aplicación de autoevaluación de madurez digital para empresas!
                    </p>
-                   <div>
-                 <label htmlFor="termsAndConditions" className="ml-6 mr-2 mt-4">Acepto los términos y condiciones</label>
-                 <input type="checkbox" name="termsAndConditions" id="termsAndConditions" onChange={handleChange} checked={formData.termsAndConditions} />
+                   <div className="mt-2 mr-8 flex justify-end w-full">
+                 <label htmlFor="termsAndConditions" className="mr-2 ">Acepto los términos y condiciones</label>
+                 <input type="checkbox" name="termsAndConditions" id="termsAndConditions" onClick={handleChange} />
                </div>
             </div>
             
