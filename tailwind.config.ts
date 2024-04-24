@@ -15,6 +15,7 @@ const config: Config = {
       black: "#000000",
       light_bg: "#F6FAFF90",
       gray_80: "#34445420",
+      gray: "#344454",
 
     },
     extend: {

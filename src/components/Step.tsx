@@ -176,5 +176,28 @@ Al utilizar nuestra aplicación, usted acepta estos términos y condiciones en s
              </div>
            </form>
         )}
+        <div id="info-popup" tabIndex={-1} className=" hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full flex justify-center items-center">
+    <div className="relative p-4 w-full max-w-lg h-full md:h-auto">
+    <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 md:p-8">
+      <div className="mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
+        <h3 className="mb-3 text-2xl font-bold text-black dark:text-black">Upsss</h3>
+        <p>
+          No has completado todos los campos de manera adecuada.
+        </p>
+      </div>
+      <div className="justify-end items-center pt-0 space-y-4 sm:flex sm:space-y-0">
+        <div className="items-center space-y-4 sm:space-x-4 sm:flex sm:space-y-0">
+          <button id="modal-button" onClick={()=>{
+            let modal = document.getElementById('info-popup');
+            if(modal){
+              modal.classList.add('hidden');
+            }
+          }}type="button" className="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg bg-primary sm:w-auto hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     </div>;
 };

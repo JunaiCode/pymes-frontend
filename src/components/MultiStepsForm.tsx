@@ -27,6 +27,7 @@ const MultiStepsForm = () => {
     let errors: { [key: string]: string }
     
     useEffect(() => {
+        // Define the errors object to store the errors
         const validateForm = () => {
             if (step === 0) {
                 if(formData.name === '') {
@@ -77,13 +78,42 @@ const MultiStepsForm = () => {
                 }
             }
             if (step === 1) {
-                return !formData.economicSector || !formData.numberEmployees || !formData.opsYears;
+                if(formData.legalRep === '') {
+                    errors = {
+                        ...errors,
+                        legalRep: 'Legal Representative is required',
+                    };
+                }
+                if(formData.legalRepEmail === '') {
+                    errors = {
+                        ...errors,
+                        legalRepEmail: 'Legal Representative Email is required',
+                    };
+                }
+                if(formData.legalRepTel === '') {
+                    errors = {
+                        ...errors,
+                        legalRepTel: 'Legal Representative Tel is required',
+                    };
+                }
+                if(!RegExp('^[0-9]{10}$').test(formData.legalRepTel))
+                {
+                    errors = {
+                        ...errors,
+                        legalRepTel: 'Legal Representative Tel is invalid',
+                    };
+                }
             }
             if (step === 2) {
                 return !formData.specificNeeds || !formData.expectations;
             }
             if (step === 3) {
-                return !formData.termsAndConditions;
+                if(formData.termsAndConditions === false) {
+                    errors = {
+                        ...errors,
+                        termsAndConditions: 'Terms and Conditions are required',
+                    };
+                }
             }
             putErrors();
         };
@@ -161,7 +191,9 @@ const MultiStepsForm = () => {
             setStep((prevStep) => prevStep + 1);
         } else {
             // Pop up indicating that there are fields without filling
-            alert('Please fill all the fields');
+            let modal = document.getElementById('info-popup');
+            if(modal)
+            modal.classList.remove('hidden');
         }
     };
     
