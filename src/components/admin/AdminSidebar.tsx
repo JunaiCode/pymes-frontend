@@ -34,7 +34,7 @@ export default function AdminSidebar() {
                 <SidebarContext.Provider value={{ expanded, setExpanded }}>
                     <ul className="flex flex-col items-center ">
                         <SidebarItem icon={<IoHomeOutline size={25} className="text-white" />} text="Inicio" onClick={() => router.push("/home")} />
-                        <SidebarItem icon={<IoShapesOutline size={25} className="text-white" />} text="Modelo" onClick={() => router.push("/model")} />
+                        <SidebarItem icon={<IoShapesOutline size={25} className="text-white" />} text="Modelo" onClick={() => router.push("/models")} />
                         <SidebarItem icon={<IoBusiness size={25} className="text-white" />} text="Empresas" onClick={() => router.push("/companies")} />
                         <SidebarItem icon={<IoPricetagOutline size={25} className="text-white" />} text="Tags" onClick={() => router.push("/tags")} />
                         <SidebarItem icon={<IoColorFilterOutline size={25} className="text-white" />} text="Dimensiones" onClick={() => router.push("/dimensions")} />

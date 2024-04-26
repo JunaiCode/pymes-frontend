@@ -1,9 +1,11 @@
 'use client'
 import CreateDimension from "@/components/admin/CreateDimension";
+import ComboBox from "@/components/ui/ComboBox";
 import PageTemplate from "@/components/ui/PageTemplate";
 import SearchBar from "@/components/ui/SearchBar";
 import { useState, useEffect, useMemo } from "react";
 import { IoIosCreate } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 
 export default function Page() {
@@ -35,9 +37,26 @@ export default function Page() {
         },
     ], []);
 
+    const modelComboBoxOptions = useMemo(() => [
+        { label: "Modelo 1", value: "1" },
+        { label: "Modelo 2", value: "2" },
+        { label: "Modelo 3", value: "3" },
+    ], []);
+
+    const versionComboBoxOptions = useMemo(() => [
+        { label: "Version 1", value: "1" },
+        { label: "Version 2", value: "2" },
+        { label: "Version 3", value: "3" },
+    ], []);
+
+    const [modelSelected, setModelSelected] = useState("1");
+    const [versionSelected, setVersionSelected] = useState("1");
+
     const [search, setSearch] = useState<string>("");
     const [filteredData, setFilteredData] = useState(data);
     const [isOpen, setIsOpen] = useState(false);
+
+    const router = useRouter();
 
 
     useEffect(() => {
@@ -57,16 +76,16 @@ export default function Page() {
                 <section className="flex flex-col w-full" id="content">
                     <header className="flex flex-row w-full p-4 justify-end">
                         <SearchBar setSearch={setSearch} />
-                        <section className="ml-auto">
-                            <button className="w-32 h-10 bg-secondary_old text-white rounded-lg" onClick={() => setIsOpen(true)}>Crear</button>
-                        </section>
+                        <ComboBox label="Modelo" options={modelComboBoxOptions} selected={modelSelected} setSelected={setModelSelected} />
+                        <ComboBox label="Version" options={versionComboBoxOptions} selected={versionSelected} setSelected={setVersionSelected} />
+                        <button className="ml-auto w-32 h-10 bg-secondary_old text-white rounded-lg" onClick={() => setIsOpen(true)}>Crear</button>
                     </header>
                 </section>
                 <div className="h-full w-full flex flex-col border overflow-y-scroll border-red-400 p-4">
-                
-                {filteredData.map((item) => (
-                    <DimensionCard key={item.id} name={item.name} description={item.description} id={item.id.toString()} />
-                ))}
+
+                    {filteredData.map((item) => (
+                        <DimensionCard key={item.id} name={item.name} description={item.description} id={item.id.toString()} router={router} />
+                    ))}
 
                 </div>
             </main>
@@ -75,7 +94,7 @@ export default function Page() {
     )
 }
 
-export function DimensionCard({ name, description,id}: { name: string, description: string, id:string }) {
+export function DimensionCard({ name, description, id, router }: { name: string, description: string, id: string , router: any}) {
     return (
         <div id={id} className="flex flex-row w-full items-start justify-start rounded-lg border my-2 border-gray-300">
             <section>
@@ -88,14 +107,17 @@ export function DimensionCard({ name, description,id}: { name: string, descripti
             </section>
             <section className="ml-auto h-full">
                 <footer className="w-full h-full flex justify-center items-center p-4">
-                    <button className="w-fit h-fit flex flex-row justify-around items-center border px-2 py-1 border-secondary_old text-secondary_old rounded-2xl">
-                        <IoIosCreate size={20} className="text-secondary_old"/>
+                    <button 
+                        className="w-fit h-fit flex flex-row justify-around items-center border px-2 py-1 border-secondary_old text-secondary_old rounded-2xl"
+                        onClick={() => router.push(`/dimensions/${id}`)}
+                        >
+                        <IoIosCreate size={20} className="text-secondary_old" />
                         <p className="ml-2 text-sm">Editar</p>
-                        </button>
+                    </button>
                 </footer>
             </section>
 
-            
+
         </div>
     )
 }
