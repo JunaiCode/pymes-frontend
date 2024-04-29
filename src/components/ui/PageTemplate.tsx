@@ -12,7 +12,6 @@ export default function PageTemplate({children}: {children: any}){
             </div>
         );
     }else{
-        console.log("Company");
         return (
             <div className="flex flex-row">
             <CompanySideBar/>
