@@ -7,8 +7,8 @@ const LoginPage = () => {
             action=""
             className="mx-auto max-w-sm bg-white rounded-lg shadow-md p-8"
           >
-            <a href="../login"> Volver </a>
-            <h1 className="text-2xl font-bold mb-2">Restablecer Contraseña</h1>
+            <a className="font-bold mt-4" href="../login"> Volver </a>
+            <h1 className="text-2xl font-bold mb-2 mt-4">Restablecer Contraseña</h1>
   
             <div className="mb-4">
               <h3 className="text-gray-700">
