@@ -39,45 +39,43 @@ export default function CompanyHome(props: any) {
             "A": 80,
             "fullMark": 100,
             "icon": IoConstructOutline,
-            "color": "red"
+            "color": "bg-red-400"
           },
             {
                 "dimension": "Estrategia",
                 "A": 70,
                 "fullMark": 100,
                 "icon": FaPuzzlePiece,
-                "color": "blue"
+                "color": "bg-blue-400"
             },
             {
                 "dimension": "Tecnología",
                 "A": 60,
                 "fullMark": 100,
                 "icon": IoDesktopOutline,
-                "color": "yellow"
+                "color": "bg-yellow-400"
             },
             {
                 "dimension": "Personas",
                 "A": 50,
                 "fullMark": 100,
                 "icon": IoPeopleOutline,
-                "color": "indigo"
+                "color": "bg-green-400"
             },
             {
                 "dimension": "Cultura",
                 "A": 40,
                 "fullMark": 100,
                 "icon": FaGlobe,
-                "color": "orange"
+                "color": "bg-purple-400"
             }
     ];
     return (
         <div className="w-full flex flex-col items-start justify-center bg-light">
-            <div className="w-full p-10">
-                <p className="text-3xl font-sans font-bold">Bienvenid@ {companyName}, estos son tus resultados</p>
-            </div>
+            <p className=" w-full mt-10 mb-10 ml-4 text-3xl font-sans font-bold">Bienvenid@ {companyName}, estos son tus resultados</p>
             <div className="w-full h-full flex flex-row  p-4">
             <div className="h-full w-full flex flex-col bg-white mr-2 border rounded-lg shadow-lg p-4" >
-                <p className="text-2xl font-sans font-bold mb-1">Nivel Actual</p>
+                <p className="text-2xl font-sans font-bold mb-1 mt-2">Nivel Actual</p>
                 <div className="flex flex-row justify-between items-center">
                     <div className="flex flex-col w-1/2">
                         <p className="text-lg font-sans mb-2">La madurez digital de su empresa en la última evaluación.</p>
@@ -102,7 +100,7 @@ export default function CompanyHome(props: any) {
             </div>
             <div className="w-full h-full flex flex-row  p-4">
             <div className="h-full w-full flex flex-col bg-white mr-2 border rounded-lg shadow-lg p-4" >
-                <p className="text-2xl font-sans font-bold mb-2">Historial</p>
+                <p className="text-2xl font-sans font-bold mb-2 mt-4">Historial</p>
                         <div className="w-full h-96">
                         <ResponsiveContainer height='100%' width='100%'>
                         <LineChart  data={data}>
