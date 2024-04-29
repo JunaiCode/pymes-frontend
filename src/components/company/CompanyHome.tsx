@@ -5,46 +5,29 @@ export default function CompanyHome(props: any) {
     // Historial de evaluaciones
     let data = [
         {
-            name: 'Lunes',
-            uv: 2000,
-            pv: 2400,
-            amt: 2400,
+            dimension: 'Procesos',
+            score: 80,
+            score2: 100,
         },
         {
-            name: 'Martes',
-            uv: 30,
-            pv: 1398,
-            amt: 2210,
+            dimension: 'Estrategia',
+            score: 70,
+            score2: 60,
         },
         {
-            name: 'Miercoles',
-            uv: 20,
-            pv: 9800,
-            amt: 2290,
+            dimension: 'Tecnología',
+            score: 60,
+            score2: 50,
         },
         {
-            name: 'Jueves',
-            uv: 27,
-            pv: 3908,
-            amt: 2000,
+            dimension: 'Personas',
+            score: 50,
+            score2: 70,
         },
         {
-            name: 'Viernes',
-            uv: 18,
-            pv: 4800,
-            amt: 2181,
-        },
-        {
-            name: 'Sabado',
-            uv: 23,
-            pv: 3800,
-            amt: 2500,
-        },
-        {
-            name: 'Domingo',
-            uv: 34,
-            pv: 4300,
-            amt: 2100,
+            dimension: 'Cultura',
+            score: 40,
+            score2: 60,
         },
     ];
     let dataRadar = [
@@ -116,12 +99,14 @@ export default function CompanyHome(props: any) {
                 <p className="text-2xl font-sans font-bold mb-2">Historial</p>
                         <div className="w-full h-96">
                         <ResponsiveContainer height='100%' width='100%'>
-                        <LineChart data={data}>
-                        <Line type="monotone" dataKey="pv" stroke="#8884d8" />
+                        <LineChart  data={data}>
+                        <Line name="Evaluación 1" type="monotone" dataKey="score" stroke="#8884d8" />
+                        <Line name="Evaluación 2" type="monotone" dataKey="score2" stroke="#82ca9d" />
                         <CartesianGrid stroke="#ccc" />
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="dimension" />
                         <YAxis />
                         <Tooltip />
+                        <Legend />
                     </LineChart>
                     </ResponsiveContainer>
                 </div>
