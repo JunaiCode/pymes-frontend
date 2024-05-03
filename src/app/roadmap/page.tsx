@@ -1,9 +1,6 @@
 'use client';
-import AdminHome from "@/components/admin/AdminHome";
-import CompanyHome from "@/components/company/CompanyHome";
 import { RoadMap } from "@/components/company/RoadMap";
 import PageTemplate from "@/components/ui/PageTemplate";
-import { useRouter } from "next/navigation";
 
 const page = () => {
   const data =[
@@ -88,7 +85,7 @@ const page = () => {
             ]
         }
     ];
-    
+
   return (
     <PageTemplate>
       <RoadMap dimensionsRecommendations={data}/>
