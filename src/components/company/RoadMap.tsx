@@ -44,7 +44,9 @@ export const RoadMap = ({dimensionsRecommendations}:RoadMapProps)=>{
     }, [progress]);
 
     useEffect(() => {
-        console.log(percentage);
+        if (percentage === "100%") {
+            alert("¡Felicidades! Has completado todas las recomendaciones de la hoja de ruta");
+        }
     }, [percentage]);
 
     
