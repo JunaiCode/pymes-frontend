@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ProgressRoadMap } from "./ProgressRoadMap";
 import { RoadMapRecommendation } from "./RoadMapRecommendation";
 
@@ -18,15 +19,57 @@ interface RoadMapProps{
     dimensionsRecommendations: recommendations[];
 }
 
+
+
 export const RoadMap = ({dimensionsRecommendations}:RoadMapProps)=>{
+    const [progress, setprogress] = useState({ total: 0,completed:0
+    });
+    const [percentage, setPercentage] = useState("0%");
+    let totalRecommendations: number = 0;
+    
+    useEffect(() => {
+        dimensionsRecommendations.forEach((dimensionRecommendation) => {
+            dimensionRecommendation.recommendations.forEach((recommendation) => {
+                totalRecommendations++;
+            });
+        });
+        setprogress({
+            total: totalRecommendations,
+            completed: 0,
+        });
+    }, []);
+
+    useEffect(() => {
+        setPercentage(`${(progress.completed / progress.total) * 100}%`)
+    }, [progress]);
+
+    useEffect(() => {
+        console.log(percentage);
+    }, [percentage]);
+
+    
+    const  handleCheck = (e:any) => {{
+        if(e.target.checked){
+            setprogress({
+                ...progress,
+                completed: progress.completed + 1,
+            });
+        }else{
+            setprogress({
+                ...progress,
+                completed: progress.completed - 1,
+            });
+        }
+    }}
+    
     return (
-        <div className="w-full flex flex-col items-start justify-center bg-light">
+        <div className="w-full flex flex-col items-start justify-center bg-light relative">
             <div className="w-full h-full flex flex-row  p-4">
             <div className="h-fit w-full bg-white mr-2 border rounded-lg shadow-lg p-4" >
                 <p className="flex justify-center items-center text-xl font-sans font-bold">Progreso</p>
                 <div className="flex flex-row justify-between items-baseline" >
                 <h1 className="text-4xl font-sans font-bold mb-1 mt-2">Hoja de ruta</h1>
-                <ProgressRoadMap/>
+                <ProgressRoadMap percentage={percentage}/>
                 <div className="flex flex-row justify-between items-baseline">
                 <p className="text-lg font-sans font-light mb-4 mr-2">Inicio de la hoja de ruta:</p>
                 <p className="pr-4 pl-4 rounded text-white bg-slate-500 inline-block w-fit h-fit">8 de marzo del 2024</p>
@@ -36,8 +79,8 @@ export const RoadMap = ({dimensionsRecommendations}:RoadMapProps)=>{
             </div>
             </div>
             {dimensionsRecommendations.map((dimensionRecommendation, index) => (
-                <RoadMapRecommendation key={index} dimension={dimensionRecommendation.dimension} description={dimensionRecommendation.description} recommendations={dimensionRecommendation.recommendations}/>
-             ))}
+                <RoadMapRecommendation key={index} dimension={dimensionRecommendation.dimension} description={dimensionRecommendation.description} recommendations={dimensionRecommendation.recommendations} handleCheck={handleCheck}/>
+            ))}
         </div>
     )
 }

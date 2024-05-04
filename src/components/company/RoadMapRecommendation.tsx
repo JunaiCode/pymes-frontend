@@ -14,9 +14,10 @@ interface props {
     dimension: string;
     description: string;
     recommendations: recommendation[];
+    handleCheck: (e:any)=>void;
 }
 
-export const RoadMapRecommendation = ({dimension, description, recommendations}:props) => {
+export const RoadMapRecommendation = ({dimension, description, recommendations,handleCheck}:props) => {
     return (
         <div className="w-full h-full flex flex-row  p-4">
             <div className="h-full w-full bg-white mr-2 border rounded-lg shadow-lg p-4" >
@@ -33,7 +34,7 @@ export const RoadMapRecommendation = ({dimension, description, recommendations}:
                     <Image src={"./next.svg"}  width={500} height={500} alt="roadmap"/>
                 </div>
                 {recommendations.map((recommendation, index) => (
-                    <RecommendationComponent key={index} title={recommendation.title} description={recommendation.description} tag={recommendation.tag}/>
+                    <RecommendationComponent key={index} title={recommendation.title} description={recommendation.description} tag={recommendation.tag} handleCheck={handleCheck}/>
                 ))}
             </div>
         </div>
