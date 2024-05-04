@@ -3,16 +3,35 @@ import { useRef } from "react";
 interface CreateDimensionProps {
     isOpen: boolean;
     onClose: (value: boolean) => void;
+    modelId: string;
 }
 
-export default function CreateNewVersion({ isOpen, onClose }: CreateDimensionProps) {
+export default function CreateNewVersion({ isOpen, onClose,modelId }: CreateDimensionProps) {
     const nameRef = useRef<HTMLInputElement>(null);
-    const descriptionRef = useRef<HTMLTextAreaElement>(null);
+    
     function handleSubmit(e: React.FormEvent) {
-        let name = nameRef.current?.value;
-        let description = descriptionRef.current?.value;
-        console.log(name, description);
-        e.preventDefault();
+        if (nameRef.current) {
+            const data = {
+                name: nameRef.current.value,
+                levels: [],
+                dimensions: []
+            }
+            fetch(`http://localhost:8080/model/add/version/${modelId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(res => {
+                if (res.ok) {
+                    onClose(false)
+                    window.location.reload()
+                }
+            })
+
+        }else{
+            alert('Por favor llene todos los campos')
+        }
     }
 
     return (
@@ -39,10 +58,7 @@ export default function CreateNewVersion({ isOpen, onClose }: CreateDimensionPro
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la version</label>
                                 <input ref={nameRef} type="text" id="name" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="v1.0.1" required/>
                             </div>
-                            <div>
-                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripcion</label>
-                                <textarea ref={descriptionRef} id="description" name="description" rows={3} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Version actualizada del modelo siguiendo ISO 99999" required></textarea>
-                            </div>
+
                             <div className="flex justify-between">
                                 
                                 <button className="w-28 bg-primary px-5 py-2.5 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary_old" onClick={handleSubmit}>Crear</button>

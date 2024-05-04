@@ -3,18 +3,30 @@ import PageTemplate from "@/components/ui/PageTemplate";
 import { useEffect, useState } from "react";
 import CreateNewVersion from "@/components/admin/CreateNewVersion";
 
+async function fetchModel(id: string) {
+    const res = await fetch(`http://localhost:8080/model/get/${id}`)
+    const data = await res.json()
+    
+    return data 
+}
+
+async function fetchVersions(id: string) {
+    const res = await fetch(`http://localhost:8080/model/get/versions/${id}`)
+    const data = await res.json()
+    return data
+}
+
 export default function Page({ params }: { params: { id: string } }) {
     const [model, setModel] = useState({
-        id: "",
-        name: "",
         description: "",
-        actualVersion: "",
-        date: "",
+        modelId: "",
+        name: "",
         versions: [
             {
-                id: "",
+                versionId: "",
                 name: "",
-                date: ""
+                dimensions: [],
+                levels: [],
             }
         ]
     })
@@ -24,56 +36,15 @@ export default function Page({ params }: { params: { id: string } }) {
 
     useEffect(() => {
         //Fecth data with id
-        setModel({
-            id: "1",
-            name: "Modelo de madurez de la gestion de proyectos",
-            description: "Modelo de madurez de la gestion de proyectos",
-            actualVersion: "v1.0",
-            date: "10/10/2021",
-            versions: [
-                {
-                    id: "1",
-                    name: "v1.0",
-                    date: "10/10/2021"
-                },
-                {
-                    id: "2",
-                    name: "v1.1",
-                    date: "10/10/2021"
-                },
-                {
-                    id: "3",
-                    name: "v1.2",
-                    date: "10/10/2021"
-                },
-                {
-                    id: "4",
-                    name: "v1.3",
-                    date: "10/10/2021"
-                },
-                {
-                    id: "5",
-                    name: "v1.4",
-                    date: "10/10/2021"
-                },
-                {
-                    id: "6",
-                    name: "v1.5",
-                    date: "10/10/2021"
-                },
-                {
-                    id: "7",
-                    name: "v1.6",
-                    date: "10/10/2021"
-                },
-                {
-                    id: "8",
-                    name: "v1.7",
-                    date: "10/10/2021"
-                },
-            ]
-        })
+        fetchModel(params.id).then(data => {
+            setModel(data)
 
+        })
+        fetchVersions(params.id).then(data => {
+            setModel(prev => ({ ...prev, versions: data }))
+            
+        })
+        console.log(model)
     }, [])
 
 
@@ -84,8 +55,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <header className="flex flex-row w-full px-4 py-8" id="title">
                     <div>
                         <p className="font-sans text-2xl mb-2">{model.name}</p>
-                        <p className="font-sans text-sm">Version actual: {model.actualVersion}</p>
-                        <p className="font-sans text-sm">Fecha: {model.date}</p>
+                        <p className="font-sans text-sm">{model.modelId}</p>
                     </div>
                     <button className="bg-primary ml-auto mt-auto text-white px-4 h-fit py-2 rounded-lg" onClick={() => setOpen(true)}>Crear nueva version</button>
                 </header>
@@ -95,17 +65,19 @@ export default function Page({ params }: { params: { id: string } }) {
                 <div className="w-full px-4 py-2" id="versions">
                     <p className="font-sans text-xl mb-2">Versiones</p>
                     <ul className="w-full">
-                        {model.versions.map((version) => (
-                            <li key={version.id} className="w-full flex flex-row items-center justify-between border-b border-gray-400 py-2">
+
+                        
+                        {model.versions && model.versions.length !== 0 && model.versions.map(version => (
+                            <li key={version.versionId} className="w-full flex flex-row items-center justify-between border-b border-gray-400 py-2">
                                 <p className="font-sans text-sm">{version.name}</p>
-                                <p className="font-sans text-sm">{version.date}</p>
+                                
                             </li>
                         ))}
                     </ul>
                 </div>
 
             </div>
-            <CreateNewVersion isOpen={open} onClose={setOpen} />
+            <CreateNewVersion isOpen={open} onClose={setOpen} modelId={params.id} />
         </PageTemplate>
     )
 }

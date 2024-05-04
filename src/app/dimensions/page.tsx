@@ -7,65 +7,66 @@ import { useState, useEffect, useMemo } from "react";
 import { IoIosCreate } from "react-icons/io";
 import { useRouter } from "next/navigation";
 
+async function fetchModels() {
+    const res = await fetch('http://localhost:8080/model/get/all')
+    const data = await res.json()
+    return data
+}
+
+async function fetchVersions(modelId: string) {
+    const res = await fetch(`http://localhost:8080/model/get/versions/${modelId}`)
+    const data = await res.json()
+    return data
+}
+
+async function fetchDimensions(versionId: string) {
+    const res = await fetch(`http://localhost:8080/version/get/${versionId}`)
+    const data = await res.json()
+    return data
+}
+
 
 export default function Page() {
-    const data = useMemo(() => [
-        {
-            id: 1,
-            name: "Tecnologia",
-            description: "Dimension que contempla la madurez tecnologica de la empresa, lo que incluye la infraestructura, la calidad de los sistemas, la capacidad de innovacion, etc.",
-        },
-        {
-            id: 2,
-            name: "Procesos",
-            description: "Dimension que contempla la madurez de los procesos de negocio de la empresa, lo que incluye la calidad de los procesos, la eficiencia, la eficacia, la capacidad de innovacion, etc.",
-        },
-        {
-            id: 3,
-            name: "Personas",
-            description: "Dimension que contempla la madurez de los recursos humanos de la empresa, lo que incluye la calidad de los recursos humanos, la capacidad de innovacion, etc.",
-        },
-        {
-            id: 4,
-            name: "Estrategia",
-            description: "Dimension que contempla la madurez de la estrategia de la empresa, lo que incluye la calidad de la estrategia, la capacidad de innovacion, etc.",
-        },
-        {
-            id: 5,
-            name: "Gestion",
-            description: "Dimension que contempla la madurez de la gestion de la empresa, lo que incluye la calidad de la gestion, la capacidad de innovacion, etc.",
-        },
-    ], []);
+    const [modelData, setModelData] = useState([] as any)
+    const [versionData, setVersionData] = useState([] as any)
+    const [data, setData] = useState([] as any)
+    const [loaded, setLoaded] = useState(false)
 
-    const modelComboBoxOptions = useMemo(() => [
-        { label: "Modelo 1", value: "1" },
-        { label: "Modelo 2", value: "2" },
-        { label: "Modelo 3", value: "3" },
-    ], []);
+    const [modelSelected, setModelSelected] = useState("-1");
+    const [versionSelected, setVersionSelected] = useState("-1");
+    const [enabled, setEnabled] = useState(false);
 
-    const versionComboBoxOptions = useMemo(() => [
-        { label: "Version 1", value: "1" },
-        { label: "Version 2", value: "2" },
-        { label: "Version 3", value: "3" },
-    ], []);
-
-    const [modelSelected, setModelSelected] = useState("1");
-    const [versionSelected, setVersionSelected] = useState("1");
-
-    const [search, setSearch] = useState<string>("");
-    const [filteredData, setFilteredData] = useState(data);
     const [isOpen, setIsOpen] = useState(false);
 
     const router = useRouter();
 
+    useEffect(() => {
+        fetchModels().then(data => {
+            setModelData(data)
+            setModelSelected(data[0].modelId)  
+        })
+    }, [])
 
     useEffect(() => {
-        setFilteredData(
-            data.filter((item) =>
-                item.name.toLowerCase().includes(search.toLowerCase())
-            )
-        );
-    }, [search, data]);
+        if (modelSelected !== "-1") {
+            fetchVersions(modelSelected).then(data => {
+                setVersionData(data)
+                setEnabled(true)
+                setVersionSelected(data[0].versionId)
+            })
+        }
+    }, [modelSelected])
+
+    useEffect(() => {
+        if (versionSelected !== "-1") {
+            fetchDimensions(versionSelected).then(dataRes => {
+                setData(dataRes.dimensions)
+                setLoaded(true)
+            })
+        }
+    }, [versionSelected])
+
+
 
     return (
         <PageTemplate>
@@ -75,26 +76,38 @@ export default function Page() {
                 </header>
                 <section className="flex flex-col w-full" id="content">
                     <header className="flex flex-row w-full p-4 justify-end">
-                        <SearchBar setSearch={setSearch} />
-                        <ComboBox label="Modelo" options={modelComboBoxOptions} selected={modelSelected} setSelected={setModelSelected} />
-                        <ComboBox label="Version" options={versionComboBoxOptions} selected={versionSelected} setSelected={setVersionSelected} />
+
+                        <ComboBox
+                            label="Modelo"
+                            options={modelData}
+                            selected={modelSelected}
+                            setSelected={setModelSelected}
+                            enabled={true}
+
+                        />
+                        <ComboBox label="Version"
+                            options={versionData}
+                            selected={versionSelected}
+                            setSelected={setVersionSelected}
+                            enabled={enabled}
+
+                        />
                         <button className="ml-auto w-32 h-10 bg-secondary_old text-white rounded-lg" onClick={() => setIsOpen(true)}>Crear</button>
                     </header>
                 </section>
                 <div className="h-full w-full flex flex-col border overflow-y-scroll border-red-400 p-4">
-
-                    {filteredData.map((item) => (
-                        <DimensionCard key={item.id} name={item.name} description={item.description} id={item.id.toString()} router={router} />
-                    ))}
+                    {loaded && data.map((dimension: any) => {
+                        return <DimensionCard key={dimension.dimensionId} name={dimension.name} description={dimension.description} id={dimension.dimensionId} router={router} />
+                    })}
 
                 </div>
             </main>
-            <CreateDimension isOpen={isOpen} onClose={setIsOpen} />
+            <CreateDimension isOpen={isOpen} onClose={setIsOpen} selectedModel={modelSelected} selectedVersion={versionSelected} />
         </PageTemplate>
     )
 }
 
-export function DimensionCard({ name, description, id, router }: { name: string, description: string, id: string , router: any}) {
+export function DimensionCard({ name, description, id, router }: { name: string, description: string, id: string, router: any }) {
     return (
         <div id={id} className="flex flex-row w-full items-start justify-start rounded-lg border my-2 border-gray-300">
             <section>
@@ -107,10 +120,10 @@ export function DimensionCard({ name, description, id, router }: { name: string,
             </section>
             <section className="ml-auto h-full">
                 <footer className="w-full h-full flex justify-center items-center p-4">
-                    <button 
+                    <button
                         className="w-fit h-fit flex flex-row justify-around items-center border px-2 py-1 border-secondary_old text-secondary_old rounded-2xl"
                         onClick={() => router.push(`/dimensions/${id}`)}
-                        >
+                    >
                         <IoIosCreate size={20} className="text-secondary_old" />
                         <p className="ml-2 text-sm">Editar</p>
                     </button>

@@ -1,10 +1,12 @@
 import { useRef } from "react";
 
+
 interface CreateDimensionProps {
     isOpen: boolean;
     onClose: (value: boolean) => void;
 
 }
+
 
 export default function CreateModel({ isOpen, onClose }: CreateDimensionProps) {
     const nameRef = useRef<HTMLInputElement>(null);
@@ -76,3 +78,5 @@ export default function CreateModel({ isOpen, onClose }: CreateDimensionProps) {
         </div> 
     )
 }
+
+
