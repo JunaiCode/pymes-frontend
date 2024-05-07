@@ -43,21 +43,32 @@ export default function Page() {
     useEffect(() => {
         fetchModels().then(data => {
             setModelData(data)
-            setModelSelected(data[0].modelId)  
+            setModelSelected(data[0].modelId)
         })
     }, [])
 
     useEffect(() => {
         if (modelSelected !== "-1") {
             fetchVersions(modelSelected).then(data => {
-                setVersionData(data)
-                setEnabled(true)
-                setVersionSelected(data[0].versionId)
+                if (data.length === 0) {
+                    setEnabled(false)
+                    setVersionData([])
+                    console.log("No hay versiones")
+
+                } else {
+                    setVersionData(data)
+                    setEnabled(true)
+                    setVersionSelected("-1")
+                    setVersionSelected(data[0].versionId)
+                    
+                }
+
             })
         }
     }, [modelSelected])
 
     useEffect(() => {
+        console.log("Version selected: ", versionSelected)
         if (versionSelected !== "-1") {
             fetchDimensions(versionSelected).then(dataRes => {
                 setData(dataRes.dimensions)
@@ -79,14 +90,16 @@ export default function Page() {
 
                         <ComboBox
                             label="Modelo"
-                            options={modelData}
+                            optionsLabels={modelData.map((model: any) => model.name)}
+                            optionsValues={modelData.map((model: any) => model.modelId)}
                             selected={modelSelected}
                             setSelected={setModelSelected}
                             enabled={true}
 
                         />
                         <ComboBox label="Version"
-                            options={versionData}
+                            optionsLabels={versionData.map((version: any) => version.name)}
+                            optionsValues={versionData.map((version: any) => version.versionId)}
                             selected={versionSelected}
                             setSelected={setVersionSelected}
                             enabled={enabled}
@@ -96,9 +109,10 @@ export default function Page() {
                     </header>
                 </section>
                 <div className="h-full w-full flex flex-col border overflow-y-scroll border-red-400 p-4">
-                    {loaded && data.map((dimension: any) => {
+                    {loaded && data && data.map((dimension: any) => {
                         return <DimensionCard key={dimension.dimensionId} name={dimension.name} description={dimension.description} id={dimension.dimensionId} router={router} />
                     })}
+                    {loaded && data.length === 0 && <p>No hay dimensiones en este modelo</p>}
 
                 </div>
             </main>

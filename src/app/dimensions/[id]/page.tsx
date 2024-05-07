@@ -1,21 +1,69 @@
+'use client'
 import PageTemplate from "@/components/ui/PageTemplate";
+import { useEffect, useState } from "react";
 
-export default function Page({params}: {params: {id: string}}) {
+async function fetchDimension(id: string) {
+    const res = await fetch(`http://localhost:8080/dimension/get/${id}`)
+    const data = await res.json()
+    return data
+}
+
+
+export default function Page({ params }: { params: { id: string } }) {
+    const [dimension, setDimension] = useState({
+        description: "",
+        dimensionId: "",
+        name: "",
+    })
+
+
+    useEffect(() => {
+        fetchDimension(params.id).then(data => {
+            setDimension(data)
+        })
+    }, [])
+
+    const handleSave = () => {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify(dimension);
+
+        const requestOptions = {
+            method: "PUT",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
+
+        fetch(`http://localhost:8080/dimension/update/${dimension.dimensionId}`, requestOptions)
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.error(error));
+    }
+
     return (
         <PageTemplate>
             <div className="w-full flex flex-col items-start justify-center bg-light max-h-screen">
                 <header className="flex flex-col w-full px-4 py-4" id="title">
-                    <p className="font-sans text-2xl">Tecnologia</p>
-                    <p className="font-sans text-sm">Modelo: Modelo de madurez de la gestion de proyectos</p>
-                    <p className="font-sans text-sm">Version: v1.0</p>
+                    <p className="font-sans text-2xl">{dimension.name}</p>
+                    <p className="font-sans text-sm">Id: {dimension.dimensionId}</p>
                 </header>
                 <div className="w-full px-4" id="description">
-                    <textarea className="w-full border border-gray-400 rounded-lg text-sm" rows={4}  />
+                    <textarea
+                        className="w-full border border-gray-400 rounded-lg text-sm"
+                        rows={4}
+                        value={dimension.description}
+                        onChange={(e) => setDimension({ ...dimension, description: e.target.value })}
+                    >
+
+                    </textarea>
                 </div>
                 <div className="h-full w-full flex flex-col p-4" id="info">
                     <p className="font-sans text-xl">Informacion sobre la dimension</p>
-                   
+
                 </div>
+                <button onClick={() => handleSave()} className="bg-primary text-white px-4 h-fit py-2 rounded-lg absolute bottom-4 right-4">Guardar</button>
             </div>
         </PageTemplate>
     )

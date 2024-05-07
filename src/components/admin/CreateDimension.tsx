@@ -31,10 +31,12 @@ export default function CreateDimension({ isOpen, onClose, selectedModel, select
                     window.location.reload()
                 } else {
                     alert('No se pudo crear la dimension')
+                    console.log(res)
                 }
             })
         }else{
-            alert('No se pudo crear la dimension')
+            alert('No se pudo crear la dimension, todos los campos son requeridos')
+
         }
     }
 
