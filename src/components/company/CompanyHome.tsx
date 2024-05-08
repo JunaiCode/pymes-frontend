@@ -13,7 +13,7 @@ export default function CompanyHome(props: any) {
             score2: 100,
         },
         {
-            dimension: 'Estrategia',
+            dimension: 'Información',
             score: 70,
             score2: 60,
         },
@@ -27,11 +27,6 @@ export default function CompanyHome(props: any) {
             score: 50,
             score2: 70,
         },
-        {
-            dimension: 'Cultura',
-            score: 40,
-            score2: 60,
-        },
     ];
     let dataRadar = [
         {
@@ -42,7 +37,7 @@ export default function CompanyHome(props: any) {
             "color": "bg-red-400"
           },
             {
-                "dimension": "Estrategia",
+                "dimension": "Información",
                 "A": 70,
                 "fullMark": 100,
                 "icon": FaPuzzlePiece,
@@ -62,13 +57,6 @@ export default function CompanyHome(props: any) {
                 "icon": IoPeopleOutline,
                 "color": "bg-green-400"
             },
-            {
-                "dimension": "Cultura",
-                "A": 40,
-                "fullMark": 100,
-                "icon": FaGlobe,
-                "color": "bg-purple-400"
-            }
     ];
     return (
         <div className="w-full flex flex-col items-start justify-center bg-light">

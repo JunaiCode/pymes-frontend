@@ -77,7 +77,9 @@ export const RoadMap = ({dimensionsRecommendations}:RoadMapProps)=>{
                 <p className="pr-4 pl-4 rounded text-white bg-slate-500 inline-block w-fit h-fit">8 de marzo del 2024</p>
                 </div>
                 </div>
-                <p className="mt-4">La herramienta Hoja de Ruta proporciona recomendaciones y pasos específicos para que las empresas avancen hacia el siguiente nivel de madurez en cada dimensión de su transformación digital, adaptadas al contexto empresarial colombiano y diseñadas para impulsar la competitividad y sostenibilidad de las Pymes en un mercado cada vez más digitalizado.</p>
+                <p className="mt-4">La herramienta Hoja de Ruta es un recurso invaluable para las empresas que buscan evolucionar en su transformación digital. Ofreciendo recomendaciones detalladas y pasos específicos, esta herramienta guía a las empresas hacia el siguiente nivel de madurez en cada dimensión de su transformación digital.
+
+Adaptada al contexto empresarial colombiano, la Hoja de Ruta está diseñada para impulsar la competitividad y sostenibilidad de las Pymes en un mercado en constante digitalización. Proporciona un plan personalizado que considera las necesidades y desafíos únicos que enfrentan las empresas en Colombia, permitiendo así un crecimiento sólido y sostenible en el mundo digital.</p>
             </div>
             </div>
             {dimensionsRecommendations.map((dimensionRecommendation, index) => (

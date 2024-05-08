@@ -12,7 +12,7 @@ useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
 }, []);
-const roadmapStyles = isSticky ? 'fixed top-0 left-1/4' : null;
+const roadmapStyles = isSticky ? 'fixed top-2 left-1/4' : null;
     return (
     <div className={`ProgressRoadMap-sticky w-1/2 flex flex-col justify-center items-center ${roadmapStyles}`}>
     <div className="w-full bg-gray-200 rounded-full h-2.5 barbar">

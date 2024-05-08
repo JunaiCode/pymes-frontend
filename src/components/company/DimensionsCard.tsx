@@ -9,13 +9,13 @@ interface DimensionsCardProps {
 
 export default function DimensionsCard(props: DimensionsCardProps) {
     return (
-        <div className="flex flex-col items-center rounded m-2 w-36">
+        <div className="flex flex-row items-center rounded m-2 w-36">
             <div className={`flex flex-col items-center justify-between w-full  ${props.color} rounded-lg gap shadow-md`}>
-                <div className="flex flex-row items-center w-full">
+                <div className="flex flex-row items-center w-full justify-center">
                     <div className="p-2 rounded-lg">
                         {props.icon({ className: `text-white`, size: 25 })}
                     </div>
-                    <p className="font-sans font-bold text-white text-lg">{props.title}</p>
+                    <p className="font-sans font-bold text-white text-lg mr-2">{props.title}</p>
                 </div>
                 <p className="font-sans font-bold text-white text-5xl p-2 rounded-lg
                 ">{props.score}</p>
