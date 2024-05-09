@@ -16,7 +16,8 @@ export default function CreateDimension({ isOpen, onClose, selectedModel, select
         if (nameRef.current && descriptionRef.current && nameRef.current.value && descriptionRef.current.value) {
             const data = {
                 name: nameRef.current.value,
-                description: descriptionRef.current.value
+                description: descriptionRef.current.value,
+                levels: []
             }
             fetch(`http://localhost:8080/dimension/add/${selectedVersion}`, {
                 method: 'POST',

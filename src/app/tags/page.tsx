@@ -3,6 +3,8 @@ import CreateTag from "@/components/admin/CreateTag";
 import ComboBox from "@/components/ui/ComboBox";
 import PageTemplate from "@/components/ui/PageTemplate";
 import { useEffect, useState } from "react";
+import { IoIosCreate } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 async function fetchModels() {
     const res = await fetch('http://localhost:8080/model/get/all')
@@ -30,7 +32,7 @@ export default function Page() {
     const [versionSelected, setVersionSelected] = useState("-1");
     const [dimensionSelected, setDimensionSelected] = useState("-1");
     const [tagData, setTagData] = useState([] as any)
-
+    const router = useRouter();
     const [versionEnabled, setVersionEnabled] = useState(false);
     const [dimensionEnabled, setDimensionEnabled] = useState(false);
 
@@ -39,7 +41,7 @@ export default function Page() {
 
     useEffect(() => {
         fetchModels().then(data => {
-            if(data.length === 0) {
+            if (data.length === 0) {
                 return
             }
             setModelData(data)
@@ -51,7 +53,7 @@ export default function Page() {
     useEffect(() => {
         if (modelSelected !== "-1") {
             fetchVersions(modelSelected).then(data => {
-                if(data.length === 0) {
+                if (data.length === 0) {
                     return
                 }
                 setVersionData(data)
@@ -71,14 +73,14 @@ export default function Page() {
     }, [versionSelected])
 
     useEffect(() => {
-        if(dimensionSelected !== "-1") {
+        if (dimensionSelected !== "-1") {
             fetchTags(dimensionSelected).then(data => {
                 setTagData(data)
                 console.log(data)
             })
         }
     }
-    , [dimensionSelected])
+        , [dimensionSelected])
 
     return (
         <PageTemplate>
@@ -89,44 +91,44 @@ export default function Page() {
                 </header>
                 <section className="flex flex-row w-full p-4">
                     <header className="flex flex-row w-full p-4 justify-end">
-                    <ComboBox 
-                        label="Modelo"
-                        optionsLabels={modelData.map((model: any) => model.name)}
-                        optionsValues={modelData.map((model: any) => model.modelId)}
-                        selected={modelSelected}
-                        setSelected={setModelSelected}
-                        enabled={true}
-                    />
+                        <ComboBox
+                            label="Modelo"
+                            optionsLabels={modelData.map((model: any) => model.name)}
+                            optionsValues={modelData.map((model: any) => model.modelId)}
+                            selected={modelSelected}
+                            setSelected={setModelSelected}
+                            enabled={true}
+                        />
 
-                    <ComboBox 
-                        label="Version"
-                        optionsLabels={versionData.map((version: any) => version.name)}
-                        optionsValues={versionData.map((version: any) => version.versionId)}
-                        selected={versionSelected}
-                        setSelected={setVersionSelected}
-                        enabled={versionEnabled}
-                    />
+                        <ComboBox
+                            label="Version"
+                            optionsLabels={versionData.map((version: any) => version.name)}
+                            optionsValues={versionData.map((version: any) => version.versionId)}
+                            selected={versionSelected}
+                            setSelected={setVersionSelected}
+                            enabled={versionEnabled}
+                        />
 
-                    <ComboBox 
-                        label="Dimension"
-                        optionsLabels={dimensionData.map((dimension: any) => dimension.name)}
-                        optionsValues={dimensionData.map((dimension: any) => dimension.dimensionId)}
-                        selected={dimensionSelected}
-                        setSelected={setDimensionSelected}
-                        enabled={dimensionEnabled}
-                    />
+                        <ComboBox
+                            label="Dimension"
+                            optionsLabels={dimensionData.map((dimension: any) => dimension.name)}
+                            optionsValues={dimensionData.map((dimension: any) => dimension.dimensionId)}
+                            selected={dimensionSelected}
+                            setSelected={setDimensionSelected}
+                            enabled={dimensionEnabled}
+                        />
 
 
-                    <button className={`ml-auto  py-2 px-2 text-white rounded-lg bg-${dimensionEnabled ? 'primary' : 'gray-400'}`}
-                        onClick={() => setOpen(true)}
-                        disabled={!dimensionEnabled}
-                    >Agregar</button>
+                        <button className={`ml-auto  py-2 px-2 text-white rounded-lg bg-${dimensionEnabled ? 'primary' : 'gray-400'}`}
+                            onClick={() => setOpen(true)}
+                            disabled={!dimensionEnabled}
+                        >Agregar</button>
                     </header>
-                    
+
                 </section>
                 <main className="h-full w-full flex flex-col border overflow-y-scroll border-red-400 p-4">
-                    {tagData.lenght > 0 && tagData.map((tag: any) => {
-                        return <TagCard key={tag.tagId} name={tag.name} description={tag.description} id={tag.tagId} router={null} />
+                    {tagData.length > 0 && tagData.map((tag: any) => {
+                        return <TagCard key={tag.tagId} name={tag.name} description={tag.description} id={tag.tagId} router={router} />
                     })}
                     {(tagData.length === 0 || tagData === null) && <p className="font-sans text-lg text-gray-400">No hay tags</p>}
                 </main>
@@ -147,9 +149,15 @@ export function TagCard({ name, description, id, router }: { name: string, descr
                     <p className="font-sans text-sm text-gray-600">{description}</p>
                 </section>
             </section>
-            <section className="ml-auto h-full">
-                <button className="w-10 h-10 bg-primary text-white rounded-lg">Editar</button>
-            </section>
+            <footer className="w-full h-full flex justify-center items-center p-4">
+                <button
+                    className="w-fit h-fit flex flex-row justify-around items-center border px-2 py-1 border-secondary_old text-secondary_old rounded-2xl ml-auto"
+                    onClick={() => router.push(`/tags/${id}`)}
+                >
+                    <IoIosCreate size={20} className="text-secondary_old" />
+                    <p className="ml-2 text-sm">Editar</p>
+                </button>
+            </footer>
         </div>
     )
 }

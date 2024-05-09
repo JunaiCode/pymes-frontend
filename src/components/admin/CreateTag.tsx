@@ -20,7 +20,7 @@ export default function CreateTag({ isOpen, onClose, dimensionId }: CreateTagPro
                 description: descriptionRef.current.value,
                 dimensionId: dimensionId
             }
-            console.log(data)
+            
             fetch(`http://localhost:8080/tag/add`, {
                 method: 'POST',
                 headers: {
