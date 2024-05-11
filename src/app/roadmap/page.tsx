@@ -6,7 +6,7 @@ const page = () => {
   const data =[
         {
             dimension: "Tecnología",
-            description: "Contar con herramientas tecnologías que estén acorde al tipo de compañía y el tamaño de la misma, agilizan la adaptación de las mismas brindando agilidad a los negocios.",
+            description: "Contar con herramientas tecnologícas que estén acorde al tipo de compañía y el tamaño de la misma, agilizan la adaptación de las mismas brindando agilidad a los negocios.",
             recommendations: [
                 {
                     title: "Conseguir servidores estables",

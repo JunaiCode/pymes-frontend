@@ -31,7 +31,7 @@ export const RoadMapRecommendation = ({dimension, description, recommendations,h
                     <p>{description}</p>
                 </div>
                 {recommendations.map((recommendation, index) => (
-                    <RecommendationComponent key={index} description={recommendation.description} tag={recommendation.tag} handleCheck={handleCheck}/>
+                    <RecommendationComponent key={index} dimension={dimension} description={recommendation.description} index={index.toString()} tag={recommendation.tag} handleCheck={handleCheck}/>
                 ))}
             </div>
         </div>

@@ -68,10 +68,14 @@ export const RoadMap = ({dimensionsRecommendations}:RoadMapProps)=>{
         <div className="w-full flex flex-col items-start justify-center bg-light relative">
             <div className="w-full h-full flex flex-row  p-4">
             <div className="h-fit w-full bg-white mr-2 border rounded-lg shadow-lg p-4" >
-                <p className="flex justify-center items-center text-xl font-sans font-bold">Progreso</p>
-                <div className="flex flex-row justify-between items-baseline" >
+                <div className="flex flex-row justify-between items-center w-full">
+                <div className="flex flex-col justify-between items-baseline w-1/2" >
                 <h1 className="text-4xl font-sans font-bold mb-1 mt-2">Hoja de ruta</h1>
+                <div className="flex w-full gap-2 justify-start items-center">
+                <p className="text-lg">Tu progreso actual:</p>
                 <ProgressRoadMap percentage={percentage}/>
+                </div>
+                </div>
                 <div className="flex flex-row justify-between items-baseline">
                 <p className="text-lg font-sans font-light mb-4 mr-2">Inicio de la hoja de ruta:</p>
                 <p className="pr-4 pl-4 rounded text-white bg-slate-500 inline-block w-fit h-fit">8 de marzo del 2024</p>
