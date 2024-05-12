@@ -8,12 +8,20 @@ async function fetchDimension(id: string) {
     return data
 }
 
+async function fetchDimensionTags(dimensionId: string) {
+    const res = await fetch(`http://localhost:8080/tag/get/dimension/${dimensionId}`)
+    const data = await res.json()
+    console.log(data)
+    return data
+}
+
 
 export default function Page({ params }: { params: { id: string } }) {
     const [dimension, setDimension] = useState({
         description: "",
         dimensionId: "",
         name: "",
+        tags: [{ tagId: "", name: "" }]
     })
 
 
@@ -21,6 +29,11 @@ export default function Page({ params }: { params: { id: string } }) {
         fetchDimension(params.id).then(data => {
             setDimension(data)
         })
+        fetchDimensionTags(params.id).then(data => {
+            setDimension({ ...dimension, tags: data })
+        })
+
+        console.log(dimension)
     }, [])
 
     const handleSave = () => {

@@ -10,8 +10,8 @@ interface ComboBoxProps {
 export default function ComboBox({ label, optionsLabels, optionsValues, selected, setSelected, enabled = true }: ComboBoxProps) {
     
     return (
-        <div className="flex ml-2">
-            
+        <div className="flex mr-2 flex-col w-1/6">
+            <label className="text-gray-700 text-xs" htmlFor="comboBox">{label}</label>
             <select
                 id="comboBox"
                 value={selected}
