@@ -5,9 +5,6 @@ import { IoArrowBackCircleOutline ,IoArrowForwardCircleOutline } from "react-ico
 const Questionary = (props:any) => {
     return (
         <div className="w-full h-screen">
-        <div className="w-full bg-primary flex justify-center items-center">
-            <p className="text-white text-3xl font-bold">Evaluación</p>
-        </div>
         <div className="w-full h-screen flex flex-col justify-evenly items-center">
             {props.questions.map((question:any, index:number) => (
                 <div key={index} className="mb-4 w-5/6">
