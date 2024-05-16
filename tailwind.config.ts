@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,17 +7,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
         primary:"#295DFA",
         secondary:"#4FE1D4",
         secondary_old: "#344454",
-        white: "#ffffff",
-        black: "#000000",
         light: "#f3f4f6",
         light_bg: "#F6FAFF90",
         dark_bg: "#021c69",
@@ -26,9 +18,14 @@ const config: Config = {
         gray_80: "#34445420",
         gray: "#344454",
       },
-    },
-    fontFamily: {
-      sans: ["DM Sans", "sans-serif"],
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      fontFamily: {
+        "sans": ["DM Sans", "sans-serif"],
+      },
     },
   },
   plugins: [],
