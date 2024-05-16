@@ -15,8 +15,6 @@ const config: Config = {
         light_bg: "#F6FAFF90",
         dark_bg: "#021c69",
         dark_bg_hover: "#0443ff",
-        gray_80: "#34445420",
-        gray: "#344454",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
