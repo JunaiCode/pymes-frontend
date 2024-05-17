@@ -6,10 +6,10 @@ import { IoArrowBackCircleOutline ,IoArrowForwardCircleOutline } from "react-ico
 const Questionary = (props:any) => {
     return (
         <div className="w-full h-screen bg-light">
-        <div className="flex justify-start items-baseline">
-        <div className="w-full h-screen flex flex-col justify-evenly items-center">
+        <div className="flex justify-start items-baseline w-full">
+        <div className="w-full h-screen flex flex-col justify-start items-center">
             {props.questions.map((question:any, index:number) => (
-                <div key={index} className="mb-4 p-12 w-5/6">
+                <div key={index} className="mt-24 flex flex-col h-5/4 bg-white mr-2 border rounded-lg shadow-lg p-12 w-5/6">
                     <ProgressEvaluation percentage="20%" />
                     <p className="text-gray-800 text-lg mb-2">
                         Pregunta {index + 1} de {props.questions.length}
@@ -37,7 +37,7 @@ const Questionary = (props:any) => {
                 </div>
             ))}
         </div>
-        <div className="w-50 mr-8">
+        <div className="w-50 mr-12">
                 <div className="border-2 p-4 rounded-lg shadow-lg bg-white">
                     <p className="text-lg font-semibold mb-4">Navegación Rápida</p>
                     {props.questions.map((question:any, index:number) => (
