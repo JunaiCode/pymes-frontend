@@ -30,12 +30,12 @@ const Questionary = (props:any) => {
                             value={option}
                         />
                     ))}
-                </div>
-            ))}
-            <div className="flex justify-center items-center gap-4">
+                    <div className="flex justify-center items-center gap-4 mt-8">
                 <IoArrowBackCircleOutline size={48} className="text-primary text-4xl cursor-pointer" />
                 <IoArrowForwardCircleOutline size={48} className="text-primary text-4xl cursor-pointer" />
             </div>
+                </div>
+            ))}
         </div>
         <div className="w-50 mr-8">
                 <div className="border-2 p-4 rounded-lg shadow-lg bg-white">
