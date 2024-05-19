@@ -215,7 +215,7 @@ const MultiStepsForm = () => {
     };
 
     return (
-        <div>
+        <div className='bg-light'>
         {step === 0 && (
             <Step
             step={step}

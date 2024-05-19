@@ -51,7 +51,7 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                 </div>
                 </div>
                 <div className="flex justify-between mb-12 mt-2">
-                <button className="bg-white hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handleCancel}>Cancelar</button>
+                <button className="bg-white hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handleCancel}>Cancelar</button>
                 <button  className="bg-secondary_old hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mr-6"onClick={handleNext}>Siguiente</button>
                 </div>
             </form>
@@ -84,7 +84,7 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                  </div>
                  </div>
                  <div className="flex justify-between mb-12 mt-2">
-                 <button className="bg-white hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handlePrev}>Volver</button>
+                 <button className="bg-white hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handlePrev}>Volver</button>
                  <button  className="bg-secondary_old hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mr-6"onClick={handleNext}>Siguiente</button>
                  </div>
              </form>
@@ -117,7 +117,7 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                  </div>
                  </div>
                  <div className="flex justify-between mb-12 mt-2">
-                 <button className="bg-white hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handlePrev}>Volver</button>
+                 <button className="bg-white hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handlePrev}>Volver</button>
                  <button  className="bg-secondary_old hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mr-6"onClick={handleNext}>Siguiente</button>
                  </div>
              </form>
@@ -142,7 +142,7 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                  </div>
                  </div>
                  <div className="flex justify-between mb-12 mt-2">
-                 <button className="bg-white hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handlePrev}>Volver</button>
+                 <button className="bg-white hover:bg-blue-700 text-black hover:text-white font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handlePrev}>Volver</button>
                  <button  className="bg-secondary_old hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mr-6"onClick={handleNext}>Siguiente</button>
                  </div>
              </form>
@@ -173,16 +173,16 @@ Al utilizar nuestra aplicación, usted acepta estos términos y condiciones en s
              </div>
              
              <div className="flex justify-between mb-12 mt-2">
-               <button className="bg-white hover:bg-blue-700 text-black font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handlePrev}>Volver</button>
+               <button className="bg-white hover:bg-blue-700 hover:text-white text-black font-bold py-2 px-4 rounded mt-4 border ml-6" onClick={handlePrev}>Volver</button>
                <button className="bg-secondary_old hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mr-6" onClick={handleNext}>Aceptar</button>
              </div>
            </form>
         )}
         <div id="info-popup" tabIndex={-1} className=" hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full flex justify-center items-center">
     <div className="relative p-4 w-full max-w-lg h-full md:h-auto">
-    <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 md:p-8">
+    <div className="relative p-4 bg-white rounded-lg shadow  md:p-8">
       <div className="mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
-        <h3 className="mb-3 text-2xl font-bold text-black dark:text-black">Upsss</h3>
+        <h3 className="mb-3 text-2xl font-bold text-black ">Upsss</h3>
         <p>
           No has completado todos los campos de manera adecuada.
         </p>

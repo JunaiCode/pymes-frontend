@@ -7,7 +7,7 @@ const LoginPage = () => {
         /* Code to send email to recover password */
     };
     return (
-      <div className="flex justify-content">
+      <div className="flex justify-content bg-light">
         <div className="img-login w-1/2 h-screen"></div>
         <div className="form-login bg-gray_80 bg-opacity-50 flex justify-center items-center w-1/2">
           <form
