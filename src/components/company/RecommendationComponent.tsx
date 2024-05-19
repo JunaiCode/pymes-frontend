@@ -49,7 +49,7 @@ export const RecommendationComponent = ({
           )}
           <p className="text-xl">{description}</p>
         </div>
-        <div className="bg-[url(/tag.svg)] w-1/4 h-14 bg-no-repeat bg-cover flex justify-evenly items-center">
+        <div className="h-14 w-64  bg-[url(/tag.svg)] bg-no-repeat bg-cover flex justify-evenly items-center">
           <span className="bg-white rounded-full w-2 h-2"></span>
           <p className="text-[#00000067]">{tag}</p>
         </div>
