@@ -2,14 +2,18 @@ import { use, useEffect, useState } from "react";
 import { ProgressEvaluation } from "./ProgressEvaluation";
 import Question from "./Question";
 import { IoArrowBackCircleOutline ,IoArrowForwardCircleOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 const Questionary = (props:any) => {
     const [questions, setQuestions] = useState(props.questions);
     const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
     const [progress, setprogress] = useState({ total: questions.length,completed:0
     });
+    const [finished, setFinished] = useState(false);
     const [percentage, setPercentage] = useState("0%");
     const [index, setIndex] = useState(0);
+    const [resultsScreen, setResultsScreen] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         setPercentage(`${(progress.completed / progress.total) * 100}%`)
@@ -17,7 +21,7 @@ const Questionary = (props:any) => {
 
     useEffect(() => {
         if (percentage === "100%") {
-            console.log("Terminaste el cuestionario");
+            setFinished(true);
         }
     }, [percentage]);
 
@@ -70,60 +74,79 @@ const Questionary = (props:any) => {
         }
     };
 
-    return (
-        <div className="w-full h-screen bg-light">
-        <div className="flex justify-start items-baseline w-full">
-        <div className="w-full h-screen flex flex-col justify-start items-center">
-                <div key={index} className="mt-24 flex flex-col h-5/4 bg-white mr-2 border rounded-lg shadow-lg p-12 w-5/6">
-                    <ProgressEvaluation percentage={percentage} />
-                    <p className="text-gray-800 text-lg mb-2">
-                        Pregunta {index + 1} de {props.questions.length}
-                    </p>
+    const handleFinishEvaluation = () => {
+        setResultsScreen(true);
+    };
 
-                    <label
-                        htmlFor={`question-${currentQuestion.title}`}
-                        className="block text-gray-700 font-bold mb-2"
-                    >
-                        {currentQuestion.title}
-                    </label>
-                    <p>Selecciona tu respuesta</p>
-                    {currentQuestion.options.map((option:any, index:number) => (
-                        <Question
-                            id={index}
-                            key={index}
-                            name={currentQuestion.title}
-                            value={option.title}
-                            checked={option.checked}
-                            handleCheck={handelcheckOption}
-                        />
-                    ))
-                    }
-                    <div className="flex justify-center items-center gap-4 mt-8">
-                <IoArrowBackCircleOutline size={48} onClick={handlePreviousQuestion} className="text-primary text-4xl cursor-pointer" />
-                <IoArrowForwardCircleOutline size={48} onClick={handleNextQuestion} className="text-primary text-4xl cursor-pointer" />
-            </div>
-                </div>
-        </div>
-        <div className="w-50 mr-12">
-                <div className="border-2 p-4 rounded-lg shadow-lg bg-white">
-                    <p className="text-lg font-semibold mb-4">Navegación Rápida</p>
-                    <div className="flex justify-between flex-wrap">
-                    {questions.map((question:any, index:number) => (
-                        <div key={index} className="mb-2">
-                            <a 
-                                onClick={() => setCurrentQuestion(question)}
-                                className={` p-2 w-full text-center cursor-pointer rounded shadow-lg transition-all duration-200 ease-in-out ${question.answered ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-blue-500 hover:text-blue-700'}`}
+    return (
+        !resultsScreen ? (
+            <div className="w-full h-screen bg-light">
+                <div className="flex justify-start items-baseline w-full">
+                    <div className="w-full h-screen flex flex-col justify-start items-center">
+                        <div key={index} className="mt-24 flex flex-col h-5/4 bg-white mr-2 border rounded-lg shadow-lg p-12 w-5/6">
+                            <ProgressEvaluation percentage={percentage} />
+                            <p className="text-gray-800 text-lg mb-2">
+                                Pregunta {index + 1} de {props.questions.length}
+                            </p>
+                            <label
+                                htmlFor={`question-${currentQuestion.title}`}
+                                className="block text-gray-700 font-bold mb-2"
                             >
-                                {index + 1}
-                            </a>
+                                {currentQuestion.title}
+                            </label>
+                            <p>Selecciona tu respuesta</p>
+                            {currentQuestion.options.map((option:any, index:any) => (
+                                <Question
+                                    id={index}
+                                    key={index}
+                                    name={currentQuestion.title}
+                                    value={option.title}
+                                    checked={option.checked}
+                                    handleCheck={handelcheckOption}
+                                />
+                            ))}
+                            <div className="flex flex-col justify-center items-center gap-6">
+                            <div className="flex justify-center items-center gap-4 mt-8">
+                                <IoArrowBackCircleOutline size={48} onClick={handlePreviousQuestion} className="text-primary text-4xl cursor-pointer" />
+                                <IoArrowForwardCircleOutline size={48} onClick={handleNextQuestion} className="text-primary text-4xl cursor-pointer" />
+                            </div>
+                            {finished && (<button className="bg-primary text-white px-6 py-3 rounded-lg shadow-lg hover:bg-primary-dark transition duration-300" onClick={handleFinishEvaluation}>
+                            Terminar evaluación
+                            </button>)}
+                            </div>
                         </div>
-                    ))}
+                    </div>
+                    <div className="w-50 mr-12">
+                        <div className="border-2 p-4 rounded-lg shadow-lg bg-white">
+                            <p className="text-lg font-semibold mb-4">Navegación Rápida</p>
+                            <div className="flex justify-between flex-wrap">
+                                {questions.map((question:any, index:any) => (
+                                    <div key={index} className="mb-2">
+                                        <a
+                                            onClick={() => setCurrentQuestion(question)}
+                                            className={`p-2 w-full text-center cursor-pointer rounded shadow-lg transition-all duration-200 ease-in-out ${question.answered ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-blue-500 hover:text-blue-700'}`}
+                                        >
+                                            {index + 1}
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
-        </div>
-        </div>
-        </div>
-    );
+            </div>
+        ) : (
+            <div className="flex flex-col justify-center items-center h-screen w-full bg-light">
+            <p className="text-2xl font-semibold text-center mt-24 mb-8">¡Gracias por completar la evaluación!</p>
+            <button className="bg-primary text-white px-6 py-3 rounded-lg shadow-lg hover:bg-primary-dark transition duration-300" onClick={()=>{
+                router.push("/home")
+            }}>
+                        Ver mis resultados
+            </button>
+            </div>
+
+        )
+    );    
 }
 
 export default Questionary;
