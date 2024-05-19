@@ -5,7 +5,38 @@ import { IoArrowBackCircleOutline ,IoArrowForwardCircleOutline } from "react-ico
 import { useRouter } from "next/navigation";
 
 const Questionary = (props:any) => {
-    const [questions, setQuestions] = useState(props.questions);
+    const [questions, setQuestions] = useState([
+        {
+            title: "¿Desde qué nivel de la jerarquía de la organización se aboga por el marketing basado en datos?",
+            options: [
+                { title: "Los cargos sénior defienden su uso hasta cierto punto.", checked: false },
+                { title: "Los cargos medios, como los directores locales, defienden su uso.", checked: false },
+                { title: "Los altos cargos, como el vicepresidente, defienden su uso.", checked: false },
+                { title: "Algunos cargos senior como el CMO, CTO o COO, defienden su uso.", checked: false }
+            ],
+            answered: false
+        },
+        {
+            title: "¿Qué tan importante es la inversión en tecnología para la empresa?",
+            options: [
+                { title: "No es importante.", checked: false },
+                { title: "Es importante.", checked: false },
+                { title: "Es muy importante.", checked: false },
+                { title: "Es crucial.", checked: false }
+            ],
+            answered: false
+        },
+        {
+            title: "¿Qué tan importante es la inversión en talento humano para la empresa?",
+            options: [
+                { title: "No es importante.", checked: false },
+                { title: "Es importante.", checked: false },
+                { title: "Es muy importante.", checkeded: false },
+                { title: "Es crucial.", checkeded: false }
+            ],
+            answered: false
+        }
+    ]);
     const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
     const [progress, setprogress] = useState({ total: questions.length,completed:0
     });
@@ -86,7 +117,7 @@ const Questionary = (props:any) => {
                         <div key={index} className="mt-24 flex flex-col h-5/4 bg-white mr-2 border rounded-lg shadow-lg p-12 w-5/6">
                             <ProgressEvaluation percentage={percentage} />
                             <p className="text-gray-800 text-lg mb-2">
-                                Pregunta {index + 1} de {props.questions.length}
+                                Pregunta {index + 1} de {questions.length}
                             </p>
                             <label
                                 htmlFor={`question-${currentQuestion.title}`}
