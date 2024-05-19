@@ -18,7 +18,8 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                 <div className="w-full ml-12 mb-8">
                 <label htmlFor="company-select">Tipo de empresa</label>
                 <select className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="type" id="company-select" onChange={handleChange} value={formData.type}>
-                    <option value="1">Micro Empresa</option>
+                    <option value="0">Seleccione tipo de empresa</option>
+                    <option value="1" selected>Micro Empresa</option>
                     <option value="2">S.A</option>
                     <option value="3">S.A.S</option>
                     <option value="4">No se</option>
@@ -37,7 +38,8 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                 <div className="w-full mr-12 mb-8">
                 <label htmlFor="city-company">Ciudad</label>
                 <select className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"name="city" id="city-company" value={formData.city} onChange={handleChange}>
-                    <option value="1">Medellin</option>
+                    <option value="0">Seleccione una ciudad</option>
+                    <option value="1" selected>Medellin</option>
                     <option value="2">Bogota</option>
                     <option value="3">Cali</option>
                 </select>

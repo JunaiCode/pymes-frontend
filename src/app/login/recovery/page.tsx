@@ -1,4 +1,11 @@
+'use client';
+import { useRouter } from 'next/navigation';
+import  {IoArrowBackCircleOutline} from 'react-icons/io5';
 const LoginPage = () => {
+    const router = useRouter();
+    const handleRecovery = () => {
+        /* Code to send email to recover password */
+    };
     return (
       <div className="flex justify-content">
         <div className="img-login w-1/2 h-screen"></div>
@@ -7,7 +14,7 @@ const LoginPage = () => {
             action=""
             className="mx-auto max-w-sm bg-white rounded-lg shadow-md p-8"
           >
-            <a className="font-bold mt-4" href="../login"> Volver </a>
+            <IoArrowBackCircleOutline size={32} className="font-bold mt-4 cursor-pointer text-primary" onClick={()=>{router.push('/login')}}>Volver</IoArrowBackCircleOutline>
             <h1 className="text-2xl font-bold mb-2 mt-4">Restablecer Contraseña</h1>
   
             <div className="mb-4">
@@ -18,15 +25,15 @@ const LoginPage = () => {
   
             <div className="mb-4">
               <label
-                htmlFor="username"
+                htmlFor="email"
                 className="block text-gray-700 font-bold mb-2"
               >
                 Correo
               </label>
               <input
                 type="text"
-                id="username"
-                name="username"
+                id="email"
+                name="email"
                 placeholder="usuario@email.com"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />

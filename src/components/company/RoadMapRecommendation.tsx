@@ -13,7 +13,7 @@ interface props {
     dimension: string;
     description: string;
     recommendations: recommendation[];
-    handleCheck: (e:any)=>void;
+    handleCheck: (e: any) => void;
 }
 
 export const RoadMapRecommendation = ({dimension, description, recommendations,handleCheck}:props) => {

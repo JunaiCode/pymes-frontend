@@ -3,11 +3,9 @@ import { useRouter } from "next/navigation";
 import {
   IoArrowBackOutline,
   IoArrowForward,
-  IoBarChartOutline,
   IoReaderOutline,
   IoPersonOutline,
   IoHomeOutline,
-  IoPricetagOutline,
   IoMapOutline,
 } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
@@ -77,7 +75,7 @@ export default function CompanySideBar() {
         </SidebarContext.Provider>
 
         <div className="flex justify-center items-center p-4">
-          <button
+          <button onClick={() => router.push("/")}
             className={`flex flex-row ${
               expanded ? "justify-between bg-primary" : "justify-center"
             } items-center

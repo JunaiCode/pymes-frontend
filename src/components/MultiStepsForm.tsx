@@ -8,7 +8,7 @@ const MultiStepsForm = () => {
     const [formData, setFormData] = useState({
         name: '',
         address: '',
-        type: '1',
+        type: '',
         city: '',
         tel: '',
         nit: '',
@@ -59,6 +59,18 @@ const MultiStepsForm = () => {
                     errors = {
                         ...errors,
                         nit: 'Nit is required',
+                    };
+                }
+                if(formData.type === '0') {
+                    errors = {
+                        ...errors,
+                        type: 'Type is required',
+                    };
+                }
+                if(formData.city === '0') {
+                    errors = {
+                        ...errors,
+                        city: 'City is required',
                     };
                 }
                 if(!RegExp('^[0-9]{10}$').test(formData.tel))
@@ -143,7 +155,7 @@ const MultiStepsForm = () => {
         setFormData({
             name: '',
             address: '',
-            type: '1',
+            type: '',
             city: '',
             tel: '',
             nit: '',
