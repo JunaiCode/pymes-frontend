@@ -212,6 +212,7 @@ const Questionary = (props: any) => {
                 { title: "Es crucial." }
             ],
             answer: null,
+            marked: false,
         },
         {
             id: 18,
@@ -223,6 +224,7 @@ const Questionary = (props: any) => {
                 { title: "Se mide por el ROI." }
             ],
             answer: null,
+            marked: false,
         },
         {
             id:19,
@@ -234,6 +236,7 @@ const Questionary = (props: any) => {
                 { title: "Es crucial." }
             ],
             answer: null,
+            marked: false,
         },
         {
             id: 20,
@@ -245,6 +248,7 @@ const Questionary = (props: any) => {
                 { title: "Es crucial." }
             ],
             answer: null,
+            marked: false,
         },
         {
             id: 21,
@@ -257,6 +261,7 @@ const Questionary = (props: any) => {
                 { title: "Algunos cargos senior como el CMO, CTO o COO, defienden su uso." }
             ],
             answer: null,
+            marked: false,
         },
         {
             id: 22,
@@ -268,6 +273,7 @@ const Questionary = (props: any) => {
                 { title: "Es crucial." }
             ],
             answer: null,
+            marked: false,
         },
         {
             id: 23,
@@ -279,6 +285,7 @@ const Questionary = (props: any) => {
                 { title: "Se mide por el ROI." }
             ],
             answer: null,
+            marked: false,
         },
         {
             id: 24,
@@ -290,6 +297,7 @@ const Questionary = (props: any) => {
                 { title: "Es crucial." }
             ],
             answer: null,
+            marked: false,
         },
         {
             id: 25,
@@ -395,6 +403,7 @@ const Questionary = (props: any) => {
     }, [currentQuestion, evaluationResults]);
 
     const handleCheckOption = (e: any) => {
+        e.preventDefault();
         let answer = currentQuestion.answer;
         if (answer === null) {
             currentQuestion.answer = e.target.value;
@@ -406,6 +415,7 @@ const Questionary = (props: any) => {
         } else {
             currentQuestion.answer = e.target.value;
         }
+        e.target.blur();
         setCurrentQuestion({ ...currentQuestion });
     };
 
@@ -467,10 +477,10 @@ const Questionary = (props: any) => {
                                 {currentQuestion.title}
                             </label>
                             <p>Selecciona tu respuesta</p>
-                            {currentQuestion.options.map((option: any, optionIndex: any) => (
+                            {currentQuestion.options.map((option: any, index: number) => (
                                 <Question
-                                    id={optionIndex}
-                                    key={optionIndex}
+                                    id={index}
+                                    key={index}
                                     name={currentQuestion.title}
                                     answer={currentQuestion.answer}
                                     value={option.title}

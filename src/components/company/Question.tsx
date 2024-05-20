@@ -1,7 +1,6 @@
 const Question = (props:any) => {
     const containerStyle = props.type === "text" ? "mb-4" : "w-full mt-4";
     const inputContainerStyle = props.type === "text" ? "" : "flex items-center";
-
     return (
         <div className={`bg-white rounded-lg shadow-md p-4 ${containerStyle}`}>
             {props.type === "text" ? (
