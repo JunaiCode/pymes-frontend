@@ -16,6 +16,7 @@ const Questionary = (props: any) => {
                 { title: "Algunos cargos senior como el CMO, CTO o COO, defienden su uso." }
             ],
             answer: "Algunos cargos senior como el CMO, CTO o COO, defienden su uso.",
+            marked: false,
         },
         {
             title: "¿Qué tan importante es la inversión en tecnología para la empresa?",
@@ -25,7 +26,8 @@ const Questionary = (props: any) => {
                 { title: "Es muy importante." },
                 { title: "Es crucial." }
             ],
-            answer: "", 
+            answer: "",
+            marked: false,
         },
         {
             title: "¿Qué tan importante es la inversión en talento humano para la empresa?",
@@ -36,6 +38,7 @@ const Questionary = (props: any) => {
                 { title: "Es crucial.",  }
             ],
             answer: "",
+            marked: false,
         }
     ]);
     const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
@@ -44,7 +47,6 @@ const Questionary = (props: any) => {
     const [percentage, setPercentage] = useState("0%");
     const [index, setIndex] = useState(0);
     const [resultsScreen, setResultsScreen] = useState(false);
-    const [markedQuestions, setMarkedQuestions] = useState<number[]>([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -103,13 +105,10 @@ const Questionary = (props: any) => {
     };
 
     const handleMarkQuestion = () => {
-        setMarkedQuestions((prev) => {
-            if (prev.includes(index)) {
-                return prev.filter((i) => i !== index);
-            } else {
-                return [...prev, index];
-            }
-        });
+        setCurrentQuestion((prev) => ({
+            ...prev,
+            marked: !prev.marked,
+        }));
     };
 
     return (
@@ -120,7 +119,7 @@ const Questionary = (props: any) => {
                         <div key={index} className="mt-24 flex flex-col h-5/4 bg-white mr-2 border rounded-lg shadow-lg p-12 w-5/6">
                         <div className="flex justify-end">
                         <button onClick={handleMarkQuestion} className=" bg-secondary_old text-white p-2 mb-4 rounded shadow-lg">
-                            {markedQuestions.includes(index) ? 'Desmarcar Pregunta' : 'Marcar Pregunta'}
+                            {questions[index].marked ? 'Desmarcar Pregunta' : 'Marcar Pregunta'}
                         </button>
                         </div>
                             <ProgressEvaluation percentage={percentage} />
@@ -168,7 +167,7 @@ const Questionary = (props: any) => {
                                             onClick={() => setCurrentQuestion(question)}
                                             className={`p-2 w-full text-center cursor-pointer rounded shadow-lg transition-all duration-200 ease-in-out ${
                                                 question.answer ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-blue-500 hover:text-blue-700'
-                                            } ${markedQuestions.includes(questionIndex) ? 'border-2 border-yellow-500' : ''}`}
+                                            } ${question.marked ? 'border-2 border-yellow-500' : ''}`}
                                         >
                                             {questionIndex + 1}
                                         </a>
