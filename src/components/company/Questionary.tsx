@@ -7,38 +7,39 @@ import { useRouter } from "next/navigation";
 const Questionary = (props: any) => {
     const [questions, setQuestions] = useState([
         {
-            title: "¿Desde qué nivel de la jerarquía de la organización se aboga por el marketing basado en datos?",
+            dimension: "id",
+            title: "¿Desde qué nivel de la jerarquía de la organización se aboga por el marketing basado en datos?",  
             options: [
-                { title: "Los cargos sénior defienden su uso hasta cierto punto.", checked: false },
-                { title: "Los cargos medios, como los directores locales, defienden su uso.", checked: false },
-                { title: "Los altos cargos, como el vicepresidente, defienden su uso.", checked: false },
-                { title: "Algunos cargos senior como el CMO, CTO o COO, defienden su uso.", checked: false }
+                { title: "Los cargos sénior defienden su uso hasta cierto punto." },
+                { title: "Los cargos medios, como los directores locales, defienden su uso." },
+                { title: "Los altos cargos, como el vicepresidente, defienden su uso." },
+                { title: "Algunos cargos senior como el CMO, CTO o COO, defienden su uso." }
             ],
-            answered: false
+            answer: "Algunos cargos senior como el CMO, CTO o COO, defienden su uso.",
         },
         {
             title: "¿Qué tan importante es la inversión en tecnología para la empresa?",
             options: [
-                { title: "No es importante.", checked: false },
-                { title: "Es importante.", checked: false },
-                { title: "Es muy importante.", checked: false },
-                { title: "Es crucial.", checked: false }
+                { title: "No es importante."},
+                { title: "Es importante." },
+                { title: "Es muy importante." },
+                { title: "Es crucial." }
             ],
-            answered: false
+            answer: "", 
         },
         {
             title: "¿Qué tan importante es la inversión en talento humano para la empresa?",
             options: [
-                { title: "No es importante.", checked: false },
-                { title: "Es importante.", checked: false },
-                { title: "Es muy importante.", checked: false },
-                { title: "Es crucial.", checked: false }
+                { title: "No es importante." },
+                { title: "Es importante.",  },
+                { title: "Es muy importante.",  },
+                { title: "Es crucial.",  }
             ],
-            answered: false
+            answer: "",
         }
     ]);
     const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
-    const [progress, setProgress] = useState({ total: questions.length, completed: 0 });
+    const [progress, setProgress] = useState({ total: questions.length, completed: questions.filter((question) => question.answer !== "").length});
     const [finished, setFinished] = useState(false);
     const [percentage, setPercentage] = useState("0%");
     const [index, setIndex] = useState(0);
@@ -72,23 +73,17 @@ const Questionary = (props: any) => {
     }, [currentQuestion, questions]);
 
     const handleCheckOption = (e: any) => {
-        let answered = currentQuestion.answered;
-        if (answered === false) {
-            answered = true;
+        let answer = currentQuestion.answer;
+        if (answer === "") {
+            currentQuestion.answer = e.target.value;
             setProgress((prevProgress: any) => ({
                 ...prevProgress,
                 completed: prevProgress.completed + 1,
             }));
+        }else{
+            currentQuestion.answer= e.target.value;
         }
-        const options = currentQuestion.options.map((option: any) => {
-            if (option.title === e.target.value) {
-                option.checked = true;
-            } else {
-                option.checked = false;
-            }
-            return option;
-        });
-        setCurrentQuestion({ ...currentQuestion, options, answered });
+        setCurrentQuestion({ ...currentQuestion });
     };
 
     const handleNextQuestion = () => {
@@ -144,8 +139,8 @@ const Questionary = (props: any) => {
                                     id={optionIndex}
                                     key={optionIndex}
                                     name={currentQuestion.title}
+                                    answer={currentQuestion.answer}
                                     value={option.title}
-                                    checked={option.checked}
                                     handleCheck={handleCheckOption}
                                 />
                             ))}
@@ -172,7 +167,7 @@ const Questionary = (props: any) => {
                                         <a
                                             onClick={() => setCurrentQuestion(question)}
                                             className={`p-2 w-full text-center cursor-pointer rounded shadow-lg transition-all duration-200 ease-in-out ${
-                                                question.answered ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-blue-500 hover:text-blue-700'
+                                                question.answer ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-blue-500 hover:text-blue-700'
                                             } ${markedQuestions.includes(questionIndex) ? 'border-2 border-yellow-500' : ''}`}
                                         >
                                             {questionIndex + 1}

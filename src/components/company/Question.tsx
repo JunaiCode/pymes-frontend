@@ -29,7 +29,7 @@ const Question = (props:any) => {
                         value={props.value}
                         className="cursor-pointer h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                         onClick={props.handleCheck}
-                        checked={props.checked}
+                        checked={props.answer === props.value}
                     />
                     <label className="ml-2" htmlFor={props.id}>{props.value}</label>
                 </div>
