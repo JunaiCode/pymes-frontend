@@ -324,11 +324,21 @@ const Questionary = (props: any) => {
     const totalPages = Math.ceil(evaluationResults.length / questionsPerPage);
 
     const router = useRouter();
-    const companyId = "1234567890";
+    const companyId = "66398ae089a64c1384ae4d51";
 
     useEffect(() => {
-        /*
-        const baseUrl = "https://api.example.com";
+        
+        const baseUrl = "https://localhost:8080";
+
+        const evaluationsResults = async () => {
+            const evaluationResults = await fetch(`${baseUrl}/evaluation/663989e2c925c715e33ee2c1/results`);
+            const evaluationData = await evaluationResults.json();
+            if(evaluationData.length === 0) {
+                createEvaluation();
+            }else{
+                setevaluationResults(evaluationData);
+            }
+        }
 
         const createEvaluation = async () => {
             const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
@@ -338,7 +348,7 @@ const Questionary = (props: any) => {
                 },
                 body: JSON.stringify({
                     evaluationDTO: {
-                        date: new Date(),
+                        date: new Date().toLocaleDateString(),
                         completed: false,
                     },
                 }),
@@ -356,8 +366,8 @@ const Questionary = (props: any) => {
             }
         };
 
-        getEvaluationResult();
-        */
+        evaluationsResults();
+        
     }, []);
 
     useEffect(() => {

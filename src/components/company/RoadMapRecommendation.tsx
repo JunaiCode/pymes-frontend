@@ -1,39 +1,64 @@
 import { IoConstructOutline, IoDesktopOutline, IoPeopleOutline } from "react-icons/io5";
 import { FaGlobe, FaPuzzlePiece } from "react-icons/fa";
-import  Image  from "next/image";
+import { FaCheck } from "react-icons/fa";
 import { RecommendationComponent } from "./RecommendationComponent";
+import { useState, useEffect } from "react";
 
-interface recommendation{
+type Recommendation = {
+    title: string;
     description: string;
+    checked: boolean;
     tag: string;
 }
 
-
-interface props {
+interface Props {
     dimension: string;
     description: string;
-    recommendations: recommendation[];
+    recommendations: Recommendation[];
     handleCheck: (e: any) => void;
 }
+export const RoadMapRecommendation = ({ dimension, description, recommendations, handleCheck }: Props) => {
+    const [completedCount, setCompletedCount] = useState(0);
 
-export const RoadMapRecommendation = ({dimension, description, recommendations,handleCheck}:props) => {
+    useEffect(() => {
+        const completed = recommendations.filter(rec => rec.checked).length;
+        setCompletedCount(completed);
+    }, [recommendations]);
+
     return (
-        <div className="w-full h-full flex flex-row  p-4">
-            <div className="h-full w-full bg-white mr-2 border rounded-lg shadow-lg p-4" >
-                <div className="flex flex-row justify-start items-center w-fit">
-                <p className="text-3xl font-sans font-bold mb-1 mt-2 mr-6 ">{dimension}</p>
-                {dimension === "Tecnología" ? <IoDesktopOutline size={40}/> : null}
-                {dimension === "Procesos" ? <IoConstructOutline size={40}/> : null}
-                {dimension === "Personas" ? <IoPeopleOutline size={40}/> : null}
-                {dimension === "Información" ? <FaPuzzlePiece size={40}/> : null}
+        <div className="w-full h-full flex flex-row p-4">
+            <div className="h-full w-full bg-white mr-2 border rounded-lg shadow-lg p-4">
+                <div className="flex flex-row justify-between items-center w-full">
+                    <div className="flex flex-row justify-start gap-2 items-center w-fit">
+                        {dimension === "Tecnología" && <IoDesktopOutline size={40} />}
+                        {dimension === "Procesos" && <IoConstructOutline size={40} />}
+                        {dimension === "Personas" && <IoPeopleOutline size={40} />}
+                        {dimension === "Información" && <FaPuzzlePiece size={40} />}
+                        <div className="flex justify-center items-baseline">
+                        <p className="text-3xl font-sans font-bold  mb-1 mt-2 mr-6">{dimension}</p>
+                        <div className="flex flex-row items-center gap-2">
+                        <p className="text-lg text-gray-500">
+                            {completedCount}/{recommendations.length} completado{recommendations.length > 1 ? "s" : ""}
+                        </p>
+                        {completedCount === recommendations.length && <FaCheck className="text-green-500" size={24} />}
+                    </div>
+                    </div>
+                    </div>
                 </div>
                 <div className="mt-4">
                     <p>{description}</p>
                 </div>
                 {recommendations.map((recommendation, index) => (
-                    <RecommendationComponent key={index} dimension={dimension} description={recommendation.description} index={index.toString()} tag={recommendation.tag} handleCheck={handleCheck}/>
+                    <RecommendationComponent
+                        key={index}
+                        dimension={dimension}
+                        description={recommendation.description}
+                        index={index.toString()}
+                        tag={recommendation.tag}
+                        handleCheck={handleCheck}
+                    />
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
