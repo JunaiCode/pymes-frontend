@@ -25,7 +25,7 @@ export const RoadMap = ()=>{
     let totalRecommendations: number = 0;
     
     useEffect(() => {
-        /*
+        
         setRoadMap([{
             dimension: "Tecnología",
             description: "Contar con herramientas tecnologícas que estén acorde al tipo de compañía y el tamaño de la misma, agilizan la adaptación de las mismas brindando agilidad a los negocios.",
@@ -98,7 +98,7 @@ export const RoadMap = ()=>{
                 }
             ]
         }])
-        */
+        
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

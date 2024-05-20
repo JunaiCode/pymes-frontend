@@ -90,8 +90,8 @@ const Profile = () => {
 
   return (
     <div className="flex justify-center items-center h-screen w-full bg-gray-100">
-      <div className="bg-white border rounded-lg shadow-lg p-6 max-w-4xl w-full">
-        <h1 className="text-3xl font-bold mb-6 text-center text-secondary_old">Perfil de la Empresa</h1>
+      <div className="  rounded-lg p-6 max-w-4xl w-full">
+        <h1 className="text-3xl font-bold mb-6 text-secondary_old">Perfil de la Empresa</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {Object.entries(companyInfo).map(([key, value]) => (
             <div key={key} className="flex flex-col bg-white p-3 rounded-lg shadow-md">
