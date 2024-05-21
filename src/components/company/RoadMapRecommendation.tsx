@@ -49,7 +49,7 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
                     </div>
                 </div>
                 <div className="mt-4">
-                    <p className="font-sans text-xl font-semibold">{description}</p>
+                    <p className='font-sans text-xl font-semibold'>{description}</p>
                 </div>
                 {recommendations.map((recommendation, index) => (
                     <RecommendationComponent
@@ -58,6 +58,7 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
                         description={recommendation.description}
                         index={index.toString()}
                         tag={recommendation.tag}
+                        checked={recommendation.checked}
                         steps={recommendation.steps}
                         recommendationId={recommendation.id}
                         handleCheck={handleCheck}

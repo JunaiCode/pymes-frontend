@@ -7,6 +7,7 @@ interface RecommendationProps {
   tag: string;
   index: string;
   dimension: string;
+  checked: boolean;
   steps: {
     id: string;
     description: string;
@@ -21,6 +22,7 @@ export const RecommendationComponent = ({
   index,
   dimension,
   steps,
+  checked,
   handleCheck,
   recommendationId
 }: RecommendationProps) => {
@@ -56,7 +58,7 @@ export const RecommendationComponent = ({
               }}
             />
           )}
-          <p className="text-lg font-medium font-sans">{description}</p>
+          <p className={`text-lg font-medium font-sans decoration-slate-500  ${checked?'line-through':''}`}>{description}</p>
         </div>
         <div className="flex justify-evenly items-center h-12 w-48 px-4 mt-2 sm:mt-0 bg-secondary_old rounded-full  break-words">
           <span className="bg-white rounded-full w-2 h-2 mr-2"></span>
@@ -81,7 +83,7 @@ export const RecommendationComponent = ({
               before:opacity-0 before:transition-opacity checked:border-primary checked:bg-primary 
               checked:before:bg-primary hover:before:opacity-10"
             />
-            <li className="ml-4 text-base font-sans">{step.description}</li>
+            <li className='ml-4 text-base font-sans'>{step.description}</li>
           </div>
         ))}
         </div>
