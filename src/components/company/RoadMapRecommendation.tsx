@@ -1,5 +1,3 @@
-import { IoConstructOutline, IoDesktopOutline, IoPeopleOutline } from "react-icons/io5";
-import { FaGlobe, FaPuzzlePiece } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { RecommendationComponent } from "./RecommendationComponent";
 import { useState, useEffect } from "react";
