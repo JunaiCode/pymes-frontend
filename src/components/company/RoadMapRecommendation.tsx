@@ -39,7 +39,7 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
                         <div className="flex flex-row items-center gap-2">
                             <p className="text-lg font-sans text-gray-500">
                                 <span className={`${completedCount === recommendations.length ? "underline-green-500" : ""} flex items-center`}>
-                                    {completedCount}/{recommendations.length} completado{recommendations.length > 1 ? "s" : ""}
+                                    {completedCount}/{recommendations.length} Implementadas
                                     {completedCount === recommendations.length && (
                                         <FaCheck className="ml-1 text-green-500" />
                                     )}
