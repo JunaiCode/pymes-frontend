@@ -18,7 +18,7 @@ export default function Page() {
     const [data, setData] = useState([] as any)
     const [open, setOpen] = useState(false)
     const router = useRouter()
-    
+
     useEffect(() => {
         getModels().then(data => {
             setData(data)
@@ -29,15 +29,22 @@ export default function Page() {
     return (
         <PageTemplate>
             <div className="w-full flex flex-col items-start justify-center bg-light max-h-screen">
-                <header className="w-full px-4 py-8" id="title">
-                    <p className="font-sans text-2xl">Modelos</p>
-                </header>
-                <section className="flex flex-row w-full p-4">
-                    <button className="ml-auto bg-secondary_old py-2 px-2 text-white rounded-lg"
+                <header className="w-full px-4 py-8 flex flex-row items-start justify-center" id="title">
+                    <div >
+
+                        <p className="font-sans text-2xl">Modelos</p>
+                        <p className="font-sans text-sm text-gray-600">Los modelos son la base de la aplicacion, en estos podras definir diferentes versiones del mismo modelo y llevar un control de los cambios realizados</p>
+                        <p className="font-sans text-sm text-gray-600">Aqui puedes ver los modelos que has creado</p>
+
+                    </div>
+                    <button className="ml-auto mt-auto h-fit bg-secondary_old py-2 px-2 text-white rounded-lg position-absolute right-4 top-4"
                         onClick={() => setOpen(true)}
                     >Agregar</button>
-                </section>
-                <main className="h-full w-full flex flex-col border overflow-y-scroll border-red-400 p-4">
+                </header>
+
+
+
+                <main className="h-full w-full flex flex-col overflow-y-scroll p-4">
                     {data.map((item: any) => (
                         <ModelCard key={item.modelId} {...item} router={router} />
                     ))}
@@ -52,14 +59,14 @@ export function ModelCard({ name, actualVersion, modelId, date, router }: { name
 
 
     return (
-        <div id={modelId} className="flex flex-row w-full items-start justify-start rounded-lg border my-2 border-gray-300">
+        <div id={modelId} className="flex flex-row w-full items-start justify-start my-2  bg-white mr-2 border rounded-lg shadow-lg">
             <section>
                 <header className="w-full px-4 pt-4">
                     <p className="font-sans text-xl text-secondary_old">{name}</p>
                 </header>
                 <section className="w-full p-4">
-                    <p className="font-sans text-sm text-gray-600">Version actual: {actualVersion}</p>
-                    <p className="font-sans text-sm text-gray-600">Fecha de creacion: {date}</p>
+                    <p className="font-sans text-sm text-gray-600">Version actual: v1.0.0</p>
+                    <p className="font-sans text-sm text-gray-600">Fecha de creacion: 10/05/2024</p>
                 </section>
             </section>
             <section className="ml-auto h-full">

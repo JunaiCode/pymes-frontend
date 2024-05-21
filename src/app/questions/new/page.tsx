@@ -5,6 +5,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoTrash, IoWarningSharp } from "react-icons/io5";
 
+const companySizeOptions = [
+    "Microempresa",
+    "Pequeña",
+    "Mediana"]
+
 
 async function fetchModels() {
     const res = await fetch('http://localhost:8080/model/get/all')
@@ -26,15 +31,21 @@ async function fetchTags(dimensionId: string) {
 
 
 
+
 export default function Page() {
     const [modelData, setModelData] = useState([] as any)
     const [versionData, setVersionData] = useState([] as any)
     const [dimensionData, setDimensionData] = useState([] as any)
+    const [levelData, setLevelData] = useState([] as any)
     const [tagData, setTagData] = useState([] as any)
+
+
     const [modelSelected, setModelSelected] = useState("-1");
     const [versionSelected, setVersionSelected] = useState("-1");
     const [dimensionSelected, setDimensionSelected] = useState("-1");
     const [tagSelected, setTagSelected] = useState("-1");
+    const [levelSelected, setLevelSelected] = useState("-1");
+    const [companySizeSelected, setCompanySizeSelected] = useState("Microempresa" as string)
     const router = useRouter();
     const [versionEnabled, setVersionEnabled] = useState(false);
     const [dimensionEnabled, setDimensionEnabled] = useState(false);
@@ -56,29 +67,45 @@ export default function Page() {
     const [sumMatch, setSumMatch] = useState(true);
     const [options, setOptions] = useState([] as any)
     const [steps, setSteps] = useState([] as any)
+    const [stepCount, setStepCount] = useState(0)
 
-    const calculateSum = () => {
-        if (options.length === 0) {
-            return
+    const calculateSum = (updatedOptions: any) => {
+        let sum = updatedOptions.reduce((acc: number, option: any) => acc + option.points, 0);
+        setSumMatch(sum === question.points);
+    };
+
+    const calculateSumWeight = (value: string) => {
+        let newValue = parseInt(value)
+        let sum = 0
+        for (let i = 0; i < options.length; i++) {
+            sum += options[i].points
         }
-        let sum = 0;
-        options.forEach((option: any) => {
-            sum += option.points
-        })
-        console.log(question.points)
-        
-        if (sum !== question.points) {
-            setSumMatch(false)
-        } else {
-            setSumMatch(true)
-        }
+        setSumMatch(sum === newValue)
     }
 
+    const handleDeleteStep = (id: any) => {
+        // Filter out the step with the given id
+        console.log(id)
+        setSteps(steps.filter((step: any) => step.id !== id));
+        setStepCount(stepCount - 1)
+
+    };
 
 
     useEffect(() => {
         fetchModels().then(data => {
             if (data.length === 0) {
+                /*Set all data to empty*/
+                setModelData([])
+                setVersionData([])
+                setDimensionData([])
+                setTagData([])
+                setLevelData([])
+                setModelSelected("-1")
+                setVersionSelected("-1")
+                setDimensionSelected("-1")
+                setTagSelected("-1")
+                setLevelSelected("-1")
                 return
             }
             setModelData(data)
@@ -91,6 +118,15 @@ export default function Page() {
         if (modelSelected !== "-1") {
             fetchVersions(modelSelected).then(data => {
                 if (data.length === 0) {
+                    /*Set all data to empty*/
+                    setVersionData([])
+                    setDimensionData([])
+                    setTagData([])
+                    setLevelData([])
+                    setVersionSelected("-1")
+                    setDimensionSelected("-1")
+                    setTagSelected("-1")
+                    setLevelSelected("-1")
                     return
                 }
                 setVersionData(data)
@@ -101,6 +137,13 @@ export default function Page() {
 
     useEffect(() => {
         if (versionSelected !== "-1") {
+            if (versionData.find((version: any) => version.versionId === versionSelected)?.dimensions?.length === 0) {
+                setDimensionData([])
+                setTagData([])
+                setLevelData([])
+                setDimensionEnabled(false)
+                return
+            }
             setDimensionData(versionData.find((version: any) => version.versionId === versionSelected).dimensions)
             setDimensionEnabled(versionData.find((version: any) => version.versionId === versionSelected)?.dimensions?.length > 0);
             setDimensionSelected(
@@ -113,15 +156,134 @@ export default function Page() {
         if (dimensionSelected !== "-1") {
             fetchTags(dimensionSelected).then(data => {
                 if (data.length === 0) {
+                    setTagData([])
+                    setLevelData([])
                     return
                 }
+
                 setTagData(data)
+                setTagSelected(data[0].tagId)
+                setLevelData(dimensionData.find((dimension: any) => dimension.dimensionId === dimensionSelected).levels)
+                setLevelSelected(dimensionData.find((dimension: any) => dimension.dimensionId === dimensionSelected).levels[0].levelId)
             })
         }
     }, [dimensionSelected])
 
     const handleAddOption = () => {
         setOptions([...options, { option: "", points: 0 }])
+    }
+
+    const handleSubmit = () => {
+        if (!checkAllFields()) {
+
+            return
+        }
+        let optionsDTO = [] as any
+        for (let i = 0; i < options.length; i++) {
+            optionsDTO.push({
+                description: options[i].option,
+                value: options[i].points
+            })
+        }
+
+        let stepsDTO = [] as any
+        for (let i = 0; i < steps.length; i++) {
+            stepsDTO.push({
+                description: steps[i].step,
+                order: i + 1
+            })
+        }
+
+        const data = {
+            question: question.question,
+            weight: 1,
+            scorePositive: question.points,
+            options: optionsDTO,
+            recommendation: {
+                title: question.recommendation.projectName,
+                description: question.recommendation.projectDescription,
+                steps: stepsDTO
+            },
+            versionId: versionSelected,
+            dimensionId: dimensionSelected,
+            tagId: tagSelected,
+            companyType: companySizeSelected,
+        }
+
+        console.log(data)
+    }
+
+    function checkAllFields() {
+        /*Check every field and do an alert if any of them is empty*/
+        if (question.question === "") {
+            alert("Favor de llenar el campo de pregunta")
+            return false
+        }
+        if (question.points === 0) {
+            alert("Favor de llenar el campo de puntos")
+            return false
+        }
+        if (question.recommendation.projectName === "") {
+            alert("Favor de llenar el campo de nombre del proyecto")
+            return false
+        }
+        if (question.recommendation.projectDescription === "") {
+            alert("Favor de llenar el campo de descripcion del proyecto")
+            return false
+        }
+        if (steps.length === 0) {
+            alert("Favor de llenar el campo de pasos a seguir")
+            return false
+        }
+        if (tagSelected === "-1") {
+            alert("Favor de seleccionar un tag, si no hay tags favor de crear uno")
+            return false
+        }
+        if (dimensionSelected === "-1") {
+            alert("Favor de seleccionar una dimension, si no hay dimensiones favor de crear una")
+            return false
+        }
+        if (versionSelected === "-1") {
+            alert("Favor de seleccionar una version, si no hay versiones favor de crear una")
+            return false
+        }
+        if (modelSelected === "-1") {
+            alert("Favor de seleccionar un modelo, si no hay modelos favor de crear uno")
+            return false
+        }
+        if (levelSelected === "-1") {
+            alert("Favor de seleccionar un nivel, si no hay niveles favor de crear uno")
+            return false
+        }
+        if (companySizeSelected === "") {
+            alert("Favor de seleccionar un tamaño de empresa")
+            return false
+        }
+        if (options.length === 0) {
+            alert("Favor de agregar al menos una opcion")
+            return false
+        }
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].option === "") {
+                alert("Favor de llenar todas las opciones")
+                return false
+            }
+            if (options[i].points === 0) {
+                alert("Favor de llenar todos los puntos de las opciones")
+                return false
+            }
+        }
+        for (let i = 0; i < steps.length; i++) {
+            if (steps[i].step === "") {
+                alert("Favor de llenar todos los pasos")
+                return false
+            }
+        }
+        return true
+    }
+
+    const handleDeleteOption = (index: number) => {
+        setOptions((prevOptions: any) => prevOptions.filter((_: any, i: number) => i !== index));
     }
 
 
@@ -136,6 +298,8 @@ export default function Page() {
                     <section className="flex flex-col w-1/2 bg-white mr-2 border rounded-lg shadow-lg h-full p-4 overflow-y-hidden" id="questionDetails">
                         <p className="text-xl font-semibold pb-5">Detalles de la pregunta</p>
                         <div className="flex flex-row w-full items-stretch justify-between ">
+
+
                             <ComboBox
                                 label="Modelo"
                                 optionsLabels={modelData.map((model: any) => model.name)}
@@ -164,6 +328,15 @@ export default function Page() {
                             />
 
                             <ComboBox
+                                label="Nivel"
+                                optionsLabels={levelData.map((level: any) => level.name)}
+                                optionsValues={levelData.map((level: any) => level.levelId)}
+                                selected={levelSelected}
+                                setSelected={setLevelSelected}
+                                enabled={true}
+                            />
+
+                            <ComboBox
                                 label="Tag"
                                 optionsLabels={tagData.map((tag: any) => tag.name)}
                                 optionsValues={tagData.map((tag: any) => tag.tagId)}
@@ -178,20 +351,30 @@ export default function Page() {
                             placeholder="Ejemplo: ¿Cuando fue la independencia de Mexico?"
                             className="w-full p-2.5 border border-gray-300 rounded-lg"
                             id="question"
+                            onChange={(e) => {
+                                setQuestion({ ...question, question: e.target.value })
+                            }}
                         />
                         <label className="text-gray-700 text-xs mt-5" htmlFor="question">Puntos de la pregunta</label>
                         <input
                             type="number"
                             placeholder="Ejemplo: 10"
-                            className="w-full p-2.5 border border-gray-300 rounded-lg"
+                            className="w-32 p-2.5 border border-gray-300 rounded-lg mb-5"
                             id="question"
                             min={1}
                             onChange={(e) => {
                                 let numericValue = parseInt(e.target.value)
                                 setQuestion({ ...question, points: numericValue })
-                                calculateSum()
-
+                                calculateSumWeight(e.target.value)
                             }}
+                        />
+                        <ComboBox
+                            label="Tamaño de la empresa"
+                            optionsLabels={companySizeOptions}
+                            optionsValues={companySizeOptions}
+                            selected={companySizeSelected}
+                            setSelected={setCompanySizeSelected}
+                            enabled={true}
                         />
                         <p className="text-xl font-semibold mt-5">Opciones</p>
                         <p className="text-gray-700 text-sm">Ingresa las opciones de la pregunta junto con el puntaje que se le asignara a cada una</p>
@@ -205,19 +388,20 @@ export default function Page() {
                                     setOptions={setOptions}
                                     index={index}
                                     calculateSum={calculateSum}
+                                    handleDeleteOption={handleDeleteOption}
                                 />
                             ))}
-                            
-                            
+
+
                         </div>
                         <div className={`flex flex-row w-full items-center justify-center mb-2 bg-red-600 rounded-lg ${sumMatch ? "hidden" : ""}`}>
-                                <IoWarningSharp className="text-white m-2" size={20} />
-                                <p className="text-lg font-semibold text-white m-2">La suma de los puntos de las opciones debe ser igual a los puntos de la pregunta</p>
-                            </div>
+                            <IoWarningSharp className="text-white m-2" size={20} />
+                            <p className="text-lg font-semibold text-white m-2">La suma de los puntos de las opciones debe ser igual a los puntos de la pregunta</p>
+                        </div>
                         <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-fit"
-                                onClick={handleAddOption}
-                            >Agregar opcion</button>
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-fit"
+                            onClick={handleAddOption}
+                        >Agregar opcion</button>
                     </section>
                     <section className="flex flex-col w-1/2 bg-white ml-2 border rounded-lg shadow-lg h-full p-4">
                         <p className="text-xl font-semibold pb-4">Recomendacion</p>
@@ -227,14 +411,20 @@ export default function Page() {
                             placeholder="Ejemplo: Adquisicion de equipo de computo"
                             className="w-full p-2.5 border border-gray-300 rounded-lg"
                             id="projectName"
+                            onChange={(e) => {
+                                setQuestion({ ...question, recommendation: { ...question.recommendation, projectName: e.target.value } })
+                            }}
                         />
                         <label className="text-gray-700 text-xs mt-5" htmlFor="projectDescription">Descripcion del proyecto</label>
-                        
+
                         <textarea
                             placeholder="Ejemplo: Se requiere adquirir equipo de computo para el area de desarrollo"
                             className="w-full p-2.5 border border-gray-300 rounded-lg resize-none"
                             id="projectDescription"
-                            
+                            onChange={(e) => {
+                                setQuestion({ ...question, recommendation: { ...question.recommendation, projectDescription: e.target.value } })
+                            }}
+
                         />
                         <label className="text-gray-700 text-xs mt-5" htmlFor="priority">Prioridad</label>
                         <input
@@ -243,21 +433,49 @@ export default function Page() {
                             className="w-full p-2.5 border border-gray-300 rounded-lg"
                             id="priority"
                             min={0}
+                            onChange={(e) => {
+                                let numericValue = parseInt(e.target.value)
+                                setQuestion({ ...question, priority: numericValue })
+                            }}
                         />
                         <p className="text-xl font-semibold mt-5">Pasos a seguir</p>
                         <p className="text-gray-700 text-sm">Ingresa los pasos que se deben seguir para completar la tarea</p>
                         <div className="h-full w-full flex flex-col overflow-y-auto p-4 border border-gray-300 rounded-lg my-5">
                             {steps.map((step: any, index: number) => (
-                                <Step key={index} step={step.step} steps={steps} setSteps={setSteps} index={index} />
+                                <Step
+                                    key={index}
+                                    step={step.step}
+                                    steps={steps}
+                                    setSteps={setSteps}
+                                    id={step.id}
+                                    handleDeleteStep={handleDeleteStep}
+                                    index={index}
+                                />
                             ))}
-                            
+                            {steps.map((step: any, index: number) => (
+                                <p key={index} className="text-gray-700 text-xs mt-1">Paso {index + 1}: {step.step}</p>
+                            ))}
+
                         </div>
-                        <button
+
+                        <div className="flex w-full flex-row">
+                            <button
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-fit"
                                 onClick={() => {
-                                    setSteps([...steps, { step: "" }])
+                                    setSteps([...steps, { step: "", id: Math.random()}])
+                                    setStepCount(stepCount + 1)
                                 }}
                             >Agregar paso</button>
+                            <button
+                                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg ml-auto w-fit"
+                                onClick={handleSubmit}
+                            >
+                                Crear pregunta
+                            </button>
+                        
+                        </div>
+
+
                     </section>
 
                 </div>
@@ -268,48 +486,55 @@ export default function Page() {
     )
 }
 
-export function QuestionOption({ option, points, options, setOptions, index, calculateSum }: any) {
+export function QuestionOption({ option, points, options, setOptions, index, calculateSum, handleDeleteOption }: any) {
+    const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newOptions = options.map((opt: any, i: number) =>
+            i === index ? { ...opt, option: e.target.value } : opt
+        );
+        setOptions(newOptions);
+    };
+
+    const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const numericValue = parseInt(e.target.value);
+        const newOptions = options.map((opt: any, i: number) =>
+            i === index ? { ...opt, points: numericValue } : opt
+        );
+        setOptions(newOptions);
+        calculateSum(newOptions); // Call with updated options
+    };
+
     return (
         <div className="flex flex-row w-full items-center justify-between my-2">
             <input
                 type="text"
                 placeholder="Ejemplo: 1810"
                 className="w-3/4 p-2.5 border border-gray-300 rounded-lg mr-2"
-                onChange={(e) => {
-                    options[index].option = e.target.value
-                    setOptions([...options])
-                }}
+                value={option}
+                onChange={handleOptionChange}
             />
             <input
                 type="number"
                 placeholder="Ejemplo: 10"
                 className="w-1/4 p-2.5 border border-gray-300 rounded-lg"
                 min={1}
-                onChange={(e) => {
-                    let numericValue = parseInt(e.target.value)
-                    options[index].points = numericValue
-                    setOptions([...options])
-                    calculateSum()
-                }}
+                value={points}
+                onChange={handlePointsChange}
             />
             <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg ml-2"
-                onClick={() => {
-                    const newOptions = options.filter((_, i) => i !== index)
-                    setOptions(newOptions)
-                }}
+                onClick={() => handleDeleteOption(index)}
             >
-
                 <IoTrash />
             </button>
         </div>
-    )
+    );
 }
 
-export function Step({ step, steps, setSteps, index }: any) {
+
+export function Step({ step, steps, setSteps, number, handleDeleteStep, index, id }: any) {
     return (
-        <div className="flex flex-row w-full items-center justify-between my-2">
-            <label className="text-gray-700 text-xs mt-1" htmlFor="step">Paso {index + 1}</label>
+        <div className="flex flex-row w-full items-center justify-start my-2">
+            <label className="text-gray-700 text-xs mt-1 mr-5" htmlFor="step">Paso {index + 1}</label>
             <input
                 type="text"
                 placeholder="Ejemplo: 1810"
@@ -321,12 +546,8 @@ export function Step({ step, steps, setSteps, index }: any) {
             />
             <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg ml-2"
-                onClick={() => {
-                    const newSteps = steps.filter((_, i) => i !== index)
-                    setSteps(newSteps)
-                }}
+                onClick={() => handleDeleteStep(id)}
             >
-
                 <IoTrash />
             </button>
         </div>

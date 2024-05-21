@@ -62,7 +62,7 @@ export default function Page({ params }: { params: { id: string, versionId: stri
 
 export function DimensionCard({ name, description, dimensionId }: { name: string, description: string, dimensionId: string }) {
     return (
-        <div id={dimensionId} className="flex flex-row w-full items-start justify-start rounded-lg border my-2 border-gray-300">
+        <div id={dimensionId} className="flex flex-row w-full items-start justify-start my-2 bg-white mr-2 border rounded-lg shadow-lg">
             <section>
                 <header className="w-full px-4 pt-4">
                     <p className="font-sans text-xl text-secondary_old">{name}</p>

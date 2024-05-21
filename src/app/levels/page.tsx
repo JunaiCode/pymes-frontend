@@ -54,6 +54,7 @@ export default function Page() {
 
     useEffect(() => {
         if (modelSelected !== "-1") {
+            
             fetchVersions(modelSelected).then(data => {
                 if (data.length === 0) {
                     setEnabled(false)
@@ -74,6 +75,15 @@ export default function Page() {
 
     useEffect(() => {
         if (versionSelected !== "-1") {
+            
+            if (versionData.length === 0 || versionData.find((version: any) => version.versionId === versionSelected).dimensions.length === 0){
+                setDimensionData([])
+                setData([])
+                setDimensionSelected("-1")
+                
+                return
+            }
+            
             setDimensionData(versionData.find((version: any) => version.versionId === versionSelected).dimensions)
             setDimensionSelected(
                 versionData.find((version: any) => version.versionId === versionSelected)?.dimensions?.[0]?.dimensionId
@@ -84,9 +94,10 @@ export default function Page() {
     useEffect(() => {
         if (dimensionSelected !== "-1") {
             fetchLevels(dimensionSelected).then(data => {
-                if (data.length === 0) {
+                console.log(data)
+                if (data.length === 0 || data === null) {
                     setData([])
-                    setLoaded(true)
+                    setLoaded(false)
                     return
                 }
                 setData(data)
@@ -154,7 +165,7 @@ export default function Page() {
                         <button className="ml-auto w-32 h-10 bg-secondary_old text-white rounded-lg" onClick={() => setIsOpen(true)}>Crear</button>
                     </header>
                 </section>
-                <div className="h-full w-full flex flex-col border overflow-y-scroll border-red-400 p-4">
+                <div className="h-full w-full flex flex-col  overflow-y-scroll  p-4">
                     {loaded && data && data.map((level: any) => {
                         return <LevelCard key={level.levelId} name={level.name} description={level.description} id={level.levelId} router={router} />
                     })}
@@ -176,7 +187,7 @@ export default function Page() {
 
 export function LevelCard({ name, description, id, router }: { name: string, description: string, id: string, router: any }) {
     return (
-        <div id={id} className="flex flex-row w-full items-start justify-start rounded-lg border my-2 border-gray-300">
+        <div id={id} className="flex flex-row w-full items-start justify-start  my-2 bg-white mr-2 border rounded-lg shadow-lg">
             <section>
                 <header className="w-full px-4 pt-4">
                     <p className="font-sans text-xl text-secondary_old">{name}</p>

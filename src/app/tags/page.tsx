@@ -54,6 +54,11 @@ export default function Page() {
         if (modelSelected !== "-1") {
             fetchVersions(modelSelected).then(data => {
                 if (data.length === 0) {
+                    setVersionData([])
+                    setDimensionData([])
+                    setVersionSelected("-1")
+                    setDimensionSelected("-1")
+                    setTagData([])
                     return
                 }
                 setVersionData(data)
@@ -126,11 +131,11 @@ export default function Page() {
                     </header>
 
                 </section>
-                <main className="h-full w-full flex flex-col border overflow-y-scroll border-red-400 p-4">
+                <main className="h-full w-full flex flex-col  overflow-y-scroll  p-4">
                     {tagData.length > 0 && tagData.map((tag: any) => {
                         return <TagCard key={tag.tagId} name={tag.name} description={tag.description} id={tag.tagId} router={router} />
                     })}
-                    {(tagData.length === 0 || tagData === null) && <p className="font-sans text-lg text-gray-400">No hay tags</p>}
+                    {(tagData.length === 0 || tagData === null || dimensionData.length === 0) && <p className="font-sans text-lg text-gray-400">No hay tags</p>}
                 </main>
             </div>
             <CreateTag isOpen={open} onClose={setOpen} dimensionId={dimensionSelected} />
@@ -140,7 +145,7 @@ export default function Page() {
 
 export function TagCard({ name, description, id, router }: { name: string, description: string, id: string, router: any }) {
     return (
-        <div id={id} className="flex flex-row w-full items-start justify-start rounded-lg border my-2 border-gray-300">
+        <div id={id} className="flex flex-row w-full items-start justify-start my-2 bg-white mr-2 border rounded-lg shadow-lg">
             <section>
                 <header className="w-full px-4 pt-4">
                     <p className="font-sans text-xl text-secondary_old">{name}</p>

@@ -64,7 +64,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <div className="w-full px-4 py-2" id="description">
                     <textarea className="w-96 border border-gray-400 rounded-lg text-sm" rows={4} value={model.description} onChange={(e) => setModel({ ...model, description: e.target.value })} />
                 </div>
-                <main className="h-full w-full flex flex-col border overflow-y-scroll  p-4">
+                <main className="h-full w-full flex flex-col border overflow-y-scroll overflow-x-hidden p-4">
                     <p className="font-sans text-xl mb-2">Versiones</p>
                     {model.versions && model.versions.length !== 0 && model.versions.map(version => (
                         <VersionCard key={version.versionId} {...version} router={router} modelId={params.id} />
@@ -79,7 +79,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
 export function VersionCard({ versionId, name, router, modelId }: { versionId: string, name: string, router: any, modelId: string }) {
     return (
-        <div className="flex flex-row w-full items-start justify-start rounded-lg border my-2 bg-white border-gray-300">
+        <div className="flex flex-row w-full items-start justify-start my-2  bg-white mr-2 border rounded-lg shadow-lg">
             <header className="w-full px-4 py-2" id="title">
                 <p className="font-sans text-lg">{name}</p>
                 <p className="font-sans text-sm">{versionId}</p>
