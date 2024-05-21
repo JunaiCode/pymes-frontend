@@ -20,8 +20,8 @@ export const RecommendationComponent = ({
   return (
     <>
       <hr className="mt-4 rounded bg-[#EAEFFF]" />
-      <div className="flex flex-row justify-between items-center mt-4">
-        <div className="flex flex-row justify-center baseline gap-2">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-4">
+        <div className="flex flex-row justify-center items-baseline gap-2">
           {hidden ? (
             <FaAngleDown
               className="text-primary cursor-pointer"
@@ -48,18 +48,18 @@ export const RecommendationComponent = ({
               }}
             />
           )}
-          <p className="text-lg font-semibold">{description}</p>
+          <p className="text-lg font-medium font-sans">{description}</p>
         </div>
-        <div className="h-14 w-64 bg-[url(/tag.svg)] bg-no-repeat bg-cover flex justify-evenly items-center">
-          <span className="bg-white rounded-full w-2 h-2"></span>
-          <p className="text-sm text-[#00000067]">{tag}</p>
+        <div className="flex justify-evenly items-center h-12 w-48 px-4 mt-2 sm:mt-0 bg-secondary_old rounded-full  break-words">
+          <span className="bg-white rounded-full w-2 h-2 mr-2"></span>
+          <p className="text-sm text-white">{tag}</p>
         </div>
       </div>
       <ul
         id={`${dimension}-${index}`}
         className={`${hidden ? "hidden" : ""} ml-8 mt-4`}
       >
-        <p className="text-base font-medium mb-2">Pasos a realizar:</p>
+        <p className="text-base font-medium mb-2 font-sans">Pasos a realizar:</p>
         <div className="flex w-5/6 justify-start items-center">
           <input
             type="checkbox"
@@ -72,7 +72,7 @@ export const RecommendationComponent = ({
               checked:before:bg-primary hover:before:opacity-10"
             id="amber"
           />
-          <li className="ml-4 text-base">Definir objetivos claros</li>
+          <li className="ml-4 text-base font-sans">Definir objetivos claros</li>
         </div>
       </ul>
     </>

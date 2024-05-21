@@ -24,7 +24,7 @@ export default function CompanySideBar() {
     <>
       <aside
         className={`h-100 flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${
-          expanded ? "w-52" : "w-20"
+          expanded ? "w-64" : "w-20"
         }`}
       >
         <div className="p-4 pb-8 flex justify-between items-center">

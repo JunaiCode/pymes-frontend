@@ -144,15 +144,17 @@ export const RoadMap = () => {
                 </div>
             ) : (
                 <div className="w-full h-full flex flex-row p-4">
-                    <div className="h-fit w-full bg-white mr-2 border rounded-lg shadow-lg p-4">
-                    <p className="text-4xl font-sans font-bold mb-2 mt-2">Hoja de Ruta</p>
-                        <div className="flex justify-center items-center">
-                            <ProgressRoadMap percentage={percentage} />
+                    <div className="h-fit w-full bg-white mr-2 border rounded-lg shadow-lg">
+                        <div className="flex justify-end items-center pl-4">
+                        <p className="text-5xl font-sans font-bold mb-2 mt-2 w-1/2 ">Mi Hoja de Ruta</p>
+                        <ProgressRoadMap percentage={percentage} />
                         </div>
-                        <p className="mt-4 text-lg leading-relaxed">
+                        <div className=" pl-4 pr-4 pb-4">
+                        <p className="mt-4 text-lg font-light font-sans leading-relaxed">
                             La herramienta Hoja de Ruta es un recurso invaluable para las empresas que buscan evolucionar en su transformación digital. Ofreciendo recomendaciones detalladas y pasos específicos, esta herramienta guía a las empresas hacia el siguiente nivel de madurez en cada dimensión de su transformación digital.
                             Adaptada al contexto empresarial colombiano, la Hoja de Ruta está diseñada para impulsar la competitividad y sostenibilidad de las Pymes en un mercado en constante digitalización. Proporciona un plan personalizado que considera las necesidades y desafíos únicos que enfrentan las empresas en Colombia, permitiendo así un crecimiento sólido y sostenible en el mundo digital.
                         </p>
+                    </div>
                     </div>
                 </div>
             )}

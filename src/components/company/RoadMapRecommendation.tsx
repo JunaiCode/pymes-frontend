@@ -30,14 +30,10 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
             <div className="h-full w-full bg-white mr-2 border rounded-lg shadow-lg p-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <div className="flex flex-row justify-start gap-2 items-center w-fit">
-                        {dimension === "Tecnología" && <IoDesktopOutline size={40} />}
-                        {dimension === "Procesos" && <IoConstructOutline size={40} />}
-                        {dimension === "Personas" && <IoPeopleOutline size={40} />}
-                        {dimension === "Información" && <FaPuzzlePiece size={40} />}
                         <div className="flex justify-center items-baseline">
-                        <p className="text-3xl font-sans font-bold  mb-1 mt-2 mr-6">{dimension}</p>
+                        <p className="text-3xl font-sans font-bold  mb-1 mt-2 mr-6 text-primary">{dimension}</p>
                         <div className="flex flex-row items-center gap-2">
-                        <p className="text-lg text-gray-500">
+                        <p className="text-lg font-sans text-gray-500">
                             {completedCount}/{recommendations.length} completado{recommendations.length > 1 ? "s" : ""}
                         </p>
                         {completedCount === recommendations.length && <FaCheck className="text-green-500" size={24} />}
@@ -46,7 +42,7 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
                     </div>
                 </div>
                 <div className="mt-4">
-                    <p>{description}</p>
+                    <p className="font-sans text-xl font-semibold">{description}</p>
                 </div>
                 {recommendations.map((recommendation, index) => (
                     <RecommendationComponent
