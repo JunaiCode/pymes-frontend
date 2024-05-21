@@ -3,10 +3,16 @@ import { RecommendationComponent } from "./RecommendationComponent";
 import { useState, useEffect } from "react";
 
 type Recommendation = {
+    id: string;
     title: string;
     description: string;
     checked: boolean;
     tag: string;
+    steps: {
+        id: string;
+        description: string;
+        checked: boolean;
+    }[];
 }
 
 interface Props {
@@ -15,6 +21,7 @@ interface Props {
     recommendations: Recommendation[];
     handleCheck: (e: any) => void;
 }
+
 export const RoadMapRecommendation = ({ dimension, description, recommendations, handleCheck }: Props) => {
     const [completedCount, setCompletedCount] = useState(0);
 
@@ -27,16 +34,18 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
         <div className="w-full h-full flex flex-row p-4">
             <div className="h-full w-full bg-white mr-2 border rounded-lg shadow-lg p-4">
                 <div className="flex flex-row justify-between items-center w-full">
-                    <div className="flex flex-row justify-start gap-2 items-center w-fit">
-                        <div className="flex justify-center items-baseline">
+                    <div className="flex flex-row justify-start gap-2 items-baseline w-fit">
                         <p className="text-3xl font-sans font-bold  mb-1 mt-2 mr-6 text-primary">{dimension}</p>
                         <div className="flex flex-row items-center gap-2">
-                        <p className="text-lg font-sans text-gray-500">
-                            {completedCount}/{recommendations.length} completado{recommendations.length > 1 ? "s" : ""}
-                        </p>
-                        {completedCount === recommendations.length && <FaCheck className="text-green-500" size={24} />}
-                    </div>
-                    </div>
+                            <p className="text-lg font-sans text-gray-500">
+                                <span className={`${completedCount === recommendations.length ? "underline-green-500" : ""} flex items-center`}>
+                                    {completedCount}/{recommendations.length} completado{recommendations.length > 1 ? "s" : ""}
+                                    {completedCount === recommendations.length && (
+                                        <FaCheck className="ml-1 text-green-500" />
+                                    )}
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div className="mt-4">
@@ -49,6 +58,8 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
                         description={recommendation.description}
                         index={index.toString()}
                         tag={recommendation.tag}
+                        steps={recommendation.steps}
+                        recommendationId={recommendation.id}
                         handleCheck={handleCheck}
                     />
                 ))}

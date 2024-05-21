@@ -2,10 +2,16 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { useState } from "react";
 
 interface RecommendationProps {
+  recommendationId: string;
   description: string;
   tag: string;
   index: string;
   dimension: string;
+  steps: {
+    id: string;
+    description: string;
+    checked: boolean;
+}[];
   handleCheck: (e: any) => void;
 }
 
@@ -14,7 +20,9 @@ export const RecommendationComponent = ({
   tag,
   index,
   dimension,
+  steps,
   handleCheck,
+  recommendationId
 }: RecommendationProps) => {
   const [hidden, setHidden] = useState(true);
   return (
@@ -60,19 +68,22 @@ export const RecommendationComponent = ({
         className={`${hidden ? "hidden" : ""} ml-8 mt-4`}
       >
         <p className="text-base font-medium mb-2 font-sans">Pasos a realizar:</p>
-        <div className="flex w-5/6 justify-start items-center">
-          <input
-            type="checkbox"
-            onClick={handleCheck}
-            className="
-              peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 transition-all 
+        <div className="flex w-5/6 flex-col justify-start gap-4">
+        {steps.map((step, index) => (
+          <div key={index} className="flex flex-row items-center gap-2">
+            <input
+              type="checkbox"
+              onClick={handleCheck}
+              id={`${recommendationId}-${step.id}`}
+              className="peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 transition-all 
               before:content[''] before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 
               before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 
               before:opacity-0 before:transition-opacity checked:border-primary checked:bg-primary 
               checked:before:bg-primary hover:before:opacity-10"
-            id="amber"
-          />
-          <li className="ml-4 text-base font-sans">Definir objetivos claros</li>
+            />
+            <li className="ml-4 text-base font-sans">{step.description}</li>
+          </div>
+        ))}
         </div>
       </ul>
     </>
