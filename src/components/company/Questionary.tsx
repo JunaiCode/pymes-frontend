@@ -4,375 +4,41 @@ import Question from "./Question";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
-const Questionary = (props: any) => {
-  const [evaluationResults, setevaluationResults] = useState([
-    {
-      id: 1,
-      dimension: "id",
-      title:
-        "¿Desde qué nivel de la jerarquía de la organización se aboga por el marketing basado en datos?",
-      options: [
-        { title: "Los cargos sénior defienden su uso hasta cierto punto." },
-        {
-          title:
-            "Los cargos medios, como los directores locales, defienden su uso.",
-        },
-        {
-          title: "Los altos cargos, como el vicepresidente, defienden su uso.",
-        },
-        {
-          title:
-            "Algunos cargos senior como el CMO, CTO o COO, defienden su uso.",
-        },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 2,
-      title:
-        "¿Qué tan importante es la inversión en tecnología para la empresa?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 3,
-      title: "¿Cómo se mide el éxito de las campañas de marketing?",
-      options: [
-        { title: "No se mide." },
-        { title: "Se mide por la cantidad de ventas." },
-        { title: "Se mide por la cantidad de leads." },
-        { title: "Se mide por el ROI." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 4,
-      title: "¿Qué tan importante es la segmentación de la audiencia?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 5,
-      title:
-        "¿Qué tan importante es la personalización de la experiencia del cliente?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 6,
-      dimension: "id",
-      title:
-        "¿Desde qué nivel de la jerarquía de la organización se aboga por el marketing basado en datos?",
-      options: [
-        { title: "Los cargos sénior defienden su uso hasta cierto punto." },
-        {
-          title:
-            "Los cargos medios, como los directores locales, defienden su uso.",
-        },
-        {
-          title: "Los altos cargos, como el vicepresidente, defienden su uso.",
-        },
-        {
-          title:
-            "Algunos cargos senior como el CMO, CTO o COO, defienden su uso.",
-        },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 7,
-      title:
-        "¿Qué tan importante es la inversión en tecnología para la empresa?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 8,
-      title: "¿Cómo se mide el éxito de las campañas de marketing?",
-      options: [
-        { title: "No se mide." },
-        { title: "Se mide por la cantidad de ventas." },
-        { title: "Se mide por la cantidad de leads." },
-        { title: "Se mide por el ROI." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 9,
-      title: "¿Qué tan importante es la segmentación de la audiencia?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 10,
-      title:
-        "¿Qué tan importante es la personalización de la experiencia del cliente?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 11,
-      dimension: "id",
-      title:
-        "¿Desde qué nivel de la jerarquía de la organización se aboga por el marketing basado en datos?",
-      options: [
-        { title: "Los cargos sénior defienden su uso hasta cierto punto." },
-        {
-          title:
-            "Los cargos medios, como los directores locales, defienden su uso.",
-        },
-        {
-          title: "Los altos cargos, como el vicepresidente, defienden su uso.",
-        },
-        {
-          title:
-            "Algunos cargos senior como el CMO, CTO o COO, defienden su uso.",
-        },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 12,
-      title:
-        "¿Qué tan importante es la inversión en tecnología para la empresa?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 13,
-      title: "¿Cómo se mide el éxito de las campañas de marketing?",
-      options: [
-        { title: "No se mide." },
-        { title: "Se mide por la cantidad de ventas." },
-        { title: "Se mide por la cantidad de leads." },
-        { title: "Se mide por el ROI." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      ide: 14,
-      title: "¿Qué tan importante es la segmentación de la audiencia?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 15,
-      title:
-        "¿Qué tan importante es la personalización de la experiencia del cliente?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 16,
-      dimension: "id",
-      title:
-        "¿Desde qué nivel de la jerarquía de la organización se aboga por el marketing basado en datos?",
-      options: [
-        { title: "Los cargos sénior defienden su uso hasta cierto punto." },
-        {
-          title:
-            "Los cargos medios, como los directores locales, defienden su uso.",
-        },
-        {
-          title: "Los altos cargos, como el vicepresidente, defienden su uso.",
-        },
-        {
-          title:
-            "Algunos cargos senior como el CMO, CTO o COO, defienden su uso.",
-        },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 17,
-      title:
-        "¿Qué tan importante es la inversión en tecnología para la empresa?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 18,
-      title: "¿Cómo se mide el éxito de las campañas de marketing?",
-      options: [
-        { title: "No se mide." },
-        { title: "Se mide por la cantidad de ventas." },
-        { title: "Se mide por la cantidad de leads." },
-        { title: "Se mide por el ROI." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 19,
-      title: "¿Qué tan importante es la segmentación de la audiencia?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 20,
-      title:
-        "¿Qué tan importante es la personalización de la experiencia del cliente?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 21,
-      dimension: "id",
-      title:
-        "¿Desde qué nivel de la jerarquía de la organización se aboga por el marketing basado en datos?",
-      options: [
-        { title: "Los cargos sénior defienden su uso hasta cierto punto." },
-        {
-          title:
-            "Los cargos medios, como los directores locales, defienden su uso.",
-        },
-        {
-          title: "Los altos cargos, como el vicepresidente, defienden su uso.",
-        },
-        {
-          title:
-            "Algunos cargos senior como el CMO, CTO o COO, defienden su uso.",
-        },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 22,
-      title:
-        "¿Qué tan importante es la inversión en tecnología para la empresa?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 23,
-      title: "¿Cómo se mide el éxito de las campañas de marketing?",
-      options: [
-        { title: "No se mide." },
-        { title: "Se mide por la cantidad de ventas." },
-        { title: "Se mide por la cantidad de leads." },
-        { title: "Se mide por el ROI." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 24,
-      title: "¿Qué tan importante es la segmentación de la audiencia?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-    {
-      id: 25,
-      title:
-        "¿Qué tan importante es la personalización de la experiencia del cliente?",
-      options: [
-        { title: "No es importante." },
-        { title: "Es importante." },
-        { title: "Es muy importante." },
-        { title: "Es crucial." },
-      ],
-      answer: null,
-      marked: false,
-    },
-  ]);
 
-  const [currentQuestion, setCurrentQuestion] = useState(evaluationResults[0]);
+interface Question {
+  question: string;
+  questionId: string;
+  options: {
+    optionId: string;
+    description: string;
+    value: number;
+  }[];
+  answer: string;
+  marked: boolean;
+}
+
+interface Questions{
+  dimensionId: string;
+  questions: Question[];
+}
+
+
+const Questionary = (props: any) => {
+  const [questions, setQuestions] = useState<Questions>({
+    dimensionId: "",
+    questions: [],
+  });
+  const [evaluationResults, setevaluationResults] = useState<Question[]>([]);
+  const [currentQuestion, setCurrentQuestion] = useState<Question>({
+    question: "",
+    questionId: "",
+    options: [],
+    answer: "",
+    marked: false,
+  });
   const [progress, setProgress] = useState({
     total: evaluationResults.length,
-    completed: evaluationResults.filter((question) => question.answer !== null)
-      .length,
+    completed: evaluationResults.filter((question) => question === null).length,
   });
   const [finished, setFinished] = useState(false);
   const [percentage, setPercentage] = useState("0%");
@@ -383,52 +49,46 @@ const Questionary = (props: any) => {
   const totalPages = Math.ceil(evaluationResults.length / questionsPerPage);
 
   const router = useRouter();
-  const companyId = "66398ae089a64c1384ae4d51";
-
+  const companyId = "5891e02d-6865-471b-ad0f-8d66e788288d";
+  const versionId ="664e108b9e53d211e63fd583"
+  const companyTypeId = "1";
   useEffect(() => {
-    const baseUrl = "https://localhost:8080";
+    const baseUrl = "http://localhost:8080";
 
-    const evaluationsResults = async () => {
-      const evaluationResults = await fetch(
-        `${baseUrl}/evaluation/663989e2c925c715e33ee2c1/results`
-      );
-      const evaluationData = await evaluationResults.json();
-      if (evaluationData.length === 0) {
-        createEvaluation();
-      } else {
-        setevaluationResults(evaluationData);
-      }
-    };
 
     const createEvaluation = async () => {
       const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          evaluationDTO: {
-            date: new Date().toLocaleDateString(),
-            completed: false,
-          },
-        }),
+        }
       }).then((response) => response.json());
-      console.log(evaluation);
+
     };
 
-    const getEvaluationResult = async () => {
-      const evaluationResults = await fetch(
-        `${baseUrl}/evaluation/${companyId}`
-      );
-      const evaluationData = await evaluationResults.json();
-      if (evaluationData.length === 0) {
-        createEvaluation();
-      } else {
-        setevaluationResults(evaluationData);
-      }
+    const getFirstQuestions = async () => {
+      const questions = await fetch(`${baseUrl}/version/get/${versionId}/questions/${companyTypeId}/first-level`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }).then((response) => response.json()).then((data) =>{
+        let questions: Question[] = [];
+        setQuestions(data);
+        data.forEach((questionPerDimension: any) => {
+          questionPerDimension.questions.forEach((question: any) => {
+            questions.push(question);
+          });
+        });
+        setevaluationResults(questions);
+        setProgress({
+          total: questions.length,
+          completed: 0,
+        });
+        setCurrentQuestion(questions[0]);
+      });
     };
-
-    evaluationsResults();
+    getFirstQuestions();
   }, []);
 
   useEffect(() => {
@@ -459,8 +119,14 @@ const Questionary = (props: any) => {
   }, [percentage]);
 
   useEffect(() => {
+
+    
+   
+  }, [questions]);
+
+  useEffect(() => {
     const newQuestions = evaluationResults.map((question: any) => {
-      if (question.id === currentQuestion.id) {
+      if (question.questionId === currentQuestion?.questionId) {
         return currentQuestion;
       }
       return question;
@@ -471,15 +137,14 @@ const Questionary = (props: any) => {
 
   useEffect(() => {
     setIndex(
-      evaluationResults.findIndex(
-        (question: any) => question.id === currentQuestion.id
-      )
+      evaluationResults.findIndex
+        ((question: any) => question.questionId === currentQuestion?.questionId)
     );
   }, [currentQuestion, evaluationResults]);
 
   const handleCheckOption = (e: any) => {
     e.preventDefault();
-    let answer = currentQuestion.answer;
+    let answer = currentQuestion?.answer;
     if (answer === null) {
       currentQuestion.answer = e.target.value;
       e.target.style.backgroundColor = "white";
@@ -556,19 +221,19 @@ const Questionary = (props: any) => {
               Pregunta {index + 1} de {evaluationResults.length}
             </p>
             <label
-              htmlFor={`question-${currentQuestion.title}`}
+              htmlFor={`question-${currentQuestion.question}`}
               className="block text-gray-700 font-bold mb-2"
             >
-              {currentQuestion.title}
+              {currentQuestion.question}
             </label>
             <p>Selecciona tu respuesta</p>
             {currentQuestion.options.map((option: any, index: number) => (
               <Question
-                id={index}
-                key={index}
-                name={currentQuestion.title}
+                id={option.optionId}
+                key={option.optionId}
+                name={currentQuestion.question}
                 answer={currentQuestion.answer}
-                value={option.title}
+                value={option.description}
                 handleCheck={handleCheckOption}
               />
             ))}
@@ -593,7 +258,7 @@ const Questionary = (props: any) => {
                     </a>
                     <hr
                       className={` h-0.5 w-full mt-4 ${
-                        question.id === currentQuestion.id ? "bg-primary" : ""
+                        question.questionId === currentQuestion.questionId ? "bg-primary" : ""
                       }`}
                     />
                   </div>
