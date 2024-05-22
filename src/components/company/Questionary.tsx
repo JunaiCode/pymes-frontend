@@ -3,11 +3,13 @@ import { ProgressEvaluation } from "./ProgressEvaluation";
 import Question from "./Question";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { verify } from "crypto";
 
 
 interface Question {
   question: string;
   questionId: string;
+  scorePositive: number;
   options: {
     optionId: string;
     description: string;
@@ -24,12 +26,13 @@ interface Questions{
 
 
 const Questionary = (props: any) => {
-  const [questions, setQuestions] = useState<Questions>({
+  const [questions, setQuestions] = useState<Questions[]>([{
     dimensionId: "",
     questions: [],
-  });
+  }]);
   const [evaluationResults, setevaluationResults] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<Question>({
+    scorePositive: 0,
     question: "",
     questionId: "",
     options: [],
@@ -120,7 +123,7 @@ const Questionary = (props: any) => {
 
   useEffect(() => {
 
-    
+
    
   }, [questions]);
 
@@ -135,7 +138,34 @@ const Questionary = (props: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestion]);
 
+  const verifyLevel = (dimensionId: string) => {
+    const questionsDimension = questions.find((questionDimension) => questionDimension.dimensionId === dimensionId);
+    let totalValue = 0;
+    questionsDimension?.questions.forEach((question: any) => {
+      evaluationResults.forEach((evaluationResult: any) => {
+        if (question.questionId === evaluationResult.questionId) {
+          totalValue += question.options.find((option: any) => option.description === evaluationResult.answer)?.value;
+      }
+      });
+    });
+    if(totalValue >= 0 && totalValue <= 5){
+      console.log("Nivel 1");}
+  };
+
   useEffect(() => {
+    questions.forEach((questionDimension: any) => {
+      let totalAnswers = 0;
+      questionDimension.questions.forEach((question: any) => {
+      evaluationResults.forEach((evaluationResult: any) => {
+        if (question.questionId === evaluationResult.questionId) {
+          totalAnswers +=  1;
+        }
+      });
+      });
+      if(totalAnswers === questionDimension.questions.length){
+        verifyLevel(questionDimension.dimensionId);
+      }
+    });
     setIndex(
       evaluationResults.findIndex
         ((question: any) => question.questionId === currentQuestion?.questionId)
