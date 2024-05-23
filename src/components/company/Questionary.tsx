@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, use, useEffect, useState } from "react";
 import { ProgressEvaluation } from "./ProgressEvaluation";
 import Question from "./Question";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
@@ -16,6 +16,13 @@ interface QuestionI {
   }[];
   answer: string;
   marked: boolean;
+}
+
+interface ResultsDTO {
+  dimensionId: string;
+  questionId: string;
+  optionId: string;
+  marked: string;
 }
 
 interface Questions{
@@ -38,6 +45,7 @@ const Questionary = (props: any) => {
     answer: "",
     marked: false,
   });
+  const [ResultsDTO, setResultsDTO] = useState<ResultsDTO[]>([]);
   const [progress, setProgress] = useState({
     total: evaluationResults.length,
     completed: 0,
@@ -54,6 +62,20 @@ const Questionary = (props: any) => {
   const versionId ="664e108b9e53d211e63fd583"
   const companyTypeId = "1";
   const baseUrl = "http://localhost:8080";
+
+  const evaluationResultToDTO = (evaluationResults: QuestionI[]) => {
+    let resultsDTO: ResultsDTO[] = [];
+    evaluationResults.forEach((question: QuestionI) => {
+      resultsDTO.push({
+        dimensionId: questions.find((questionDimension) => questionDimension.questions.find((question) => question.questionId === question.questionId))?.dimensionId ?? "",
+        questionId: question.questionId,
+        optionId: question.options.find((option) => option.description === question.answer)?.optionId ?? "",
+        marked: question.answer!=null ? "true" : "false",
+      });
+    });
+    return resultsDTO;
+  };
+
   useEffect(() => {
     const createEvaluation = async () => {
       const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
@@ -62,7 +84,6 @@ const Questionary = (props: any) => {
           "Content-Type": "application/json",
         }
       }).then((response) => response.json());
-
     };
 
     const getFirstQuestions = async () => {
@@ -93,6 +114,11 @@ const Questionary = (props: any) => {
   useEffect(() => {
     setPercentage(`${(progress.completed / progress.total) * 100}%`);
   }, [progress]);
+
+  useEffect(() => {
+    setResultsDTO(evaluationResultToDTO(evaluationResults));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [evaluationResults]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
