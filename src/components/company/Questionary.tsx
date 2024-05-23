@@ -128,7 +128,7 @@ const Questionary = (props: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestion]);
 
-  const verifyLevel = (dimensionId: string) => {
+  const verifyLevel = async(dimensionId: string) => {
     const questionsDimension = questions.find((questionDimension) => questionDimension.dimensionId === dimensionId);
     let totalValue = 0;
     let totalScore = 0;
@@ -142,13 +142,13 @@ const Questionary = (props: any) => {
     });
     if (totalValue === totalScore && totalValue !== 0) {
       let countAnswers = 0;
-      let nextLevel: { questions: SetStateAction<QuestionI[]>; } | null = null;
+      let nextLevel: any = null;
       fetch(`${baseUrl}/level/dimension/${dimensionId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         }
-      }).then((response) => response.json()).then((data) => {
+      }).then((response) => response.json()).then(async (data) => {
         data.forEach((level: any) => {
           level.questions.forEach((question: any) => {
             let questionFound = evaluationResults.find((evaluationResult: any) => evaluationResult.questionId === question);
@@ -165,16 +165,14 @@ const Questionary = (props: any) => {
           });
         });
         if (nextLevel !== null) {
-          const updatedQuestions = questions.map((questionDimension: any) => {
-            if (questionDimension.dimensionId === dimensionId) {
-              return {
-                ...questionDimension,
-                questions: nextLevel?.questions,
-              };
-            }
-            return questionDimension;
-          });
-          console.log(nextLevel);
+          const newQuestions = await fetch(`${baseUrl}/version/get/questions/company-type/level`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({levelId: nextLevel.levelId, companyTypeId: companyTypeId, versionId: versionId, companyId: companyId})
+          }).then((response) => response.json());
+          console.log(newQuestions);
         }        
       })
     }
