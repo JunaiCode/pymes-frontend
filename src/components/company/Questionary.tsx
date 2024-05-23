@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { ProgressEvaluation } from "./ProgressEvaluation";
 import Question from "./Question";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
 
-interface Question {
+interface QuestionI {
   question: string;
   questionId: string;
   maxScore: number;
@@ -20,7 +20,7 @@ interface Question {
 
 interface Questions{
   dimensionId: string;
-  questions: Question[];
+  questions: QuestionI[];
 }
 
 
@@ -29,8 +29,8 @@ const Questionary = (props: any) => {
     dimensionId: "",
     questions: [],
   }]);
-  const [evaluationResults, setevaluationResults] = useState<Question[]>([]);
-  const [currentQuestion, setCurrentQuestion] = useState<Question>({
+  const [evaluationResults, setevaluationResults] = useState<QuestionI[]>([]);
+  const [currentQuestion, setCurrentQuestion] = useState<QuestionI>({
     maxScore: 0,
     question: "",
     questionId: "",
@@ -40,7 +40,7 @@ const Questionary = (props: any) => {
   });
   const [progress, setProgress] = useState({
     total: evaluationResults.length,
-    completed: evaluationResults.filter((question) => question === null).length,
+    completed: 0,
   });
   const [finished, setFinished] = useState(false);
   const [percentage, setPercentage] = useState("0%");
@@ -49,15 +49,12 @@ const Questionary = (props: any) => {
   const [currentPage, setCurrentPage] = useState(0);
   const questionsPerPage = 5;
   const totalPages = Math.ceil(evaluationResults.length / questionsPerPage);
-
   const router = useRouter();
   const companyId = "5891e02d-6865-471b-ad0f-8d66e788288d";
   const versionId ="664e108b9e53d211e63fd583"
   const companyTypeId = "1";
+  const baseUrl = "http://localhost:8080";
   useEffect(() => {
-    const baseUrl = "http://localhost:8080";
-
-
     const createEvaluation = async () => {
       const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
         method: "POST",
@@ -75,7 +72,7 @@ const Questionary = (props: any) => {
           "Content-Type": "application/json",
         }
       }).then((response) => response.json()).then((data) =>{
-        let questions: Question[] = [];
+        let questions: QuestionI[] = [];
         setQuestions(data);
         data.forEach((questionPerDimension: any) => {
           questionPerDimension.questions.forEach((question: any) => {
@@ -121,12 +118,6 @@ const Questionary = (props: any) => {
   }, [percentage]);
 
   useEffect(() => {
-
-
-   
-  }, [questions]);
-
-  useEffect(() => {
     const newQuestions = evaluationResults.map((question: any) => {
       if (question.questionId === currentQuestion?.questionId) {
         return currentQuestion;
@@ -146,11 +137,46 @@ const Questionary = (props: any) => {
       evaluationResults.forEach((evaluationResult: any) => {
         if (question.questionId === evaluationResult.questionId) {
           totalValue += question.options.find((option: any) => option.description === evaluationResult.answer)?.value;
-      }
+        }
       });
     });
-    if(totalValue === totalScore && totalValue !== 0){
-      
+    if (totalValue === totalScore && totalValue !== 0) {
+      let countAnswers = 0;
+      let nextLevel: { questions: SetStateAction<QuestionI[]>; } | null = null;
+      fetch(`${baseUrl}/level/dimension/${dimensionId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }).then((response) => response.json()).then((data) => {
+        data.forEach((level: any) => {
+          level.questions.forEach((question: any) => {
+            let questionFound = evaluationResults.find((evaluationResult: any) => evaluationResult.questionId === question);
+            if (questionFound) {
+              countAnswers += 1;
+              if (countAnswers === level.questions.length) {
+                if (data.indexOf(level) < data.length - 1) {
+                  nextLevel = data[data.indexOf(level) + 1];
+                } else {
+                  nextLevel = null;
+                }
+              }
+            }
+          });
+        });
+        if (nextLevel !== null) {
+          const updatedQuestions = questions.map((questionDimension: any) => {
+            if (questionDimension.dimensionId === dimensionId) {
+              return {
+                ...questionDimension,
+                questions: nextLevel?.questions,
+              };
+            }
+            return questionDimension;
+          });
+          console.log(nextLevel);
+        }        
+      })
     }
   };
 
@@ -228,8 +254,9 @@ const Questionary = (props: any) => {
 
   const questionsToShow = evaluationResults.slice(
     currentPage * questionsPerPage,
-    (currentPage + 1) * questionsPerPage
+    currentPage * questionsPerPage + questionsPerPage
   );
+  
   return !resultsScreen ? (
     <div className="w-full h-screen bg-light">
       <div className="flex justify-start items-baseline w-full">
