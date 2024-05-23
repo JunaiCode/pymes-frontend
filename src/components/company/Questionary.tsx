@@ -3,7 +3,6 @@ import { ProgressEvaluation } from "./ProgressEvaluation";
 import Question from "./Question";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import { verify } from "crypto";
 
 
 interface Question {
