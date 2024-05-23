@@ -9,7 +9,7 @@ import { verify } from "crypto";
 interface Question {
   question: string;
   questionId: string;
-  scorePositive: number;
+  maxScore: number;
   options: {
     optionId: string;
     description: string;
@@ -32,7 +32,7 @@ const Questionary = (props: any) => {
   }]);
   const [evaluationResults, setevaluationResults] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<Question>({
-    scorePositive: 0,
+    maxScore: 0,
     question: "",
     questionId: "",
     options: [],
@@ -141,15 +141,18 @@ const Questionary = (props: any) => {
   const verifyLevel = (dimensionId: string) => {
     const questionsDimension = questions.find((questionDimension) => questionDimension.dimensionId === dimensionId);
     let totalValue = 0;
+    let totalScore = 0;
     questionsDimension?.questions.forEach((question: any) => {
+      totalScore += question.maxScore;
       evaluationResults.forEach((evaluationResult: any) => {
         if (question.questionId === evaluationResult.questionId) {
           totalValue += question.options.find((option: any) => option.description === evaluationResult.answer)?.value;
       }
       });
     });
-    if(totalValue >= 0 && totalValue <= 5){
-      console.log("Nivel 1");}
+    if(totalValue === totalScore && totalValue !== 0){
+      console.log("Dimension completada");
+    }
   };
 
   useEffect(() => {
