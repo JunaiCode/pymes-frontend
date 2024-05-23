@@ -166,13 +166,13 @@ const Questionary = (props: any) => {
         });
         if (nextLevel !== null) {
           const newQuestions = await fetch(`${baseUrl}/version/get/questions/company-type/level`, {
-            method: "GET",
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({levelId: nextLevel.levelId, companyTypeId: companyTypeId, versionId: versionId, companyId: companyId})
+            body: JSON.stringify({dimensionId: dimensionId, levelId: nextLevel.levelId, versionId: versionId, companyTypeId: companyTypeId  })
           }).then((response) => response.json());
-          console.log(newQuestions);
+          
         }        
       })
     }
