@@ -151,7 +151,7 @@ const Questionary = (props: any) => {
       });
     });
     if(totalValue === totalScore && totalValue !== 0){
-      console.log("Dimension completada");
+      
     }
   };
 
