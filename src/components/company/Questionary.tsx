@@ -22,7 +22,7 @@ interface ResultsDTO {
   dimensionId: string;
   questionId: string;
   optionId: string;
-  marked: string;
+  marked: boolean;
 }
 
 interface Questions{
@@ -31,7 +31,7 @@ interface Questions{
 }
 
 
-const Questionary = (props: any) => {
+const Questionary = ({evaluationExist}:any) => {
   const [questions, setQuestions] = useState<Questions[]>([{
     dimensionId: "",
     questions: [],
@@ -71,7 +71,7 @@ const Questionary = (props: any) => {
         dimensionId: questions.find((questionDimension) => questionDimension.questions.find((question) => question.questionId === question.questionId))?.dimensionId ?? "",
         questionId: question.questionId,
         optionId: question.options.find((option) => option.description === question.answer)?.optionId ?? "",
-        marked: question.answer!=null ? "true" : "false",
+        marked: question.marked,
       });
     });
     return resultsDTO;
@@ -92,7 +92,6 @@ const Questionary = (props: any) => {
   , [questions]);
 
   useEffect(() => {
-    /*
     const sendResults = async () => {
       await fetch(`${baseUrl}/evaluation/${evaluationId}/addAnswers`, {
         method: "POST",
@@ -107,26 +106,11 @@ const Questionary = (props: any) => {
     if (ResultsDTO.length > 0) {
       sendResults();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  */
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   , [ResultsDTO]);
 
   useEffect(() => {
-
-
-    /*
-    const getExistingEvaluation = async()=> await fetch(`${baseUrl}/evaluation/get/${companyId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }).then((response) => response.json()).then((data) => {
-      if (data.length > 0) {
-        setEvaluationId(data[0].evaluationId);
-      }
-    });
-    */
 
     const createEvaluation = async () => {
       const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
@@ -141,7 +125,6 @@ const Questionary = (props: any) => {
     };
 
     const getFirstQuestions = async () => {
-
       const questions = await fetch(`${baseUrl}/version/get/${versionId}/questions/${companyTypeId}/first-level`, {
         method: "GET",
         headers: {
@@ -163,8 +146,24 @@ const Questionary = (props: any) => {
         setCurrentQuestion(questions[0]);
       });
     };
-    createEvaluation();
-    getFirstQuestions();
+
+    if(evaluationExist !== null){
+      console.log(evaluationExist);
+      setevaluationResults(evaluationExist['664e1312cc973a1d8a0ba10c']);
+      setCurrentQuestion(evaluationExist['664e1312cc973a1d8a0ba10c'][0]);
+      fetch(`${baseUrl}/version/get/${versionId}/questions/${companyTypeId}/first-level`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }).then((response) => response.json()).then((data) =>{
+        setQuestions(data);
+      });
+    }else{
+      //createEvaluation();
+      //getFirstQuestions();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -331,17 +330,12 @@ const Questionary = (props: any) => {
   };
 
   const handleFinishEvaluation = () => {
-    /*
-    fetch(`${baseUrl}/evaluation/${evaluationId}/setCompleted`, {
+    fetch(`${baseUrl}/evaluation/finish/${evaluationId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        completed: true,
-      }),
+      }
     });
-    */
     setResultsScreen(true);
   };
 

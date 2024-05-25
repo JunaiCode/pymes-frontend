@@ -2,10 +2,29 @@
 
 import Questionary from "@/components/company/Questionary";
 import PageTemplate from "@/components/ui/PageTemplate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+ const companyId = "5891e02d-6865-471b-ad0f-8d66e788288d";
+ const baseUrl = "http://localhost:8080";
 
 const Page = () => {
     const [started, setStarted] = useState(false);
+    const [buttonText, setButtonText] = useState("Empezar evaluación");
+    const [evaluationExist, setEvaluationExist] = useState(null);
+    useEffect(() => {
+        fetch(`${baseUrl}/evaluation/company/${companyId}/results`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            }
+          }).then((response) => response.json()).then((data) => {
+            console.log(data);
+            if (data != null){
+            setButtonText("Continuar evaluación");
+            setEvaluationExist(data);
+            }
+          });
+    }, []);
     return (
         <PageTemplate>
             {!started ? (
@@ -17,11 +36,11 @@ const Page = () => {
                             setStarted(true);
                         }}
                     >
-                        Comenzar evaluación
+                        {buttonText}
                     </button>
                 </div>
             ) : (
-                <Questionary/>
+                <Questionary evaluationExist={evaluationExist}/>
             )}
         </PageTemplate>
     );    
