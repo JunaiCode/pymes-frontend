@@ -90,7 +90,28 @@ const Questionary = (props: any) => {
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   , [questions]);
-  
+
+  useEffect(() => {
+    /*
+    const sendResults = async () => {
+      await fetch(`${baseUrl}/evaluation/${evaluationId}/addAnswers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ResultsDTO),
+      }).then((response) => response.json()).then((data) => {
+        return data;
+      });
+    };
+    if (ResultsDTO.length > 0) {
+      sendResults();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  */
+  }
+  , [ResultsDTO]);
+
   useEffect(() => {
     const createEvaluation = async () => {
       const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
@@ -105,6 +126,19 @@ const Questionary = (props: any) => {
     };
 
     const getFirstQuestions = async () => {
+      /*
+      const getExistingEvaluation = await fetch(`${baseUrl}/evaluation/get/${companyId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }).then((response) => response.json()).then((data) => {
+        if (data.length > 0) {
+          setEvaluationId(data[0].evaluationId);
+        }
+      });
+      */
+
       const questions = await fetch(`${baseUrl}/version/get/${versionId}/questions/${companyTypeId}/first-level`, {
         method: "GET",
         headers: {
@@ -126,8 +160,7 @@ const Questionary = (props: any) => {
         setCurrentQuestion(questions[0]);
       });
     };
-    createEvaluation();
-    getFirstQuestions();
+
   }, []);
 
   useEffect(() => {
@@ -294,6 +327,17 @@ const Questionary = (props: any) => {
   };
 
   const handleFinishEvaluation = () => {
+    /*
+    fetch(`${baseUrl}/evaluation/${evaluationId}/setCompleted`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        completed: true,
+      }),
+    });
+    */
     setResultsScreen(true);
   };
 
