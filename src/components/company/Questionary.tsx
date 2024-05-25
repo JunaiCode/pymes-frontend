@@ -76,6 +76,20 @@ const Questionary = (props: any) => {
     return resultsDTO;
   };
 
+
+  useEffect(() => {
+    questions.forEach((questionDimension: any) => {
+      questionDimension.questions.forEach((question: any) => {
+        let questionFound = evaluationResults.find((evaluationResult: any) => evaluationResult.questionId === question.questionId);
+        if (!questionFound) {
+          setevaluationResults((prev) => [...prev, question]);
+        }
+      });
+    });
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  , [questions]);
+
   useEffect(() => {
     const createEvaluation = async () => {
       const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
@@ -117,6 +131,10 @@ const Questionary = (props: any) => {
 
   useEffect(() => {
     setResultsDTO(evaluationResultToDTO(evaluationResults));
+    setProgress({
+      total: evaluationResults.length,
+      completed: evaluationResults.filter((question) => question.answer).length,
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [evaluationResults]);
 
@@ -140,6 +158,8 @@ const Questionary = (props: any) => {
   useEffect(() => {
     if (percentage === "100%") {
       setFinished(true);
+    }else{
+      setFinished(false);
     }
   }, [percentage]);
 
@@ -191,14 +211,22 @@ const Questionary = (props: any) => {
           });
         });
         if (nextLevel !== null) {
-          const newQuestions = await fetch(`${baseUrl}/version/get/questions/company-type/level`, {
+          const getNewQuestions: any = await fetch(`${baseUrl}/version/get/questions/company-type/level`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({dimensionId: dimensionId, levelId: nextLevel.levelId, versionId: versionId, companyTypeId: companyTypeId  })
-          }).then((response) => response.json());
-          
+          }).then((response) => response.json()).then((data) => {
+            return data[0];
+          });
+
+          const newQuestions = questions.map((questionDimension: any) => {
+            if (questionDimension.dimensionId === dimensionId) {
+              return getNewQuestions;
+            }
+          });
+          setQuestions(newQuestions);
         }        
       })
     }
@@ -222,6 +250,7 @@ const Questionary = (props: any) => {
       evaluationResults.findIndex
         ((question: any) => question.questionId === currentQuestion?.questionId)
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestion, evaluationResults]);
 
   const handleCheckOption = (e: any) => {
