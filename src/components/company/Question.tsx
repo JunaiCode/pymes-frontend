@@ -1,3 +1,4 @@
+
 const Question = (props:any) => {
     const containerStyle = props.type === "text" ? "mb-4" : "w-full mt-4";
     const inputContainerStyle = props.type === "text" ? "" : "flex items-center";
@@ -28,9 +29,9 @@ const Question = (props:any) => {
                     value={props.value}
                     className="cursor-pointer h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                     onChange={props.handleCheck}
-                    checked={props.answer === props.value}
+                    checked={props.answer == props.value}
                     />
-                    <label className="ml-2" htmlFor={props.id}>{props.value}</label>
+                    <label className="ml-2" htmlFor={props.id}>{props.name}</label>
                 </div>
             )}
         </div>

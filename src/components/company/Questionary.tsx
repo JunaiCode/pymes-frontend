@@ -14,7 +14,11 @@ interface QuestionI {
     description: string;
     value: number;
   }[];
-  answer: string;
+  answer: {
+    description: string;
+    optionId: string;
+    value: number;
+  };
   marked: boolean;
 }
 
@@ -42,7 +46,11 @@ const Questionary = ({evaluationExist}:any) => {
     question: "",
     questionId: "",
     options: [],
-    answer: "",
+    answer: {
+      description: "",
+      optionId: "",
+      value: 0,
+    },
     marked: false,
   });
   const [ResultsDTO, setResultsDTO] = useState<ResultsDTO[]>([]);
@@ -70,7 +78,7 @@ const Questionary = ({evaluationExist}:any) => {
       resultsDTO.push({
         dimensionId: questions.find((questionDimension) => questionDimension.questions.find((question) => question.questionId === question.questionId))?.dimensionId ?? "",
         questionId: question.questionId,
-        optionId: question.options.find((option) => option.description === question.answer)?.optionId ?? "",
+        optionId: question.answer?.optionId ?? "",
         marked: question.marked,
       });
     });
@@ -92,6 +100,7 @@ const Questionary = ({evaluationExist}:any) => {
   , [questions]);
 
   useEffect(() => {
+    
     const sendResults = async () => {
       await fetch(`${baseUrl}/evaluation/${evaluationId}/addAnswers`, {
         method: "POST",
@@ -148,9 +157,6 @@ const Questionary = ({evaluationExist}:any) => {
     };
 
     if(evaluationExist !== null){
-      console.log(evaluationExist);
-      setevaluationResults(evaluationExist['664e1312cc973a1d8a0ba10c']);
-      setCurrentQuestion(evaluationExist['664e1312cc973a1d8a0ba10c'][0]);
       fetch(`${baseUrl}/version/get/${versionId}/questions/${companyTypeId}/first-level`, {
         method: "GET",
         headers: {
@@ -158,10 +164,14 @@ const Questionary = ({evaluationExist}:any) => {
         }
       }).then((response) => response.json()).then((data) =>{
         setQuestions(data);
+        setevaluationResults(evaluationExist.questions);
+        setEvaluationId(evaluationExist.evaluationId);
+        setResultsDTO(evaluationResultToDTO(evaluationExist.questions));
+        setCurrentQuestion(evaluationExist.questions[0]);
       });
     }else{
-      //createEvaluation();
-      //getFirstQuestions();
+      createEvaluation();
+      getFirstQuestions();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -221,9 +231,9 @@ const Questionary = ({evaluationExist}:any) => {
     let totalScore = 0;
     questionsDimension?.questions.forEach((question: any) => {
       totalScore += question.maxScore;
-      evaluationResults.forEach((evaluationResult: any) => {
+      evaluationResults.forEach((evaluationResult: QuestionI) => {
         if (question.questionId === evaluationResult.questionId) {
-          totalValue += question.options.find((option: any) => option.description === evaluationResult.answer)?.value;
+          totalValue += question.options.find((option: any) => option.description === evaluationResult.answer?.description)?.value;
         }
       });
     });
@@ -298,14 +308,22 @@ const Questionary = ({evaluationExist}:any) => {
     e.preventDefault();
     let answer = currentQuestion?.answer;
     if (answer === null) {
-      currentQuestion.answer = e.target.value;
+      currentQuestion.answer = {
+        description: e.target.name,
+        optionId: e.target.id,
+        value: e.target.value,
+      };
       e.target.style.backgroundColor = "white";
       setProgress((prevProgress: any) => ({
         ...prevProgress,
         completed: prevProgress.completed + 1,
       }));
     } else {
-      currentQuestion.answer = e.target.value;
+      currentQuestion.answer = {
+        description: e.target.name,
+        optionId: e.target.id,
+        value: e.target.value,
+      };
     }
     e.target.blur();
     setCurrentQuestion({ ...currentQuestion });
@@ -390,9 +408,9 @@ const Questionary = ({evaluationExist}:any) => {
               <Question
                 id={option.optionId}
                 key={option.optionId}
-                name={currentQuestion.question}
-                answer={currentQuestion.answer}
-                value={option.description}
+                name={option.description}
+                answer={currentQuestion?.answer?.value}
+                value={option.value}
                 handleCheck={handleCheckOption}
               />
             ))}

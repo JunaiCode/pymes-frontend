@@ -18,8 +18,7 @@ const Page = () => {
               "Content-Type": "application/json",
             }
           }).then((response) => response.json()).then((data) => {
-            console.log(data);
-            if (data != null){
+            if (data != null && data.status !== 'NOT_FOUND'){
             setButtonText("Continuar evaluación");
             setEvaluationExist(data);
             }
