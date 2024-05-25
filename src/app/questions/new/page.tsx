@@ -445,16 +445,14 @@ export default function Page() {
                                 <Step
                                     key={index}
                                     step={step.step}
+                                    id={step.id}
                                     steps={steps}
                                     setSteps={setSteps}
-                                    id={step.id}
-                                    handleDeleteStep={handleDeleteStep}
                                     index={index}
+                                    handleDeleteStep={handleDeleteStep}
                                 />
                             ))}
-                            {steps.map((step: any, index: number) => (
-                                <p key={index} className="text-gray-700 text-xs mt-1">Paso {index + 1}: {step.step}</p>
-                            ))}
+                            
 
                         </div>
 
@@ -462,7 +460,7 @@ export default function Page() {
                             <button
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-fit"
                                 onClick={() => {
-                                    setSteps([...steps, { step: "", id: Math.random()}])
+                                    setSteps([...steps, { step: "", id: Math.random() }])
                                     setStepCount(stepCount + 1)
                                 }}
                             >Agregar paso</button>
@@ -472,7 +470,7 @@ export default function Page() {
                             >
                                 Crear pregunta
                             </button>
-                        
+
                         </div>
 
 
@@ -531,18 +529,27 @@ export function QuestionOption({ option, points, options, setOptions, index, cal
 }
 
 
-export function Step({ step, steps, setSteps, number, handleDeleteStep, index, id }: any) {
+export function Step({ step, id, steps, setSteps, index, handleDeleteStep }: any) {
+
+    const handleStepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newSteps = steps.map((stp: any, i: number) =>
+            i === index ? { ...stp, step: e.target.value } : stp
+        );
+        setSteps(newSteps);
+    };
+
     return (
         <div className="flex flex-row w-full items-center justify-start my-2">
             <label className="text-gray-700 text-xs mt-1 mr-5" htmlFor="step">Paso {index + 1}</label>
+           
             <input
                 type="text"
                 placeholder="Ejemplo: 1810"
                 className="w-3/4 p-2.5 border border-gray-300 rounded-lg mr-2"
                 onChange={(e) => {
-                    steps[index].step = e.target.value
-                    setSteps([...steps])
+                    handleStepChange(e)
                 }}
+                value={step}
             />
             <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg ml-2"
