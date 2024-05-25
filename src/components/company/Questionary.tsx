@@ -58,6 +58,7 @@ const Questionary = (props: any) => {
   const questionsPerPage = 5;
   const totalPages = Math.ceil(evaluationResults.length / questionsPerPage);
   const router = useRouter();
+  const [evaluationId, setEvaluationId] = useState("");
   const companyId = "5891e02d-6865-471b-ad0f-8d66e788288d";
   const versionId ="664e108b9e53d211e63fd583"
   const companyTypeId = "1";
@@ -89,7 +90,7 @@ const Questionary = (props: any) => {
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   , [questions]);
-
+  
   useEffect(() => {
     const createEvaluation = async () => {
       const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
@@ -97,7 +98,10 @@ const Questionary = (props: any) => {
         headers: {
           "Content-Type": "application/json",
         }
-      }).then((response) => response.json());
+      }).then((response) => response.json()).then((data) => {
+        setEvaluationId(data.evaluationId);
+      }
+      );
     };
 
     const getFirstQuestions = async () => {
@@ -122,6 +126,7 @@ const Questionary = (props: any) => {
         setCurrentQuestion(questions[0]);
       });
     };
+    createEvaluation();
     getFirstQuestions();
   }, []);
 
