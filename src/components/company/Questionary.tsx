@@ -113,6 +113,21 @@ const Questionary = (props: any) => {
   , [ResultsDTO]);
 
   useEffect(() => {
+
+
+    /*
+    const getExistingEvaluation = async()=> await fetch(`${baseUrl}/evaluation/get/${companyId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }).then((response) => response.json()).then((data) => {
+      if (data.length > 0) {
+        setEvaluationId(data[0].evaluationId);
+      }
+    });
+    */
+
     const createEvaluation = async () => {
       const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
         method: "POST",
@@ -126,18 +141,6 @@ const Questionary = (props: any) => {
     };
 
     const getFirstQuestions = async () => {
-      /*
-      const getExistingEvaluation = await fetch(`${baseUrl}/evaluation/get/${companyId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        }
-      }).then((response) => response.json()).then((data) => {
-        if (data.length > 0) {
-          setEvaluationId(data[0].evaluationId);
-        }
-      });
-      */
 
       const questions = await fetch(`${baseUrl}/version/get/${versionId}/questions/${companyTypeId}/first-level`, {
         method: "GET",
@@ -160,7 +163,8 @@ const Questionary = (props: any) => {
         setCurrentQuestion(questions[0]);
       });
     };
-
+    createEvaluation();
+    getFirstQuestions();
   }, []);
 
   useEffect(() => {
