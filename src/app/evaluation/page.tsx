@@ -15,15 +15,26 @@ const Page = () => {
         fetch(`${baseUrl}/evaluation/company/${companyId}/results`, {
             method: "GET",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             }
-          }).then((response) => response.json()).then((data) => {
-            if (data != null && data.status !== 'NOT_FOUND'){
-            setButtonText("Continuar evaluación");
-            setEvaluationExist(data);
+        }).then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("No se encontró la evaluación");
             }
-          });
+        }).then((data) => {
+            if (data != null && data.status !== 'NOT_FOUND') {
+                setButtonText("Continuar evaluación");
+                setEvaluationExist(data);
+            } else {
+                console.log("La evaluación no existe.");
+            }
+        }).catch((error) => {
+            console.error('La evaluacion no existe:', error);
+        });
     }, []);
+    
     return (
         <PageTemplate>
             {!started ? (

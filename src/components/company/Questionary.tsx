@@ -66,10 +66,6 @@ const Questionary = ({evaluationExist}:any) => {
   const totalPages = Math.ceil(evaluationResults.length / questionsPerPage);
   const router = useRouter();
   const [evaluationId, setEvaluationId] = useState("");
-  const [roadmapDates, setRoadMapDates] = useState({
-    startDate: "",
-    endDate: "",
-  });
   const companyId = "5891e02d-6865-471b-ad0f-8d66e788288d";
   const versionId ="664e108b9e53d211e63fd583"
   const companyTypeId = "1";
@@ -86,23 +82,6 @@ const Questionary = ({evaluationExist}:any) => {
     });
     return resultsDTO;
   };
-
-  const onChangeDate = (e:any) => {
-    const newDate = moment.utc(new Date(e.target.value)).format('YYYY-MM-DD');
-    if(e.target.id === "startDate"){
-      setRoadMapDates({
-        ...roadmapDates,
-        startDate: newDate,
-      });
-    }
-    if(e.target.id === "endDate"){
-      setRoadMapDates({
-        ...roadmapDates,
-        endDate: newDate,
-      });
-    }
-  };
-
 
   useEffect(() => {
     questions.forEach((questionDimension: any) => {
@@ -370,9 +349,21 @@ const Questionary = ({evaluationExist}:any) => {
       headers: {
         "Content-Type": "application/json",
       }
+    }).then(() => {
+      return fetch(`${baseUrl}/actionPlan/add/evaluation/${evaluationId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+    }).then((response) => response.json()).then((data) => {
+    }).then(() => {
+      setResultsScreen(true);
+    }).catch((error) => {
+      console.error('Hubo un error:', error);
     });
-    setResultsScreen(true);
   };
+  
 
   const handleMarkQuestion = () => {
     setCurrentQuestion((prev) => ({
@@ -477,34 +468,19 @@ const Questionary = ({evaluationExist}:any) => {
       </div>
     </div>
   ) : (
-    <div className="flex w-full items-center justify-center bg-light">
-    <div className="flex flex-col justify-center items-start gap-4 h-screen mx-auto max-w-lg p-8">
+    <div className="flex flex-col justify-center w-full items-center bg-light gap-4 h-screen">
     <p className="text-2xl font-semibold mt-12 mb-6 text-center">
       ¡Gracias por completar la evaluación!
     </p>
-    <label htmlFor="startDate" className="text-lg text-gray-700">Elige la fecha de inicio para tu hoja de ruta</label>
-    <input
-      type="date"
-      id="startDate"
-      onChange={onChangeDate}
-      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-    />
-    <label htmlFor="endDate" className="text-lg text-gray-700 mt-4">Elige la fecha de fin para tu hoja de ruta</label>
-    <input
-      type="date"
-      id="endDate"
-      onChange={onChangeDate}
-      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-    />
     <button
-      className="bg-primary text-white px-6 py-3 rounded-lg shadow-lg hover:bg-primary-dark transition duration-300 mt-6 w-full"
+      className="bg-primary text-white px-6 py-3 rounded-lg shadow-lg hover:bg-primary-dark transition duration-300"
       onClick={() => {
+
         router.push("/home");
       }}
     >
       Ver mis resultados
     </button>
-  </div>
   </div>
   );
 };
