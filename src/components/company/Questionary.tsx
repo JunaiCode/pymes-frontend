@@ -198,7 +198,6 @@ const Questionary = ({evaluationExist}:any) => {
   }, [progress]);
 
   useEffect(() => {
-    console.log(evaluationResults);
     setResultsDTO(evaluationResultToDTO(evaluationResults));
     setProgress({
       total: evaluationResults.length,
