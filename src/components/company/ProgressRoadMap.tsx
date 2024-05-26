@@ -12,13 +12,14 @@ interface props{
 export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,setStartDate }: any) => {
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [date, setDate] = useState(null);
+    const formatDate = 'yyyy-MM-dd'
 
     const handlePencilClick = () => {
         setIsDatePickerOpen(true);
     };
 
     const handleDateChange = (date:any) => {
-        const formattedDate = format(date, 'yyyy-MM-dd');
+        const formattedDate = format(date, formatDate);
         setFinishDate(formattedDate); 
         setDate(date);
         setIsDatePickerOpen(false);
@@ -29,7 +30,7 @@ export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,
             <div className="flex flex-col justify-start w-full mb-4">
                 <div className="flex flex-row justify-between items-baseline mb-2">
                     <p className="text-lg font-sans text-white font-light">Inicio de la hoja de ruta:</p>
-                    <p className="pr-4 pl-4 rounded text-white bg-secondary_old inline-block">{startDate}</p>
+                    <p className="pr-4 pl-4 rounded text-white bg-secondary_old inline-block">{format(startDate,formatDate)}</p>
                 </div>
                 <div className="flex flex-row justify-between items-baseline">
                     <p className="text-lg font-sans text-white font-light">Finalización de la hoja de ruta:</p>
@@ -37,9 +38,8 @@ export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,
                         <IoPencil 
                             className="text-white cursor-pointer hover:text-blue-700 transition duration-200 mr-2" 
                             size={24} 
-                            onClick={handlePencilClick} // Agregar evento onClick al lápiz
+                            onClick={handlePencilClick}
                         />
-                        {/* Mostrar el componente DatePicker cuando isDatePickerOpen es true */}
                         {isDatePickerOpen && (
                             <DatePicker
                                 selected={date}

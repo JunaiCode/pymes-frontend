@@ -48,6 +48,7 @@ export const RoadMap = () => {
                         }
                     });
                 });
+                setStartDate(data.startDate);
                 setRoadMap(data.info);
                 setRoadMapId(data.actionPlanId);
             } catch (error) {
