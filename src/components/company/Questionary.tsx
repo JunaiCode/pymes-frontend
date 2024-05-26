@@ -1,9 +1,8 @@
-import { SetStateAction, use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ProgressEvaluation } from "./ProgressEvaluation";
 import Question from "./Question";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import moment from 'moment';
 
 interface QuestionI {
   question: string;
