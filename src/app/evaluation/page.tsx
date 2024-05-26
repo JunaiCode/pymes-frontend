@@ -2,10 +2,39 @@
 
 import Questionary from "@/components/company/Questionary";
 import PageTemplate from "@/components/ui/PageTemplate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+ const companyId = "5891e02d-6865-471b-ad0f-8d66e788288d";
+ const baseUrl = "http://localhost:8080";
 
 const Page = () => {
     const [started, setStarted] = useState(false);
+    const [buttonText, setButtonText] = useState("Empezar evaluación");
+    const [evaluationExist, setEvaluationExist] = useState(null);
+    useEffect(() => {
+        fetch(`${baseUrl}/evaluation/company/${companyId}/results`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("No se encontró la evaluación");
+            }
+        }).then((data) => {
+            if (data != null && data.status !== 'NOT_FOUND') {
+                setButtonText("Continuar evaluación");
+                setEvaluationExist(data);
+            } else {
+                console.log("La evaluación no existe.");
+            }
+        }).catch((error) => {
+            console.error('La evaluacion no existe:', error);
+        });
+    }, []);
+    
     return (
         <PageTemplate>
             {!started ? (
@@ -17,11 +46,11 @@ const Page = () => {
                             setStarted(true);
                         }}
                     >
-                        Comenzar evaluación
+                        {buttonText}
                     </button>
                 </div>
             ) : (
-                <Questionary/>
+                <Questionary evaluationExist={evaluationExist}/>
             )}
         </PageTemplate>
     );    
