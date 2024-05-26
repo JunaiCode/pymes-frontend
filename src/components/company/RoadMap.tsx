@@ -22,13 +22,25 @@ interface Props {
     description: string;
     recommendations: Recommendation[];
 }
-
+const companyId = "5891e02d-6865-471b-ad0f-8d66e788288d";
+const baseUrl = "http://localhost:8080";
 export const RoadMap = () => {
     const [roadMap, setRoadMap] = useState([] as Props[]);
     const [progress, setProgress] = useState({ total: 0, completed: 0 });
     const [percentage, setPercentage] = useState("0%");
 
     useEffect(() => {
+        const fetchRoadMap = async () => {
+            try {
+                console.log(companyId);
+                const response = await fetch(`${baseUrl}/actionPlan/getActualActionPlan/${companyId}`);
+                const data = await response.json();
+                console.log("Roadmap data:", data);
+            } catch (error) {
+                console.error("Error fetching roadmap data:", error);
+            }
+        };
+        fetchRoadMap();
         setRoadMap([
             {
                 dimension: "Tecnología",
