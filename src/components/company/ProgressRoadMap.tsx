@@ -9,7 +9,7 @@ interface props{
     setFinishDate: any;
 }
 
-export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate }: any) => {
+export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,setStartDate }: any) => {
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [date, setDate] = useState(null);
 
@@ -29,7 +29,7 @@ export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate }: any) =>
             <div className="flex flex-col justify-start w-full mb-4">
                 <div className="flex flex-row justify-between items-baseline mb-2">
                     <p className="text-lg font-sans text-white font-light">Inicio de la hoja de ruta:</p>
-                    <p className="pr-4 pl-4 rounded text-white bg-secondary_old inline-block">2024-05-25</p>
+                    <p className="pr-4 pl-4 rounded text-white bg-secondary_old inline-block">{startDate}</p>
                 </div>
                 <div className="flex flex-row justify-between items-baseline">
                     <p className="text-lg font-sans text-white font-light">Finalización de la hoja de ruta:</p>

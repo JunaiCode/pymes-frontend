@@ -4,7 +4,7 @@ import Questionary from "@/components/company/Questionary";
 import PageTemplate from "@/components/ui/PageTemplate";
 import { useEffect, useState } from "react";
 
- const companyId = "5891e02d-6865-471b-ad0f-8d66e788288d";
+ const companyId = "72c963d0-15d2-40a7-95c0-5afa77c3e774";
  const baseUrl = "http://localhost:8080";
 
 const Page = () => {

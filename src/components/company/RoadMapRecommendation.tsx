@@ -27,9 +27,10 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
     const [completedCount, setCompletedCount] = useState(0);
 
     useEffect(() => {
-        const completed = recommendations.filter(rec => rec.checked).length;
+        const completed = recommendations.filter(recommendation => recommendation.checked).length;
         setCompletedCount(completed);
     }, [recommendations]);
+    
 
     return (
         <div className="w-full h-fit flex flex-row p-4">
