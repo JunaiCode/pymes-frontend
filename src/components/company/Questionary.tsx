@@ -23,7 +23,6 @@ interface QuestionI {
 }
 
 interface ResultsDTO {
-  dimensionId: string;
   questionId: string;
   optionId: string;
   marked: boolean;
@@ -76,7 +75,6 @@ const Questionary = ({evaluationExist}:any) => {
     let resultsDTO: ResultsDTO[] = [];
     evaluationResults.forEach((question: QuestionI) => {
       resultsDTO.push({
-        dimensionId: questions.find((questionDimension) => questionDimension.questions.find((question) => question.questionId === question.questionId))?.dimensionId ?? "",
         questionId: question.questionId,
         optionId: question.answer?.optionId ?? "",
         marked: question.marked,
@@ -166,7 +164,6 @@ const Questionary = ({evaluationExist}:any) => {
         setQuestions(data);
         setevaluationResults(evaluationExist.questions);
         setEvaluationId(evaluationExist.evaluationId);
-        setResultsDTO(evaluationResultToDTO(evaluationExist.questions));
         setCurrentQuestion(evaluationExist.questions[0]);
       });
     }else{
@@ -181,6 +178,7 @@ const Questionary = ({evaluationExist}:any) => {
   }, [progress]);
 
   useEffect(() => {
+    console.log(evaluationResults);
     setResultsDTO(evaluationResultToDTO(evaluationResults));
     setProgress({
       total: evaluationResults.length,
