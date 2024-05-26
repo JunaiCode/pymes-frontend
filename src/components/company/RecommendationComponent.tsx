@@ -4,12 +4,13 @@ import { useState } from "react";
 interface RecommendationProps {
   recommendationId: string;
   description: string;
-  tag: string;
+  tagName: string;
   index: string;
   dimension: string;
   checked: boolean;
   steps: {
-    id: string;
+    recommendationActionPlanId
+    : string;
     description: string;
     checked: boolean;
 }[];
@@ -18,7 +19,7 @@ interface RecommendationProps {
 
 export const RecommendationComponent = ({
   description,
-  tag,
+  tagName,
   index,
   dimension,
   steps,
@@ -62,7 +63,7 @@ export const RecommendationComponent = ({
         </div>
         <div className="flex justify-evenly items-center h-12 w-48 px-4 mt-2 sm:mt-0 bg-secondary_old rounded-full  break-words">
           <span className="bg-white rounded-full w-2 h-2 mr-2"></span>
-          <p className="text-sm text-white">{tag}</p>
+          <p className="text-sm text-white">{tagName}</p>
         </div>
       </div>
       <ul
@@ -76,7 +77,8 @@ export const RecommendationComponent = ({
             <input
               type="checkbox"
               onClick={handleCheck}
-              id={`${recommendationId}-${step.id}`}
+              id={`${recommendationId}/${step.recommendationActionPlanId
+              }`}
               className="peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 transition-all 
               before:content[''] before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 
               before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 

@@ -3,13 +3,14 @@ import { RecommendationComponent } from "./RecommendationComponent";
 import { useState, useEffect } from "react";
 
 type Recommendation = {
-    id: string;
+    recommendationId: string;
     title: string;
     description: string;
     checked: boolean;
-    tag: string;
+    tagName: string;
     steps: {
-        id: string;
+        recommendationActionPlanId
+: string;
         description: string;
         checked: boolean;
     }[];
@@ -31,7 +32,7 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
     }, [recommendations]);
 
     return (
-        <div className="w-full h-full flex flex-row p-4">
+        <div className="w-full h-fit flex flex-row p-4">
             <div className="h-full w-full bg-white mr-2 border rounded-lg shadow-lg p-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <div className="flex flex-row justify-start gap-2 items-baseline w-fit">
@@ -57,10 +58,11 @@ export const RoadMapRecommendation = ({ dimension, description, recommendations,
                         dimension={dimension}
                         description={recommendation.description}
                         index={index.toString()}
-                        tag={recommendation.tag}
+                        tagName={recommendation.tagName}
                         checked={recommendation.checked}
                         steps={recommendation.steps}
-                        recommendationId={recommendation.id}
+                        recommendationId={recommendation.recommendationId
+                        }
                         handleCheck={handleCheck}
                     />
                 ))}
