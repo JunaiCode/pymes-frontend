@@ -2,7 +2,9 @@
 import ComboBox from "@/components/ui/ComboBox";
 import PageTemplate from "@/components/ui/PageTemplate";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import { IoIosCreate } from "react-icons/io";
+
 
 async function fetchModels() {
     const res = await fetch('http://localhost:8080/model/get/all')
@@ -16,6 +18,13 @@ async function fetchVersions(modelId: string) {
     return data
 }
 
+async function fetchQuestions(levelId: string) {
+    const res = await fetch(`http://localhost:8080/question/get/level/${levelId}`)
+    const data = await res.json()
+
+    return data
+}
+
 export default function Page() {
     const [modelData, setModelData] = useState([] as any)
     const [versionData, setVersionData] = useState([] as any)
@@ -23,10 +32,15 @@ export default function Page() {
     const [modelSelected, setModelSelected] = useState("-1");
     const [versionSelected, setVersionSelected] = useState("-1");
     const [dimensionSelected, setDimensionSelected] = useState("-1");
+    const [levelSelected, setLevelSelected] = useState("-1");
+    const [levelData, setLevelData] = useState([] as any)
+    const [levelEnabled, setLevelEnabled] = useState(false)
     const [questionData, setQuestionData] = useState([] as any)
     const router = useRouter();
     const [versionEnabled, setVersionEnabled] = useState(false);
     const [dimensionEnabled, setDimensionEnabled] = useState(false);
+
+
 
     useEffect(() => {
         fetchModels().then(data => {
@@ -62,8 +76,30 @@ export default function Page() {
     }, [versionSelected])
 
     useEffect(() => {
+        if (dimensionSelected !== "-1") {
+            if (dimensionData.find((dimension: any) => dimension.dimensionId === dimensionSelected).levels.length === 0) {
+                setQuestionData([])
+                return
+            }
+            setLevelData(dimensionData.find((dimension: any) => dimension.dimensionId === dimensionSelected).levels)
+            setLevelSelected(dimensionData.find((dimension: any) => dimension.dimensionId === dimensionSelected).levels[0].levelId)
+            setLevelEnabled(true)
+        }
 
     }, [dimensionSelected])
+
+    useEffect(() => {
+        if (levelSelected !== "-1") {
+            fetchQuestions(levelSelected).then(data => {
+                console.log(data)
+                if (data.length === 0) {
+                    setQuestionData([])
+                    return
+                }
+                setQuestionData(data)
+            })
+        }
+    }, [levelSelected])
 
     return (
         <PageTemplate>
@@ -99,14 +135,66 @@ export default function Page() {
                         enabled={dimensionEnabled}
                     />
 
+                    <ComboBox
+                        label="Nivel"
+                        optionsLabels={levelData.map((level: any) => level.name)}
+                        optionsValues={levelData.map((level: any) => level.levelId)}
+                        selected={levelSelected}
+                        setSelected={setLevelSelected}
+                        enabled={levelEnabled}
+                    />
+
                     <button className="ml-auto bg-secondary_old py-2 px-2 text-white rounded-lg h-fit"
                         onClick={() => router.push('/questions/new')}
                     >Agregar</button>
                 </section>
-                <main className="h-full w-full flex flex-col border overflow-y-scroll border-red-400 p-4">
+                <main className="h-full w-full flex flex-col  overflow-y-scroll p-4">
+                    {questionData.map((question: any) => (
+                        <QuestionCard question={question} router={router} key={question.questionId} />
 
+                    ))}
+                    {questionData.length === 0 && (
+                        <p className="font-sans text-lg text-gray-600">No hay preguntas en este nivel</p>
+                    )}
                 </main>
             </div>
         </PageTemplate>
+    )
+}
+
+export function QuestionCard({ question, router }: any) {
+    return (
+        <div className="flex flex-col w-full items-start justify-start my-2 bg-white mr-2 border rounded-lg shadow-lg">
+            <header className="w-full px-4 pt-4 border-b-2 pb-1">
+                <p className="font-sans font-bold text-xl text-secondary_old">{question.question}</p>
+            </header>
+            <section className="flex flex-row w-full ">
+                <section className="w-full flex flex-row p-4 ">
+                    <section className="h-full w-full flex flex-col">
+                        <p className="font-sans text-md font-semibold text-gray-600">Informacion de la pregunta</p>
+                        <p className="font-sans text-sm text-gray-600">Tipo de empresa: {question.companyTypeId}</p>
+                        <p className="font-sans text-sm text-gray-600">Puntaje: {question.scorePositive}</p>
+                        <p className="font-sans text-sm text-gray-600">Opciones: {question.options.length}</p>
+                    </section>
+                    <section className="h-full w-full flex flex-col">
+                        <p className="font-sans text-md font-bold text-gray-600">Informacion de la recomendacion</p>
+                        <p className="font-sans text-sm text-gray-600">Titulo: {question.recommendation.title}</p>
+                        <p className="font-sans text-sm text-gray-600">Pasos: {question.recommendation.steps.length}</p>
+                        
+                    </section>
+
+                </section>
+                <footer className=" h-full flex justify-center items-center p-4">
+                    <button
+                        className="w-fit h-fit flex flex-row justify-around items-center border px-2 py-1 border-secondary_old text-secondary_old rounded-2xl ml-auto"
+                        onClick={() => router.push(`/tags/${question.questionId}`)}
+                    >
+                        <IoIosCreate size={20} className="text-secondary_old" />
+                        <p className="ml-2 text-sm">Editar</p>
+                    </button>
+                </footer>
+            </section>
+
+        </div>
     )
 }

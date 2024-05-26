@@ -14,18 +14,21 @@ const companySizeOptions = [
 async function fetchModels() {
     const res = await fetch('http://localhost:8080/model/get/all')
     const data = await res.json()
+    console.log(data)
     return data
 }
 
 async function fetchVersions(modelId: string) {
     const res = await fetch(`http://localhost:8080/model/get/versions/${modelId}`)
     const data = await res.json()
+    console.log(data)
     return data
 }
 
 async function fetchTags(dimensionId: string) {
     const res = await fetch(`http://localhost:8080/tag/get/dimension/${dimensionId}`)
     const data = await res.json()
+    console.log(data)
     return data
 }
 
@@ -207,10 +210,29 @@ export default function Page() {
             versionId: versionSelected,
             dimensionId: dimensionSelected,
             tagId: tagSelected,
-            companyType: companySizeSelected,
+            companyTypeId: companySizeSelected,
+            levelId: levelSelected,
         }
 
         console.log(data)
+
+        fetch('http://localhost:8080/question/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        }).then(response => {
+            if (response.ok) {
+                alert("Pregunta creada correctamente")
+                router.push("/questions")
+            } else {
+                alert("Error al crear la pregunta")
+                console.error('Error:', response);
+            }
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
     }
 
     function checkAllFields() {
@@ -268,10 +290,10 @@ export default function Page() {
                 alert("Favor de llenar todas las opciones")
                 return false
             }
-            if (options[i].points === 0) {
-                alert("Favor de llenar todos los puntos de las opciones")
-                return false
-            }
+           if(sumMatch === false){
+               alert("La suma de los puntos de las opciones debe ser igual a los puntos de la pregunta")
+               return false
+           }
         }
         for (let i = 0; i < steps.length; i++) {
             if (steps[i].step === "") {
