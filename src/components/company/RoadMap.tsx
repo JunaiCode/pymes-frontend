@@ -102,7 +102,7 @@ export const RoadMap = () => {
     return (
         <div className="w-full h-screen flex flex-col items-start justify-start bg-light relative">
             {roadMap.length === 0 ? (
-                <div className="w-full flex flex-col items-center justify-center bg-light">
+                <div className="w-full flex flex-col items-center h-screen justify-center bg-light">
                     <h1 className="text-2xl font-semibold text-center mt-24 mb-8">
                         ¡Ups! Aún no tienes ninguna hoja de ruta disponible. Te invitamos a realizar tu primera evaluación.
                     </h1>
