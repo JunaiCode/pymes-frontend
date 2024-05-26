@@ -143,7 +143,7 @@ export const RoadMap = () => {
                     <div className="h-fit w-full bg-white mr-2 border rounded-lg shadow-lg">
                         <div className="flex justify-end items-center pl-4">
                             <p className="text-5xl font-sans font-bold mb-2 mt-2 w-1/2">Mi Hoja de Ruta</p>
-                            <ProgressRoadMap percentage={percentage} finishDate={finishDate} startDate={startDate} setStartDate={setStartDate} setFinishDate={setFinishDate} />
+                            <ProgressRoadMap percentage={percentage} finishDate={finishDate} startDate={startDate} actionPlanId={roadMapId} setFinishDate={setFinishDate} />
                         </div>
                         <div className="pl-4 pr-4 pb-4">
                             <p className="mt-4 text-lg font-light font-sans leading-relaxed">

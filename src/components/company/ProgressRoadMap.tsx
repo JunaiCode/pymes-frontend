@@ -8,12 +8,11 @@ interface props{
     finishDate: string;
     setFinishDate: any;
 }
-
-export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,setStartDate }: any) => {
+const baseUrl = "http://localhost:8080";
+export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,actionPlanId }: any) => {
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [date, setDate] = useState(null);
     const formatDate = 'yyyy-MM-dd'
-
     const handlePencilClick = () => {
         setIsDatePickerOpen(true);
     };
@@ -22,6 +21,23 @@ export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,
         const formattedDate = format(date, formatDate);
         setFinishDate(formattedDate); 
         setDate(date);
+        fetch(`${baseUrl}/actionPlan/updateEnd/${actionPlanId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                date: date.toISOString(),
+            }),
+        }).then((response) => {
+            if (response.ok) {
+                console.log("Fecha de finalización actualizada");
+            } else {
+                throw new Error("Error al actualizar la fecha de finalización");
+            }
+        }).catch((error) => {
+            console.error("Error al actualizar la fecha de finalización:", error);
+        });
         setIsDatePickerOpen(false);
     };
 
