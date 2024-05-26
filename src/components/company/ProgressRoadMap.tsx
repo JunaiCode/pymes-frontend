@@ -20,8 +20,6 @@ export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,
     const handleDateChange = (date:any) => {
         const isoString = date.toISOString();
         const stringWithoutZ = isoString.slice(0, -1);
-        console.log("startDate",startDate);
-        console.log("finishDate",stringWithoutZ);
         const formattedDate = format(date, formatDate);
         setFinishDate(formattedDate); 
         setDate(date);

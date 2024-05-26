@@ -343,7 +343,7 @@ const Questionary = ({evaluationExist}:any) => {
   };
 
   const handleFinishEvaluation = () => {
-    fetch(`${baseUrl}/evaluation/finish/${evaluationId}`, {
+    fetch(`${baseUrl}/evaluation/finish/${evaluationId}/version/${versionId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
