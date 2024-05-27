@@ -41,7 +41,7 @@ export const RoadMap = () => {
     useEffect(() => {
         const fetchRoadMap = async () => {
             try {
-                const response = await fetch(`${baseUrl}/actionPlan/getActualActionPlan/${companyId}`);
+                const response = await fetch(`${baseUrl}/company/${companyId}/actionPlan/actual`);
                 const data = await response.json();
                 data.info.map((dimensionRecommendation: any) => {
                     dimensionRecommendation.recommendations.map((recommendation: any) => {
