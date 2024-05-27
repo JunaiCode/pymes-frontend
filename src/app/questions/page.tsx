@@ -103,7 +103,7 @@ export default function Page() {
 
     return (
         <PageTemplate>
-            <div className="w-full flex flex-col items-start justify-center bg-light max-h-screen">
+            <div className="h-full w-full flex flex-col items-start justify-center bg-light max-h-screen">
                 <header className="w-full px-4 py-8" id="title">
                     <p className="font-sans text-2xl">Preguntas del modelo</p>
                 </header>

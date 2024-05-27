@@ -7,7 +7,7 @@ import WelcomeScreen from "@/components/company/WelcomeScreen";
 import { useRouter } from "next/navigation";
 
 const page = () => {
-  let userType = "company";
+  let userType = "admin";
   let hasCompletedEvaluation = true;
 
   if (userType === "admin") {

@@ -21,6 +21,7 @@ export default function Page() {
 
     useEffect(() => {
         getModels().then(data => {
+            if(data.length === 0) return 
             setData(data)
             console.log(data)
         })
@@ -28,7 +29,7 @@ export default function Page() {
 
     return (
         <PageTemplate>
-            <div className="w-full flex flex-col items-start justify-center bg-light max-h-screen">
+            <div className="h-full w-full flex flex-col items-start justify-center bg-light max-h-screen">
                 <header className="w-full px-4 py-8 flex flex-row items-start justify-center" id="title">
                     <div >
 
@@ -48,6 +49,9 @@ export default function Page() {
                     {data.map((item: any) => (
                         <ModelCard key={item.modelId} {...item} router={router} />
                     ))}
+                    {data.length === 0 && (
+                        <p className="font-sans text-lg text-gray-400">No hay modelos creados</p>
+                    )}
                 </main>
             </div>
             <CreateModel isOpen={open} onClose={setOpen} />

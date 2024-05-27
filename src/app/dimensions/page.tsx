@@ -42,6 +42,7 @@ export default function Page() {
 
     useEffect(() => {
         fetchModels().then(data => {
+            if(data.length === 0) return
             setModelData(data)
             setModelSelected(data[0].modelId)
         })
@@ -81,7 +82,7 @@ export default function Page() {
 
     return (
         <PageTemplate>
-            <main className="w-full flex flex-col items-start justify-center bg-light max-h-screen">
+            <main className="h-full w-full flex flex-col items-start justify-center bg-light max-h-screen">
                 <header className="w-full px-4 py-8" id="title">
                     <p className="font-sans text-2xl">Dimensiones del modelo</p>
                 </header>
@@ -112,8 +113,9 @@ export default function Page() {
                     {loaded && data && data.map((dimension: any) => {
                         return <DimensionCard key={dimension.dimensionId} name={dimension.name} description={dimension.description} id={dimension.dimensionId} router={router} />
                     })}
-                    {loaded && data.length === 0 && <p>No hay dimensiones en este modelo</p>}
-
+                    {loaded && data.length === 0 && <p className="font-sans text-lg text-gray-400">No hay dimensiones creadas</p>}
+                    {modelData.length === 0 && <p className="font-sans text-lg text-gray-400">No hay modelos creados</p>}
+                    {versionData.length === 0 && <p className="font-sans text-lg text-gray-400">No hay versiones creadas</p>}
                 </div>
             </main>
             <CreateDimension isOpen={isOpen} onClose={setIsOpen} selectedModel={modelSelected} selectedVersion={versionSelected} />
