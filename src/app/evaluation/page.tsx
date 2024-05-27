@@ -12,7 +12,7 @@ const Page = () => {
     const [buttonText, setButtonText] = useState("Empezar evaluación");
     const [evaluationExist, setEvaluationExist] = useState(null);
     useEffect(() => {
-        fetch(`${baseUrl}/evaluation/company/${companyId}/results`, {
+        fetch(`${baseUrl}/company/${companyId}/results`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

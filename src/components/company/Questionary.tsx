@@ -118,7 +118,7 @@ const Questionary = ({evaluationExist}:any) => {
   useEffect(() => {
 
     const createEvaluation = async () => {
-      const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
+      const evaluation = await fetch(`${baseUrl}/company/${companyId}/evaluation`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
