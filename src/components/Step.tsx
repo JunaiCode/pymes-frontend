@@ -14,6 +14,7 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                 <div className="w-full ml-12 mb-8">
                 <label htmlFor="name">Nombre de la empresa</label>
                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" id="name" value={formData.name} onChange={handleChange} placeholder="Empresa S.A.S" />
+                <p id="name" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                 </div>
                 <div className="w-full ml-12 mb-8">
                 <label htmlFor="company-select">Tipo de empresa</label>
@@ -24,16 +25,19 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                     <option value="3">S.A.S</option>
                     <option value="4">No se</option>
                 </select>
+                <p id="company-select" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                 </div>
                 <div className="w-full ml-12 mb-8">
                 <label htmlFor="nit">NIT</label>
                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="nit" id="nit" value={formData.nit} onChange={handleChange} placeholder="100 - 100 - 100" />
+                <p id="nit" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                 </div>
                 </div>
                 <div className="flex flex-col justify-center items-center">
                 <div className="w-full mr-12 mb-8">
                 <label htmlFor="address">Dirección</label>
                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="address" id="address" value={formData.address} onChange={handleChange} placeholder="Carrera 1A #5-55" />
+                <p id="address" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                 </div>
                 <div className="w-full mr-12 mb-8">
                 <label htmlFor="city-company">Ciudad</label>
@@ -43,10 +47,12 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                     <option value="2">Bogota</option>
                     <option value="3">Cali</option>
                 </select>
+                <p id="city-company" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                 </div>
                 <div className="w-full mr-12 mb-8">
                 <label htmlFor="tel">Telefono</label>
                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="tel" id="tel" value={formData.tel} onChange={handleChange} placeholder="300 252 4520" />
+                <p id="tel" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                 </div>
                 </div>
                 </div>
@@ -65,18 +71,22 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                  <div className="w-full ml-12 mb-8">
                  <label htmlFor="legalRep">Nombre del representante legal</label>
                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="legalRep" id="legalRep" value={formData.legalRep} onChange={handleChange} placeholder="Pedro Perez" />
+                 <p id="legalRep" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
                  <div className="w-full ml-12 mb-8">
                  <label htmlFor="legalRepEmail">Correo electronico del representante legal</label>
                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="legalRepEmail" id="legalRepEmail" value={formData.legalRepEmail} onChange={handleChange} placeholder="usuario@email.com" />
+                 <p id="legalRepEmail" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
                  <div className="w-full ml-12 mb-8">
                  <label htmlFor="legalRepTel">Telefono del representante legal</label>
                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="tel" name="legalRepTel" id="legalRepTel" value={formData.legalRepTel} onChange={handleChange} placeholder="300 3030 300" />
+                 <p id="legalRepTel" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
                  <div className="w-full ml-12 mb-8">
                  <label htmlFor="password">Contraseña</label>
                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" id="password" value={formData.password} onChange={handleChange} placeholder="********" />
+                 <p id="password" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
                  </div>
                  <div className="flex flex-col justify-center items-center mr-12">
@@ -102,14 +112,17 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                      <option value="2">Opcion2</option>
                      <option value="3">Opcion3</option>
                  </select>
+                 <p id="economicSector-select" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
                  <div className="w-full ml-12 mb-8">
                  <label htmlFor="numberEmployees">Numero de empleados</label>
                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="numberEmployees" id="numberEmployees" value={formData.numberEmployees} onChange={handleChange} placeholder="500" />
+                 <p id="numberEmployees" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
                  <div className="w-full ml-12 mb-8">
                  <label htmlFor="opsYears">Años en operación</label>
                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="opsYears" id="opsYears" value={formData.opsYears} onChange={handleChange} placeholder="3" />
+                 <p id="opsYears" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
                  </div>
                  <div className="flex flex-col justify-center items-center">
@@ -131,10 +144,12 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                  <div className="w-full ml-12 mb-8">
                  <label htmlFor="specificNeeds">Necesidades especificas de su empresa</label>
                  <textarea className=" resize-none shadow border rounded w-full h-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="specificNeeds" id="specificNeeds" cols={30} rows= {10} onChange={handleChange} value={formData.specificNeeds} placeholder="Detalles"></textarea>
+                 <p id="specificNeeds" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
                  <div className="w-full ml-12 mb-8">
                  <label htmlFor="expectations">Expectativas con respecto a la plataforma</label>
                  <textarea className=" resize-none shadow border rounded w-full h-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="expectations" id="expectations" cols={30} rows= {10} onChange={handleChange} value={formData.expectations} placeholder="Detalles"></textarea>
+                 <p id="expectations" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
                  </div>
                  <div className="flex flex-col justify-center items-center">
@@ -166,6 +181,7 @@ Al utilizar nuestra aplicación, usted acepta estos términos y condiciones en s
                    <div className="mt-2 mr-8 flex justify-end w-full">
                  <label htmlFor="termsAndConditions" className="mr-2 ">Acepto los términos y condiciones</label>
                  <input type="checkbox" name="termsAndConditions" id="termsAndConditions" onClick={handleChange} />
+                 <p id="termsAndConditions" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                </div>
             </div>
             

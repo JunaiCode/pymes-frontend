@@ -116,10 +116,55 @@ const MultiStepsForm = () => {
                     };
                 }
             }
-            if (step === 2) {
-                return !formData.specificNeeds || !formData.expectations;
+            if(step === 2) {
+                if(formData.economicSector === '') {
+                    errors = {
+                        ...errors,
+                        economicSector: 'Economic Sector is required',
+                    };
+                }
+                if(formData.numberEmployees === '') {
+                    errors = {
+                        ...errors,
+                        numberEmployees: 'Number of Employees is required',
+                    };
+                }
+                if(formData.opsYears === '') {
+                    errors = {
+                        ...errors,
+                        opsYears: 'Operation Years is required',
+                    };
+                }
+                if(!RegExp('^[0-9]{1,3}$').test(formData.numberEmployees))
+                {
+                    errors = {
+                        ...errors,
+                        numberEmployees: 'Number of Employees is invalid',
+                    };
+                }
+                if(!RegExp('^[0-9]{1,3}$').test(formData.opsYears))
+                {
+                    errors = {
+                        ...errors,
+                        opsYears: 'Operation Years is invalid',
+                    };
+                }
             }
             if (step === 3) {
+                if(formData.specificNeeds === '') {
+                    errors = {
+                        ...errors,
+                        specificNeeds: 'Specific Needs are required',
+                    };
+                }
+                if(formData.expectations === '') {
+                    errors = {
+                        ...errors,
+                        expectations: 'Expectations are required',
+                    };
+                }
+            }
+            if (step === 4) {
                 if(formData.termsAndConditions === false) {
                     errors = {
                         ...errors,
@@ -173,27 +218,35 @@ const MultiStepsForm = () => {
         router.push('/');
     }
 
-    const putErrors =()=>{
+    const putErrors = () => {
         for (const key in formData) {
-            // Insert error into the form
-                let input = document.querySelector(`input[name=${key}]`);
-                let errorElement = document.querySelector(`p[id=${key}]`);
-                if (errors != undefined && Object.keys(errors).includes(key)){
-                    const error = errors[key];
-                    if(input && !errorElement ){
-                        input.classList.add('border-red-500');
-                        input.insertAdjacentHTML('afterend', `<p id="${key}" class="text-red-500 mt-2 text-xs italic">${error}</p>`);
-                    }
-                }else{
-                    if(errorElement){
-                        errorElement.remove();
-                        if(input){
-                            input.classList.remove('border-red-500');
-                        }
+                if(errors !== undefined) {
+                const input = document.querySelector(`input[name=${key}]`);
+                const errorElement = document.querySelector(`p[id=${key}]`) as HTMLElement;
+                const error = errors[key];
+                if(error != undefined && errorElement && input) {
+                    console.log(error);
+                    errorElement.innerText = error;
+                    errorElement.classList.add('opacity-1');
+                    errorElement.classList.remove('opacity-0');
+                    input.classList.add('border-red-500');
+                }else if(error == undefined && errorElement && input) {
+                    errorElement.classList.add('opacity-0');
+                    errorElement.classList.remove('opacity-1');
+                    input.classList.remove('border-red-500');
                 }
+            }else{
+                const elements = document.querySelectorAll('.opacity-1');
+                elements.forEach(element => {
+                    const input = element.previousElementSibling as HTMLElement;
+                    element.classList.remove('opacity-1');
+                    element.classList.add('opacity-0');
+                    input.classList.remove('border-red-500');
+                });
             }
-    }
-    }
+        }
+    };
+    
 
     
     const handleNext = (e: React.MouseEvent) => {
