@@ -216,7 +216,7 @@ export default function Page() {
 
         console.log(data)
 
-        fetch('http://localhost:8080/question/add', {
+        fetch('http://localhost:8080/version/add/question', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
