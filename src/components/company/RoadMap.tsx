@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ProgressRoadMap } from "./ProgressRoadMap";
 import { RoadMapRecommendation } from "./RoadMapRecommendation";
+import { useRouter } from "next/navigation";
 
 type Step = {
     recommendationActionPlanId:string;
@@ -34,6 +35,8 @@ export const RoadMap = () => {
     const [percentage, setPercentage] = useState("0%");
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState(""); 
+    const [finished, setFinished] = useState(false);
+    const router = useRouter();
         
     useEffect(() => {
         const fetchRoadMap = async () => {
@@ -77,7 +80,9 @@ export const RoadMap = () => {
 
     useEffect(() => {
         if (percentage === "100%") {
-            alert("¡Felicidades! Has completado todas las recomendaciones de la hoja de ruta");
+            setFinished(true);
+        }else{
+            setFinished(false);
         }
     }, [percentage]);
 
@@ -96,12 +101,6 @@ export const RoadMap = () => {
                                             method: "PUT",
                                             headers: {
                                                 "Content-Type": "application/json",
-                                            }
-                                        }).then((response) => {
-                                            if (response.ok) {
-                                                return response.json();
-                                            } else {
-                                                throw new Error("No se pudo actualizar el paso de la hoja de ruta.");
                                             }
                                         })
                                         return {
@@ -162,6 +161,24 @@ export const RoadMap = () => {
                     handleCheck={handleCheck}
                 />
             ))}
+            {finished && (
+            <div className="flex justify-center w-full items-center p-4">
+            <div className="flex flex-col items-center justify-center">
+            <p className="text-center mb-4 mr-2">
+                ¡Felicidades por completar la hoja de ruta! Ahora la empresa está en un nivel de madurez digital más alto. Te invitamos a evaluarte nuevamente y seguir avanzando hacia el éxito. ¡Enhorabuena por este logro! 🚀🎉
+            </p>
+            <button 
+                className="bg-primary text-white px-6 py-3 rounded-lg shadow-lg hover:bg-primary-dark transition duration-300" 
+                onClick={() => {
+                    router.push("/evaluation");
+                }}
+            >
+                Realizar nueva evaluación
+            </button>
+        </div>
+    </div>
+)}
+
         </div>
     );
 };
