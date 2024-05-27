@@ -31,12 +31,6 @@ export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,
             body: JSON.stringify({
                 date: stringWithoutZ,
             }),
-        }).then((response) => {
-            if (response.ok) {
-                console.log("Fecha de finalización actualizada");
-            } else {
-                throw new Error("Error al actualizar la fecha de finalización");
-            }
         }).catch((error) => {
             console.error("Error al actualizar la fecha de finalización:", error);
         });

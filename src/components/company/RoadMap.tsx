@@ -49,6 +49,9 @@ export const RoadMap = () => {
                     });
                 });
                 setStartDate(data.startDate);
+                if(data.endDate){
+                    setFinishDate(data.endDate.slice(0,10));
+                }
                 setRoadMap(data.info);
                 setRoadMapId(data.actionPlanId);
             } catch (error) {
@@ -83,12 +86,10 @@ export const RoadMap = () => {
         setRoadMap(prevRoadMap => 
             prevRoadMap.map(dimensionRecommendation => {
                 if (dimensionRecommendation.recommendations.some(recommendation => recommendation.recommendationId === recommendationId)) {
-                    // Si la recomendación está en esta dimensión
                     return {
                         ...dimensionRecommendation,
                         recommendations: dimensionRecommendation.recommendations.map(recommendation => {
                             if (recommendation.recommendationId === recommendationId) {
-                                // Si es la recomendación que se está marcando
                                 const updatedSteps = recommendation.steps.map(step => {
                                     if (step.recommendationActionPlanId === stepId) {
                                         fetch(`${baseUrl}/actionPlan/updateStepTrack/${roadMapId}/${stepId}/${e.target.checked}`, {
@@ -102,8 +103,6 @@ export const RoadMap = () => {
                                             } else {
                                                 throw new Error("No se pudo actualizar el paso de la hoja de ruta.");
                                             }
-                                        }).then((data) => {
-                                            console.log(data);
                                         })
                                         return {
                                             ...step,
