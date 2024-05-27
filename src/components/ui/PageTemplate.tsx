@@ -3,7 +3,7 @@ import AdminSidebar from '../admin/AdminSidebar';
 import CompanySideBar from '../company/CompanySideBar';
 
 export default function PageTemplate({ children }: { children: any }) {
-  let userType = 'admin';
+  let userType = 'company';
   if (userType === 'admin') {
     return (
       <div className="flex flex-row">

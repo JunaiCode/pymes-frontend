@@ -108,9 +108,11 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                  <div className="w-full ml-12 mb-8">
                  <label htmlFor="economicSector-select">Sector economico</label>
                  <select className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="economicSector" id="economicSector-select" onChange={handleChange} value={formData.economicSector}>
-                     <option value="1">Opcion1</option>
-                     <option value="2">Opcion2</option>
-                     <option value="3">Opcion3</option>
+                      <option value="0">Seleccione sector economico</option>
+                      <option value="1">Comercio</option>
+                      <option value="2">Servicios</option>
+                      <option value="3">Industrial</option>
+                      <option value="4">Tecnologia</option>
                  </select>
                  <p id="economicSector-select" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                  </div>
@@ -181,7 +183,9 @@ Al utilizar nuestra aplicación, usted acepta estos términos y condiciones en s
                    <div className="mt-2 mr-8 flex justify-end w-full">
                  <label htmlFor="termsAndConditions" className="mr-2 ">Acepto los términos y condiciones</label>
                  <input type="checkbox" name="termsAndConditions" id="termsAndConditions" onClick={handleChange} />
-                 <p id="termsAndConditions" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
+               </div>
+               <div className="flex justify-end w-full mr-8">
+               <p id="termsAndConditions" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                </div>
             </div>
             
