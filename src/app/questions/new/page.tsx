@@ -312,7 +312,7 @@ export default function Page() {
 
     return (
         <PageTemplate>
-            <div className="w-full  flex flex-col items-start justify-start bg-light max-h-screen">
+            <div className="h-full w-full  flex flex-col items-start justify-start bg-light max-h-screen">
                 <header className="w-full px-4 pt-8" id="title">
                     <h1 className="text-2xl font-bold">Nueva pregunta</h1>
                 </header>
