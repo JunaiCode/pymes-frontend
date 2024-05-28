@@ -41,7 +41,7 @@ export default function Page({ params }: { params: { id: string, versionId: stri
 
     return (
         <PageTemplate>
-            <div className="w-full flex flex-col items-start justify-start bg-light max-h-screen">
+            <div className="h-full w-full flex flex-col items-start justify-start bg-light max-h-screen">
                 <header className="flex flex-row w-full px-4 py-8" id="title">
                     <div>
                         <p className="font-sans text-md ">{model.name}</p>

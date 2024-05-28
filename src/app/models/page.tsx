@@ -21,6 +21,7 @@ export default function Page() {
 
     useEffect(() => {
         getModels().then(data => {
+            if(data.length === 0) return 
             setData(data)
             console.log(data)
         })
@@ -28,14 +29,14 @@ export default function Page() {
 
     return (
         <PageTemplate>
-            <div className="w-full flex flex-col items-start justify-center bg-light max-h-screen">
+            <div className="h-full w-full flex flex-col items-start justify-center bg-light max-h-screen">
                 <header className="w-full px-4 py-8 flex flex-row items-start justify-center" id="title">
                     <div >
 
                         <p className="font-sans text-2xl">Modelos</p>
                         <p className="font-sans text-sm text-gray-600">Los modelos son la base de la aplicacion, en estos podras definir diferentes versiones del mismo modelo y llevar un control de los cambios realizados</p>
                         <p className="font-sans text-sm text-gray-600">Aqui puedes ver los modelos que has creado</p>
-
+                        
                     </div>
                     <button className="ml-auto mt-auto h-fit bg-secondary_old py-2 px-2 text-white rounded-lg position-absolute right-4 top-4"
                         onClick={() => setOpen(true)}
@@ -48,6 +49,9 @@ export default function Page() {
                     {data.map((item: any) => (
                         <ModelCard key={item.modelId} {...item} router={router} />
                     ))}
+                    {data.length === 0 && (
+                        <p className="font-sans text-lg text-gray-400">No hay modelos creados</p>
+                    )}
                 </main>
             </div>
             <CreateModel isOpen={open} onClose={setOpen} />
@@ -55,7 +59,7 @@ export default function Page() {
     )
 }
 
-export function ModelCard({ name, actualVersion, modelId, date, router }: { name: string, actualVersion: string, modelId: string, date: string, router: any }) {
+export function ModelCard({ name, actualVersion, modelId, date, active, router }: any) {
 
 
     return (
@@ -66,7 +70,9 @@ export function ModelCard({ name, actualVersion, modelId, date, router }: { name
                 </header>
                 <section className="w-full p-4">
                     <p className="font-sans text-sm text-gray-600">Version actual: v1.0.0</p>
-                    <p className="font-sans text-sm text-gray-600">Fecha de creacion: 10/05/2024</p>
+                    {active && (
+                        <p className="font-sans text-sm text-green-500">Activo</p>
+                    )}
                 </section>
             </section>
             <section className="ml-auto h-full">

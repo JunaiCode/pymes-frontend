@@ -64,7 +64,7 @@ export default function AdminHome() {
 
     ];
     return (
-        <div className="w-full flex flex-col items-start justify-center bg-light">
+        <div className="h-full w-full flex flex-col items-start justify-center bg-light">
             <div className="w-full p-10">
                 <p className="text-3xl font-sans font-bold">Dashboard</p>
             </div>

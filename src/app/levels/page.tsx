@@ -47,6 +47,7 @@ export default function Page() {
 
     useEffect(() => {
         fetchModels().then(data => {
+            if(data.length === 0) return
             setModelData(data)
             setModelSelected(data[0].modelId)
         })
@@ -131,7 +132,7 @@ export default function Page() {
 
     return (
         <PageTemplate>
-            <main className="w-full flex flex-col items-start justify-center bg-light max-h-screen">
+            <main className="h-full w-full flex flex-col items-start justify-center bg-light max-h-screen">
                 <header className="w-full px-4 py-8" id="title">
                     <p className="font-sans text-2xl">Niveles del modelo</p>
                 </header>

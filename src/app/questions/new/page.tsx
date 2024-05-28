@@ -173,7 +173,7 @@ export default function Page() {
     }, [dimensionSelected])
 
     const handleAddOption = () => {
-        setOptions([...options, { option: "", points: 0 }])
+        setOptions([...options, { option: "", checked: false }]);
     }
 
     const handleSubmit = () => {
@@ -185,7 +185,7 @@ export default function Page() {
         for (let i = 0; i < options.length; i++) {
             optionsDTO.push({
                 description: options[i].option,
-                value: options[i].points
+                value: options[i].checked ? question.points : 0
             })
         }
 
@@ -285,15 +285,19 @@ export default function Page() {
             alert("Favor de agregar al menos una opcion")
             return false
         }
+        let oneChecked = false
         for (let i = 0; i < options.length; i++) {
             if (options[i].option === "") {
                 alert("Favor de llenar todas las opciones")
                 return false
             }
-           if(sumMatch === false){
-               alert("La suma de los puntos de las opciones debe ser igual a los puntos de la pregunta")
-               return false
-           }
+            if(options[i].checked){
+                oneChecked = true
+            }
+        }
+        if(!oneChecked){
+            alert("Favor de selecciona la correcta")
+            return false
         }
         for (let i = 0; i < steps.length; i++) {
             if (steps[i].step === "") {
@@ -312,7 +316,7 @@ export default function Page() {
 
     return (
         <PageTemplate>
-            <div className="w-full  flex flex-col items-start justify-start bg-light max-h-screen">
+            <div className="h-full w-full  flex flex-col items-start justify-start bg-light max-h-screen">
                 <header className="w-full px-4 pt-8" id="title">
                     <h1 className="text-2xl font-bold">Nueva pregunta</h1>
                 </header>
@@ -387,7 +391,7 @@ export default function Page() {
                             onChange={(e) => {
                                 let numericValue = parseInt(e.target.value)
                                 setQuestion({ ...question, points: numericValue })
-                                calculateSumWeight(e.target.value)
+                                
                             }}
                         />
                         <ComboBox
@@ -399,7 +403,8 @@ export default function Page() {
                             enabled={true}
                         />
                         <p className="text-xl font-semibold mt-5">Opciones</p>
-                        <p className="text-gray-700 text-sm">Ingresa las opciones de la pregunta junto con el puntaje que se le asignara a cada una</p>
+                        <p className="text-gray-700 text-sm">Ingresa las opciones de la pregunta y selecciona la respuesta correcta</p>
+                        
                         <div className="h-full w-full flex flex-col overflow-y-auto p-4 border border-gray-300 rounded-lg my-5">
                             {options.map((option: any, index: number) => (
                                 <QuestionOption
@@ -411,6 +416,8 @@ export default function Page() {
                                     index={index}
                                     calculateSum={calculateSum}
                                     handleDeleteOption={handleDeleteOption}
+                                    maxPoints={question.points}
+                                    checked={option.checked}
                                 />
                             ))}
 
@@ -506,7 +513,7 @@ export default function Page() {
     )
 }
 
-export function QuestionOption({ option, points, options, setOptions, index, calculateSum, handleDeleteOption }: any) {
+export function QuestionOption({ option, points, options, setOptions, index, calculateSum, handleDeleteOption, maxPoints, checked }: any) {
     const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newOptions = options.map((opt: any, i: number) =>
             i === index ? { ...opt, option: e.target.value } : opt
@@ -514,14 +521,12 @@ export function QuestionOption({ option, points, options, setOptions, index, cal
         setOptions(newOptions);
     };
 
-    const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const numericValue = parseInt(e.target.value);
+    const handleOptionChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newOptions = options.map((opt: any, i: number) =>
-            i === index ? { ...opt, points: numericValue } : opt
+            i === index ? { ...opt,  checked: true } : { ...opt, checked: false }
         );
         setOptions(newOptions);
-        calculateSum(newOptions); // Call with updated options
-    };
+    }
 
     return (
         <div className="flex flex-row w-full items-center justify-between my-2">
@@ -532,14 +537,15 @@ export function QuestionOption({ option, points, options, setOptions, index, cal
                 value={option}
                 onChange={handleOptionChange}
             />
+
             <input
-                type="number"
-                placeholder="Ejemplo: 10"
-                className="w-1/4 p-2.5 border border-gray-300 rounded-lg"
-                min={1}
-                value={points}
-                onChange={handlePointsChange}
+                type="checkbox"
+                className="mr-2 w-4 h-4 text-blue-600  border-gray-300 rounded   "
+                checked={checked}
+                onChange={handleOptionChecked}
+
             />
+
             <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg ml-2"
                 onClick={() => handleDeleteOption(index)}

@@ -29,6 +29,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 name: "",
                 dimensions: [],
                 levels: [],
+                active: false
             }
         ]
     })
@@ -53,7 +54,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
     return (
         <PageTemplate>
-            <div className="w-full flex flex-col items-start justify-start bg-light max-h-screen">
+            <div className="h-full w-full flex flex-col items-start justify-start bg-light max-h-screen">
                 <header className="flex flex-row w-full px-4 py-8" id="title">
                     <div>
                         <p className="font-sans text-2xl mb-2">{model.name}</p>
@@ -67,7 +68,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <main className="h-full w-full flex flex-col border overflow-y-scroll overflow-x-hidden p-4">
                     <p className="font-sans text-xl mb-2">Versiones</p>
                     {model.versions && model.versions.length !== 0 && model.versions.map(version => (
-                        <VersionCard key={version.versionId} {...version} router={router} modelId={params.id} />
+                        <VersionCard key={version.versionId} {...version} router={router} modelId={params.id} active={version.active} />
                     ))}
                 </main>
 
@@ -77,18 +78,21 @@ export default function Page({ params }: { params: { id: string } }) {
     )
 }
 
-export function VersionCard({ versionId, name, router, modelId }: { versionId: string, name: string, router: any, modelId: string }) {
+export function VersionCard({ versionId, name, router, modelId, active }: { versionId: string, name: string, router: any, modelId: string, active: boolean }) {
     return (
-        <div className="flex flex-row w-full items-start justify-start my-2  bg-white mr-2 border rounded-lg shadow-lg">
+        <div className={`flex flex-row w-full items-start justify-start my-2  bg-white mr-2 border rounded-lg shadow-lg`}>
             <header className="w-full px-4 py-2" id="title">
-                <p className="font-sans text-lg">{name}</p>
+                <div className="h-full flex flex-row items-center">
+                    <p className="font-sans text-lg">{name}</p>
+                    {active && <p className="ml-10 text-sm font-semibold text-green-500">Activa</p>}
+                </div>
                 <p className="font-sans text-sm">{versionId}</p>
             </header>
             <footer className="w-full h-full flex justify-center items-center p-4">
-                <button 
+                <button
                     className="w-fit h-fit flex flex-row justify-around items-center border px-2 py-1 border-secondary_old text-secondary_old ml-auto rounded-2xl"
                     onClick={() => router.push(`/models/${modelId}/${versionId}`)}
-                    >
+                >
                     <p className="ml-auto text-sm">Ver</p>
                 </button>
             </footer>

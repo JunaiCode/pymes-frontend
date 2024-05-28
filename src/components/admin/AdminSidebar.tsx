@@ -17,6 +17,12 @@ const SidebarContext = createContext({ expanded: true, setExpanded: (expanded: b
 export default function AdminSidebar() {
     const router = useRouter();
     const [expanded, setExpanded] = useState(true);
+
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        router.push("/");
+    }
+
     return (
         <>
             <aside className={`sticky left-0 h-screen flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${expanded ? "w-52" : "w-20"}`}>
@@ -35,20 +41,21 @@ export default function AdminSidebar() {
                     <ul className="flex flex-col items-center ">
                         <SidebarItem icon={<IoHomeOutline size={25} className="text-white" />} text="Inicio" onClick={() => router.push("/home")} />
                         <SidebarItem icon={<IoShapesOutline size={25} className="text-white" />} text="Modelo" onClick={() => router.push("/models")} />
-                        <SidebarItem icon={<IoBusiness size={25} className="text-white" />} text="Empresas" onClick={() => router.push("/companies")} />
+                        
                         <SidebarItem icon={<IoPricetagOutline size={25} className="text-white" />} text="Tags" onClick={() => router.push("/tags")} />
                         <SidebarItem icon={<IoColorFilterOutline size={25} className="text-white" />} text="Dimensiones" onClick={() => router.push("/dimensions")} />
                         <SidebarItem icon={<IoPodiumOutline size={25} className="text-white" />} text="Niveles" onClick={() => router.push("/levels")} />
                         <SidebarItem icon={<IoHelpCircleOutline size={25} className="text-white" />} text="Preguntas" onClick={() => router.push("/questions")} />
-                        <SidebarItem icon={<IoAnalytics size={25} className="text-white" />} text="Reportes" onClick={() => router.push("/reports")} />
+                        
                     </ul>
                 </SidebarContext.Provider>
 
-                <div className="flex justify-center items-center p-4">
+                <div className="flex justify-center items-center p-4 mt-auto">
                     <button
                         className={`flex flex-row ${expanded ? "justify-between bg-primary" : "justify-center"} items-center
-                         hover:bg-dark_bg_hover p-2 rounded-lg duration-100 px-3
+                         hover:bg-dark_bg_hover p-2 rounded-lg duration-100 px-3 
                           transition-all`}
+                        onClick={handleLogout}
                     >
                         <IoIosLogOut size={25} className={`text-white ${expanded ? "mr-2" : ""}`} />
                         {expanded ? <p className="text-white text-lg ">Salir</p> : null}
