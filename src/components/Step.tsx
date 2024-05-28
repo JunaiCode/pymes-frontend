@@ -18,11 +18,11 @@ export const Step = ({step,formData,handleChange,handleNext,handlePrev,handleCan
                 </div>
                 <div className="w-full ml-12 mb-8">
                 <label htmlFor="company-select">Tipo de empresa</label>
-                <select className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="type" id="company-select" defaultValue="MICRO" onChange={handleChange} value={formData.type}>
+                <select className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="type" id="company-select" defaultValue="1" onChange={handleChange} value={formData.type}>
                     <option value="0">Seleccione tipo de empresa</option>
-                    <option value="MICRO">Micro Empresa</option>
-                    <option value="PEQUEÑA">Pequeña Empresa</option>
-                    <option value="MEDIANA">Mediana Empresa</option>
+                    <option value="1">Micro Empresa</option>
+                    <option value="2">Pequeña Empresa</option>
+                    <option value="3">Mediana Empresa</option>
                 </select>
                 <p id="company-select" className="text-red-500 mt-2 text-xs italic opacity-0"></p>
                 </div>
