@@ -1,8 +1,10 @@
 'use client';
 
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 async function login(data: any) {
+  
   const res = await fetch("http://localhost:8080/auth/login", {
     method: "POST",
     headers: {
@@ -15,6 +17,7 @@ async function login(data: any) {
 }
 
 const LoginPage = () => {
+  const router = useRouter();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -30,8 +33,9 @@ const LoginPage = () => {
         alert(res.message)
         return
       }
-      console.log(res)
+      localStorage.setItem('user', JSON.stringify(res))
       alert('Bienvenido')
+      router.push('/home')
     })
     
   }

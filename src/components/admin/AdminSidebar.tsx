@@ -17,6 +17,12 @@ const SidebarContext = createContext({ expanded: true, setExpanded: (expanded: b
 export default function AdminSidebar() {
     const router = useRouter();
     const [expanded, setExpanded] = useState(true);
+
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        router.push("/");
+    }
+
     return (
         <>
             <aside className={`sticky left-0 h-screen flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${expanded ? "w-52" : "w-20"}`}>
@@ -49,6 +55,7 @@ export default function AdminSidebar() {
                         className={`flex flex-row ${expanded ? "justify-between bg-primary" : "justify-center"} items-center
                          hover:bg-dark_bg_hover p-2 rounded-lg duration-100 px-3 
                           transition-all`}
+                        onClick={handleLogout}
                     >
                         <IoIosLogOut size={25} className={`text-white ${expanded ? "mr-2" : ""}`} />
                         {expanded ? <p className="text-white text-lg ">Salir</p> : null}

@@ -7,7 +7,10 @@ import WelcomeScreen from "@/components/company/WelcomeScreen";
 import { useRouter } from "next/navigation";
 
 const page = () => {
-  let userType = "admin";
+  let string = localStorage.getItem("user");
+  let user = string ? JSON.parse(string) : null;
+  let userType = user ? user.role : null;
+
   let hasCompletedEvaluation = true;
 
   if (userType === "admin") {

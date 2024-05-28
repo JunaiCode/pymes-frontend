@@ -1,9 +1,14 @@
 'use client';
 import AdminSidebar from '../admin/AdminSidebar';
 import CompanySideBar from '../company/CompanySideBar';
+import { useRouter } from 'next/navigation';
 
 export default function PageTemplate({ children }: { children: any }) {
-  let userType = 'admin';
+  let router = useRouter();
+  let string = localStorage.getItem("user");
+  let user = string ? JSON.parse(string) : null;
+  let userType = user ? user.role : null;
+  
   if (userType === 'admin') {
     return (
       <div className="flex flex-row">
@@ -13,7 +18,7 @@ export default function PageTemplate({ children }: { children: any }) {
         </div>
       </div>
     );
-  } else {
+  } else if (userType === 'company') {
     return (
       <div className="flex flex-row">
         <CompanySideBar />
@@ -22,5 +27,8 @@ export default function PageTemplate({ children }: { children: any }) {
         </div>
       </div>
     );
+  }else{
+    router.push('/')
   }
+
 }

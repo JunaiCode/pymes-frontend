@@ -14,25 +14,28 @@ import React, { useContext } from "react";
 
 const SidebarContext = createContext({
   expanded: true,
-  setExpanded: (expanded: boolean) => {},
+  setExpanded: (expanded: boolean) => { },
 });
 
 export default function CompanySideBar() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(true);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.push("/");
+  }
   return (
     <>
       <aside
-        className={`h-100 flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${
-          expanded ? "w-64" : "w-20"
-        }`}
+        className={`h-100 flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${expanded ? "w-64" : "w-20"
+          }`}
       >
         <div className="p-4 pb-8 flex justify-between items-center">
           <p
             className={`font-sans font-bold text-white text-2xl mx-2
-                        overflow-hidden transition-all ${
-                          expanded ? "w-full" : "w-0"
-                        }
+                        overflow-hidden transition-all ${expanded ? "w-full" : "w-0"
+              }
                     `}
           >
             Logo
@@ -75,10 +78,9 @@ export default function CompanySideBar() {
         </SidebarContext.Provider>
 
         <div className="flex justify-center items-center p-4">
-          <button onClick={() => router.push("/")}
-            className={`flex flex-row ${
-              expanded ? "justify-between bg-primary" : "justify-center"
-            } items-center
+          <button onClick={handleLogout}
+            className={`flex flex-row ${expanded ? "justify-between bg-primary" : "justify-center"
+              } items-center
                          hover:bg-dark_bg_hover p-2 rounded-lg duration-100 px-3
                           transition-all`}
           >
