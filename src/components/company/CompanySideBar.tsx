@@ -23,7 +23,7 @@ export default function CompanySideBar() {
   return (
     <>
       <aside
-        className={`h-100 flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-full flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${
           expanded ? "w-64" : "w-20"
         }`}
       >
@@ -50,45 +50,45 @@ export default function CompanySideBar() {
         </div>
 
         <SidebarContext.Provider value={{ expanded, setExpanded }}>
-          <ul className="flex flex-col items-center ">
-            <SidebarItem
-              icon={<IoHomeOutline size={25} className="text-white" />}
-              text="Inicio"
-              onClick={() => router.push("/home")}
-            />
-            <SidebarItem
-              icon={<IoReaderOutline size={25} className="text-white" />}
-              text="Evaluarse"
-              onClick={() => router.push("/evaluation")}
-            />
-            <SidebarItem
-              icon={<IoMapOutline size={25} className="text-white" />}
-              text="Hoja de ruta"
-              onClick={() => router.push("/roadmap")}
-            />
-            <SidebarItem
-              icon={<IoPersonOutline size={25} className="text-white" />}
-              text="Perfil"
-              onClick={() => router.push("/profile")}
-            />
+          <ul className="flex flex-col flex-1 justify-between items-center ">
+            <div>
+              <SidebarItem
+                icon={<IoHomeOutline size={25} className="text-white" />}
+                text="Inicio"
+                onClick={() => router.push("/home")}
+              />
+              <SidebarItem
+                icon={<IoReaderOutline size={25} className="text-white" />}
+                text="Evaluarse"
+                onClick={() => router.push("/evaluation")}
+              />
+              <SidebarItem
+                icon={<IoMapOutline size={25} className="text-white" />}
+                text="Hoja de ruta"
+                onClick={() => router.push("/roadmap")}
+              />
+              <SidebarItem
+                icon={<IoPersonOutline size={25} className="text-white" />}
+                text="Perfil"
+                onClick={() => router.push("/profile")}
+              />
+            </div>
+            <div className="p-4">
+              <button
+                onClick={() => router.push("/")}
+                className={`flex flex-row ${
+                  expanded ? "justify-between bg-primary" : "justify-center"
+                } items-center hover:bg-dark_bg_hover p-2 rounded-lg duration-100 px-3 transition-all`}
+              >
+                <IoIosLogOut
+                  size={25}
+                  className={`text-white ${expanded ? "mr-2" : ""}`}
+                />
+                {expanded ? <p className="text-white text-lg ">Salir</p> : null}
+              </button>
+            </div>
           </ul>
         </SidebarContext.Provider>
-
-        <div className="flex justify-center items-center p-4">
-          <button onClick={() => router.push("/")}
-            className={`flex flex-row ${
-              expanded ? "justify-between bg-primary" : "justify-center"
-            } items-center
-                         hover:bg-dark_bg_hover p-2 rounded-lg duration-100 px-3
-                          transition-all`}
-          >
-            <IoIosLogOut
-              size={25}
-              className={`text-white ${expanded ? "mr-2" : ""}`}
-            />
-            {expanded ? <p className="text-white text-lg ">Salir</p> : null}
-          </button>
-        </div>
       </aside>
     </>
   );
@@ -105,15 +105,12 @@ export function SidebarItem({ icon, text, onClick }: SidebarItemProps) {
   return (
     <li className="w-full px-3">
       <button
-        className="flex flex-row px justify-start items-start hover:bg-dark_bg_hover rounded-lg transition-colors duration-300 ease-in-out
-            h-fit w-full px-3 py-1.5 my-4"
+        className="flex flex-row px justify-start items-start hover:bg-dark_bg_hover rounded-lg transition-colors duration-300 ease-in-out h-fit w-full px-3 py-1.5 my-4"
         onClick={onClick}
       >
         {icon}
         {expanded ? (
-          <p
-            className={`text-white text-lg mx-3 overflow-hidden transition-all `}
-          >
+          <p className={`text-white text-lg mx-3 overflow-hidden transition-all`}>
             {text}
           </p>
         ) : null}

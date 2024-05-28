@@ -6,18 +6,18 @@ export default function PageTemplate({ children }: { children: any }) {
   let userType = 'company';
   if (userType === 'admin') {
     return (
-      <div className="flex flex-row">
+      <div className="flex">
         <AdminSidebar />
-        <div className="flex flex-col w-full">
+        <div className="ml-64 w-full p-4">
           {children}
         </div>
       </div>
     );
   } else {
     return (
-      <div className="flex flex-row">
+      <div className="flex">
         <CompanySideBar />
-        <div className="flex flex-col w-full">
+        <div className="ml-64 w-full p-4">
           {children}
         </div>
       </div>
