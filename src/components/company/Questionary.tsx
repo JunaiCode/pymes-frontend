@@ -65,8 +65,8 @@ const Questionary = ({evaluationExist}:any) => {
   const totalPages = Math.ceil(evaluationResults.length / questionsPerPage);
   const router = useRouter();
   const [evaluationId, setEvaluationId] = useState("");
-  const companyId = "72c963d0-15d2-40a7-95c0-5afa77c3e774";
-  const versionId ="664e108b9e53d211e63fd583"
+  const companyId = "9633e4f5-b3ea-481d-b824-aa2661d0d9fd";
+  const versionId ="434c21b6-1776-4484-a272-ac774307967c"
   const companyTypeId = "1";
   const baseUrl = "http://localhost:8080";
 
@@ -96,7 +96,6 @@ const Questionary = ({evaluationExist}:any) => {
   , [questions]);
 
   useEffect(() => {
-    
     const sendResults = async () => {
       await fetch(`${baseUrl}/evaluation/${evaluationId}/addAnswers`, {
         method: "POST",
@@ -168,6 +167,7 @@ const Questionary = ({evaluationExist}:any) => {
       createEvaluation();
       getFirstQuestions();
     }
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -246,9 +246,10 @@ const Questionary = ({evaluationExist}:any) => {
             let questionFound = evaluationResults.find((evaluationResult: any) => evaluationResult.questionId === question);
             if (questionFound) {
               countAnswers += 1;
-              if (countAnswers === level.questions.length) {
-                if (data.indexOf(level) < data.length - 1) {
-                  nextLevel = data[data.indexOf(level) + 1];
+              if (countAnswers == level.questions.length) {
+                if (level.value < data.length) {
+                  const nextValue = level.value + 1;
+                  nextLevel = data.find((level: any) => level.value === nextValue);
                 } else {
                   nextLevel = null;
                 }
