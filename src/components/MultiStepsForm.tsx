@@ -289,12 +289,9 @@ const MultiStepsForm = () => {
         validateForm();
         if (errors === undefined || Object.keys(errors).length === 0){
             if(step === 4) {
-                
-                const clone = structuredClone(formData);
-                
-
+            
                 // Send data to backend
-                register(clone).then((data) => {
+                register(formData).then((data) => {
                     
                     localStorage.setItem('user', JSON.stringify(data))
                     router.push('/home');
