@@ -137,6 +137,7 @@ const Questionary = ({evaluationExist}:any) => {
         }
       }).then((response) => response.json()).then((data) =>{
         let questions: QuestionI[] = [];
+        console.log(data);
         setQuestions(data);
         data.forEach((questionPerDimension: any) => {
           questionPerDimension.questions.forEach((question: any) => {
@@ -247,9 +248,10 @@ const Questionary = ({evaluationExist}:any) => {
             let questionFound = evaluationResults.find((evaluationResult: any) => evaluationResult.questionId === question);
             if (questionFound) {
               countAnswers += 1;
-              if (countAnswers === level.questions.length) {
-                if (data.indexOf(level) < data.length - 1) {
-                  nextLevel = data[data.indexOf(level) + 1];
+              if (countAnswers == level.questions.length) {
+                if (level.value < data.length) {
+                  const nextValue = level.value + 1;
+                  nextLevel = data.find((level: any) => level.value === nextValue);
                 } else {
                   nextLevel = null;
                 }

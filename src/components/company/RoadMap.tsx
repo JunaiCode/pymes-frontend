@@ -26,7 +26,7 @@ interface Props {
     dimensionId: string;
     recommendations: Recommendation[];
 }
-const companyId = "8dfb8530-c0b4-4407-aea6-6bd27f9d6f74";
+const companyId = "9633e4f5-b3ea-481d-b824-aa2661d0d9fd";
 const baseUrl = "http://localhost:8080";
 export const RoadMap = () => {
     const [roadMap, setRoadMap] = useState([] as Props[]);
