@@ -123,7 +123,6 @@ const Questionary = ({evaluationExist}:any) => {
           "Content-Type": "application/json",
         }
       }).then((response) => response.json()).then((data) => {
-        console.log(data);
         setEvaluationId(data.evaluationId);
       }
       );
@@ -137,7 +136,6 @@ const Questionary = ({evaluationExist}:any) => {
         }
       }).then((response) => response.json()).then((data) =>{
         let questions: QuestionI[] = [];
-        console.log(data);
         setQuestions(data);
         data.forEach((questionPerDimension: any) => {
           questionPerDimension.questions.forEach((question: any) => {
