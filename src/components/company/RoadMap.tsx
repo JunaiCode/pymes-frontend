@@ -38,6 +38,7 @@ export const RoadMap = () => {
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState(""); 
     const [finished, setFinished] = useState(false);
+    const [withoutRecommendations, setWithoutRecommendations] = useState(false);
     const router = useRouter();
         
     useEffect(() => {
@@ -45,6 +46,10 @@ export const RoadMap = () => {
             try {
                 const response = await fetch(`${baseUrl}/company/${companyId}/actionPlan/actual`);
                 const data = await response.json();
+                if(data.info.length === 0){
+                    console.log("No hay recomendaciones");
+                    setWithoutRecommendations(true);
+                }
                 data.info.map((dimensionRecommendation: any) => {
                     dimensionRecommendation.recommendations.map((recommendation: any) => {
                         const totalStepsChecked = recommendation.steps.filter((step: any) => step.checked).length;
@@ -60,6 +65,7 @@ export const RoadMap = () => {
                 setRoadMap(data.info);
                 setRoadMapId(data.actionPlanId);
             } catch (error) {
+                setWithoutRecommendations(false);
                 console.error("Error fetching roadmap data:", error);
             }
         };
@@ -132,13 +138,22 @@ export const RoadMap = () => {
 
     return (
         <div className="w-full h-screen flex flex-col items-start justify-start bg-light relative">
-            {roadMap.length === 0 ? (
+            {roadMap.length === 0 && withoutRecommendations ? (
                 <div className="w-full flex flex-col items-center h-screen justify-center bg-light">
                     <h1 className="text-2xl font-semibold text-center mt-24 mb-8">
-                        ¡Ups! Aún no tienes ninguna hoja de ruta disponible. Te invitamos a evaluarte.
+                        ¡Felicidades! Has completado la evaluación, pero no se encontraron recomendaciones.
+                        Esto sugiere que ya estás en un buen nivel de madurez digital.
                     </h1>
                 </div>
             ) : (
+                <div className="w-full flex flex-col items-center h-screen justify-center bg-light">
+                    <h1 className="text-2xl font-semibold text-center mt-24 mb-8">
+                        ¡Ups! Aún no tienes ninguna hoja de ruta disponible. Te invitamos a realizar tu primera evaluación.
+                    </h1>
+                </div>
+            )}
+    
+            {roadMap.length > 0 && (
                 <div className="w-full flex flex-row p-4">
                     <div className="h-fit w-full bg-white mr-2 border rounded-lg shadow-lg">
                         <div className="flex justify-end items-center pl-4">
@@ -154,6 +169,7 @@ export const RoadMap = () => {
                     </div>
                 </div>
             )}
+    
             {roadMap.map((dimensionRecommendation, index) => (
                 <RoadMapRecommendation
                     key={index}
@@ -163,24 +179,24 @@ export const RoadMap = () => {
                     handleCheck={handleCheck}
                 />
             ))}
+    
             {finished && (
-            <div className="flex justify-center w-full items-center p-4">
-            <div className="flex flex-col items-center justify-center">
-            <p className="text-center mb-4 mr-2">
-                ¡Felicidades por completar la hoja de ruta! Ahora la empresa está en un nivel de madurez digital más alto. Te invitamos a evaluarte nuevamente y seguir avanzando hacia el éxito. ¡Enhorabuena por este logro! 🚀🎉
-            </p>
-            <button 
-                className="bg-primary text-white px-6 py-3 rounded-lg shadow-lg hover:bg-primary-dark transition duration-300" 
-                onClick={() => {
-                    router.push("/evaluation");
-                }}
-            >
-                Realizar nueva evaluación
-            </button>
+                <div className="flex justify-center w-full items-center p-4">
+                    <div className="flex flex-col items-center justify-center">
+                        <p className="text-center mb-4 mr-2">
+                            ¡Felicidades por completar la hoja de ruta! Ahora la empresa está en un nivel de madurez digital más alto. Te invitamos a evaluarte nuevamente y seguir avanzando hacia el éxito. ¡Enhorabuena por este logro! 🚀🎉
+                        </p>
+                        <button 
+                            className="bg-primary text-white px-6 py-3 rounded-lg shadow-lg hover:bg-primary-dark transition duration-300" 
+                            onClick={() => {
+                                router.push("/evaluation");
+                            }}
+                        >
+                            Realizar nueva evaluación
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
-    </div>
-)}
-
-        </div>
-    );
+    );    
 };
