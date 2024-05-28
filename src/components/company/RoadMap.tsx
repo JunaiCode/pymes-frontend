@@ -26,7 +26,9 @@ interface Props {
     dimensionId: string;
     recommendations: Recommendation[];
 }
-const companyId = "9633e4f5-b3ea-481d-b824-aa2661d0d9fd";
+const string = localStorage.getItem("user");
+const user = string ? JSON.parse(string) : null;
+const companyId = user ? user.id : null;
 const baseUrl = "http://localhost:8080";
 export const RoadMap = () => {
     const [roadMap, setRoadMap] = useState([] as Props[]);

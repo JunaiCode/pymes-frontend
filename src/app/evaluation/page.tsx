@@ -4,7 +4,9 @@ import Questionary from "@/components/company/Questionary";
 import PageTemplate from "@/components/ui/PageTemplate";
 import { useEffect, useState } from "react";
 
- const companyId = "9633e4f5-b3ea-481d-b824-aa2661d0d9fd";
+ const string = localStorage.getItem("user");
+ const user = string ? JSON.parse(string) : null;
+ const companyId = user ? user.id : null;
  const baseUrl = "http://localhost:8080";
 
 const Page = () => {
