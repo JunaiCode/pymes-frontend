@@ -1,21 +1,16 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoCloseCircleOutline, IoCheckmarkCircleOutline, IoPencil } from "react-icons/io5";
 
 type CompanyInfo = {
   name: string;
-  type: string;
   nit: string;
   address: string;
-  city: string;
   phone: string;
   legalRepresentativeName: string;
   legalRepresentativeEmail: string;
   legalRepresentativePhone: string;
-  economicSector: string;
   numberOfEmployees: number;
-  yearsInOperation: number;
-  [key: string]: string | number;
 }
 
 type EditedInfo = {
@@ -24,23 +19,33 @@ type EditedInfo = {
 
 const Profile = () => {
   const [companyInfo, setCompanyInfo] = useState<CompanyInfo>({
-    name: "Tech Innovators Inc.",
-    type: "Tecnología y Consultoría",
-    nit: "1234567890",
-    address: "123 Calle Principal",
-    city: "Ciudad Tech",
-    phone: "+571234567890",
-    legalRepresentativeName: "Juan Pérez",
-    legalRepresentativeEmail: "juan.perez@techinnovators.com",
-    legalRepresentativePhone: "+579876543210",
-    economicSector: "Tecnología",
-    numberOfEmployees: 150,
-    yearsInOperation: 10,
+    name: '',
+    nit: '',
+    address: '',
+    phone: '',
+    legalRepresentativeName: '',
+    legalRepresentativeEmail: '',
+    legalRepresentativePhone: '',
+    numberOfEmployees: 0,
   });
-
+  
+  const baseURL = 'http://localhost:8080';
+  const string = localStorage.getItem("user");
+  const user = string ? JSON.parse(string) : null;
+  const companyId = user ? user.id : null;
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editedInfo, setEditedInfo] = useState<EditedInfo>({ ...companyInfo });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    
+    fetch(`${baseURL}/company/get/info/${companyId}`)
+      .then((response) => response.json())
+      .then((data) => setCompanyInfo(data))
+      .catch((error) => console.error(error));
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleEditClick = () => {
     setEditMode(true);
@@ -57,6 +62,7 @@ const Profile = () => {
     const newErrors: Record<string, string> = {};
 
     ['nit', 'phone', 'legalRepresentativePhone'].forEach((key) => {
+      if(editedInfo !== undefined && editedInfo[key] === undefined) return;
       const isValidFormat = RegExp('^[0-9]{10}$').test(editedInfo[key].toString().replace(/\D/g, ''));
       if (!isValidFormat) {
         newErrors[key] = "El formato debe ser de 10 dígitos numéricos";
@@ -68,16 +74,16 @@ const Profile = () => {
       setCompanyInfo({ ...editedInfo } as CompanyInfo);
       setEditMode(false);
       setErrors({});
-      /*
-      const response = await fetch(API, {
-        method: 'PATCH',
+      
+      const response = await fetch(`${baseURL}/company/set/info/${companyId}`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editedInfo),
       });
 
       if (!response.ok) {
         throw new Error('Error saving changes');
-      }*/
+      }
     } else {
       setErrors(newErrors);
     }

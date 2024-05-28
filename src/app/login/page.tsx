@@ -1,4 +1,45 @@
+'use client';
+
+import { useRouter } from "next/navigation";
+import { useRef } from "react";
+
+async function login(data: any) {
+  
+  const res = await fetch("http://localhost:8080/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const resData = await res.json();
+  return resData;
+}
+
 const LoginPage = () => {
+  const router = useRouter();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if(!emailRef.current || !passwordRef.current) return
+    const data = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value
+    }
+    login(data).then(res => {
+      if(res.error) {
+        alert(res.message)
+        return
+      }
+      localStorage.setItem('user', JSON.stringify(res))
+      alert('Bienvenido')
+      router.push('/home')
+    })
+    
+  }
+
   return (
     <div className="flex justify-content bg-light">
       <div className="img-login w-1/2 h-screen"></div>
@@ -31,6 +72,7 @@ const LoginPage = () => {
               name="username"
               placeholder="usuario@email.com"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              ref={emailRef}
             />
           </div>
 
@@ -47,6 +89,7 @@ const LoginPage = () => {
               name="password"
               placeholder="Ingresa tu contraseña"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              ref={passwordRef}
             />
           </div>
 
@@ -70,8 +113,9 @@ const LoginPage = () => {
           </div>
 
           <button
-            type="submit"
+            
             className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+            onClick={handleLogin}
           >
             Iniciar Sesión
           </button>

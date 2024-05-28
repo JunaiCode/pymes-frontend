@@ -14,25 +14,28 @@ import React, { useContext } from "react";
 
 const SidebarContext = createContext({
   expanded: true,
-  setExpanded: (expanded: boolean) => {},
+  setExpanded: (expanded: boolean) => { },
 });
 
 export default function CompanySideBar() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(true);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.push("/");
+  }
   return (
     <>
       <aside
-        className={`fixed top-0 left-0 h-full flex flex-col bg-dark_bg transition-all duration-300 ease-in-out ${
-          expanded ? "w-64" : "w-20"
-        }`}
+        className={`h-screen sticky left-0 top-0 flex flex-col m-0 bg-dark_bg transition-all duration-300 ease-in-out ${expanded ? "w-64" : "w-20"
+          }`}
       >
         <div className="p-4 pb-8 flex justify-between items-center">
           <p
             className={`font-sans font-bold text-white text-2xl mx-2
-                        overflow-hidden transition-all ${
-                          expanded ? "w-full" : "w-0"
-                        }
+                        overflow-hidden transition-all ${expanded ? "w-full" : "w-0"
+              }
                     `}
           >
             Logo

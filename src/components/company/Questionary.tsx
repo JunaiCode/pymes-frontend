@@ -65,9 +65,11 @@ const Questionary = ({evaluationExist}:any) => {
   const totalPages = Math.ceil(evaluationResults.length / questionsPerPage);
   const router = useRouter();
   const [evaluationId, setEvaluationId] = useState("");
-  const companyId = "72c963d0-15d2-40a7-95c0-5afa77c3e774";
-  const versionId ="664e108b9e53d211e63fd583"
-  const companyTypeId = "1";
+  const string = localStorage.getItem("user");
+  const user = string ? JSON.parse(string) : null;
+  const companyId = user ? user.id : null;
+  const versionId = user ? user.actualVersion : null;
+  const companyTypeId = user ? user.companyType : null;
   const baseUrl = "http://localhost:8080";
 
   const evaluationResultToDTO = (evaluationResults: QuestionI[]) => {
@@ -96,7 +98,6 @@ const Questionary = ({evaluationExist}:any) => {
   , [questions]);
 
   useEffect(() => {
-    
     const sendResults = async () => {
       await fetch(`${baseUrl}/evaluation/${evaluationId}/addAnswers`, {
         method: "POST",
@@ -118,7 +119,7 @@ const Questionary = ({evaluationExist}:any) => {
   useEffect(() => {
 
     const createEvaluation = async () => {
-      const evaluation = await fetch(`${baseUrl}/evaluation/add/${companyId}`, {
+      const evaluation = await fetch(`${baseUrl}/company/${companyId}/evaluation`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,6 +169,7 @@ const Questionary = ({evaluationExist}:any) => {
       createEvaluation();
       getFirstQuestions();
     }
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -246,9 +248,10 @@ const Questionary = ({evaluationExist}:any) => {
             let questionFound = evaluationResults.find((evaluationResult: any) => evaluationResult.questionId === question);
             if (questionFound) {
               countAnswers += 1;
-              if (countAnswers === level.questions.length) {
-                if (data.indexOf(level) < data.length - 1) {
-                  nextLevel = data[data.indexOf(level) + 1];
+              if (countAnswers == level.questions.length) {
+                if (level.value < data.length) {
+                  const nextValue = level.value + 1;
+                  nextLevel = data.find((level: any) => level.value === nextValue);
                 } else {
                   nextLevel = null;
                 }
@@ -343,7 +346,7 @@ const Questionary = ({evaluationExist}:any) => {
   };
 
   const handleFinishEvaluation = () => {
-    fetch(`${baseUrl}/evaluation/finish/${evaluationId}`, {
+    fetch(`${baseUrl}/evaluation/finish/${evaluationId}/version/${versionId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

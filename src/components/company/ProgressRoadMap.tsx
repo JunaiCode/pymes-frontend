@@ -8,19 +8,32 @@ interface props{
     finishDate: string;
     setFinishDate: any;
 }
-
-export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate }: any) => {
+const baseUrl = "http://localhost:8080";
+export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,actionPlanId }: any) => {
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [date, setDate] = useState(null);
-
+    const formatDate = 'yyyy-MM-dd'
     const handlePencilClick = () => {
         setIsDatePickerOpen(true);
     };
 
     const handleDateChange = (date:any) => {
-        const formattedDate = format(date, 'yyyy-MM-dd');
+        const isoString = date.toISOString();
+        const stringWithoutZ = isoString.slice(0, -1);
+        const formattedDate = format(date, formatDate);
         setFinishDate(formattedDate); 
         setDate(date);
+        fetch(`${baseUrl}/actionPlan/updateEnd/${actionPlanId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                date: stringWithoutZ,
+            }),
+        }).catch((error) => {
+            console.error("Error al actualizar la fecha de finalización:", error);
+        });
         setIsDatePickerOpen(false);
     };
 
@@ -29,7 +42,7 @@ export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate }: any) =>
             <div className="flex flex-col justify-start w-full mb-4">
                 <div className="flex flex-row justify-between items-baseline mb-2">
                     <p className="text-lg font-sans text-white font-light">Inicio de la hoja de ruta:</p>
-                    <p className="pr-4 pl-4 rounded text-white bg-secondary_old inline-block">2024-05-25</p>
+                    <p className="pr-4 pl-4 rounded text-white bg-secondary_old inline-block">{format(startDate,formatDate)}</p>
                 </div>
                 <div className="flex flex-row justify-between items-baseline">
                     <p className="text-lg font-sans text-white font-light">Finalización de la hoja de ruta:</p>
@@ -37,9 +50,8 @@ export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate }: any) =>
                         <IoPencil 
                             className="text-white cursor-pointer hover:text-blue-700 transition duration-200 mr-2" 
                             size={24} 
-                            onClick={handlePencilClick} // Agregar evento onClick al lápiz
+                            onClick={handlePencilClick}
                         />
-                        {/* Mostrar el componente DatePicker cuando isDatePickerOpen es true */}
                         {isDatePickerOpen && (
                             <DatePicker
                                 selected={date}
