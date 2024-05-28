@@ -77,7 +77,7 @@ export default function CompanySideBar() {
           </ul>
         </SidebarContext.Provider>
 
-        <div className="flex justify-center items-center p-4">
+        <div className="flex justify-center items-center p-4 mt-auto">
           <button onClick={handleLogout}
             className={`flex flex-row ${expanded ? "justify-between bg-primary" : "justify-center"
               } items-center

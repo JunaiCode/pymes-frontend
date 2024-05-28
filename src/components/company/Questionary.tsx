@@ -68,8 +68,8 @@ const Questionary = ({evaluationExist}:any) => {
   const string = localStorage.getItem("user");
   const user = string ? JSON.parse(string) : null;
   const companyId = user ? user.id : null;
-  const versionId ="434c21b6-1776-4484-a272-ac774307967c"
-  const companyTypeId = "1";
+  const versionId = user ? user.actualVersion : null;
+  const companyTypeId = user ? user.companyType : null;
   const baseUrl = "http://localhost:8080";
 
   const evaluationResultToDTO = (evaluationResults: QuestionI[]) => {
