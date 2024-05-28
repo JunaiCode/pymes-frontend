@@ -2,6 +2,20 @@
 import React, { useEffect, useState } from 'react';
 import { Step } from './Step';
 import { useRouter } from 'next/navigation';
+
+async function register(data: any) {
+    const res = await fetch('http://localhost:8080/auth/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    return json;
+}
+
+
 const MultiStepsForm = () => {
     const router = useRouter();
     const [step, setStep] = useState(0);
@@ -203,6 +217,7 @@ const MultiStepsForm = () => {
                 ...prevData,
                 [name]:!formData.termsAndConditions,
             }));
+            
         }else{
         setFormData((prevData) => ({
         ...prevData,
@@ -210,7 +225,7 @@ const MultiStepsForm = () => {
         }));
         
     }
-    console.log(formData);
+    
     };
 
     const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -244,7 +259,7 @@ const MultiStepsForm = () => {
                 const errorElement = document.querySelector(`p[id=${key}]`) as HTMLElement;
                 const error = errors[key];
                 if(error != undefined && errorElement && input) {
-                    console.log(error);
+                    
                     errorElement.innerText = error;
                     errorElement.classList.add('opacity-1');
                     errorElement.classList.remove('opacity-0');
@@ -273,6 +288,17 @@ const MultiStepsForm = () => {
         e.preventDefault();
         validateForm();
         if (errors === undefined || Object.keys(errors).length === 0){
+            if(step === 4) {
+                
+                const clone = structuredClone(formData);
+                
+
+                // Send data to backend
+                register(clone).then((data) => {
+                    localStorage.setItem('user', data.token);
+                    router.push('/home');
+                });
+            }
             setStep((prevStep) => prevStep + 1);
         } else {
             // Pop up indicating that there are fields without filling
@@ -288,7 +314,7 @@ const MultiStepsForm = () => {
     };
 
     return (
-        <div className='bg-light'>
+        <div className='bg-[#c5c8cc]' >
         {step === 0 && (
             <Step
             step={step}

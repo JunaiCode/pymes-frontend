@@ -10,6 +10,7 @@ export default function PageTemplate({ children }: { children: any }) {
         <AdminSidebar />
         <div className="flex flex-col w-full ">
           {children}
+        </div>
       </div>
     );
   } else {
