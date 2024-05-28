@@ -36,7 +36,7 @@ export default function Page() {
                         <p className="font-sans text-2xl">Modelos</p>
                         <p className="font-sans text-sm text-gray-600">Los modelos son la base de la aplicacion, en estos podras definir diferentes versiones del mismo modelo y llevar un control de los cambios realizados</p>
                         <p className="font-sans text-sm text-gray-600">Aqui puedes ver los modelos que has creado</p>
-
+                        
                     </div>
                     <button className="ml-auto mt-auto h-fit bg-secondary_old py-2 px-2 text-white rounded-lg position-absolute right-4 top-4"
                         onClick={() => setOpen(true)}
@@ -59,7 +59,7 @@ export default function Page() {
     )
 }
 
-export function ModelCard({ name, actualVersion, modelId, date, router }: { name: string, actualVersion: string, modelId: string, date: string, router: any }) {
+export function ModelCard({ name, actualVersion, modelId, date, active, router }: any) {
 
 
     return (
@@ -70,7 +70,9 @@ export function ModelCard({ name, actualVersion, modelId, date, router }: { name
                 </header>
                 <section className="w-full p-4">
                     <p className="font-sans text-sm text-gray-600">Version actual: v1.0.0</p>
-                    <p className="font-sans text-sm text-gray-600">Fecha de creacion: 10/05/2024</p>
+                    {active && (
+                        <p className="font-sans text-sm text-green-500">Activo</p>
+                    )}
                 </section>
             </section>
             <section className="ml-auto h-full">

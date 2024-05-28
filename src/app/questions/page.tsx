@@ -72,12 +72,14 @@ export default function Page() {
             setDimensionSelected(
                 versionData.find((version: any) => version.versionId === versionSelected)?.dimensions?.[0]?.dimensionId
             )
+
         }
     }, [versionSelected])
 
     useEffect(() => {
         if (dimensionSelected !== "-1") {
-            if (dimensionData.find((dimension: any) => dimension.dimensionId === dimensionSelected).levels.length === 0) {
+            
+            if (dimensionData.length === 0 || dimensionData.find((dimension: any) => dimension.dimensionId === dimensionSelected).levels.length === 0) {
                 setQuestionData([])
                 return
             }
@@ -91,7 +93,7 @@ export default function Page() {
     useEffect(() => {
         if (levelSelected !== "-1") {
             fetchQuestions(levelSelected).then(data => {
-                console.log(data)
+
                 if (data.length === 0) {
                     setQuestionData([])
                     return
@@ -180,7 +182,7 @@ export function QuestionCard({ question, router }: any) {
                         <p className="font-sans text-md font-bold text-gray-600">Informacion de la recomendacion</p>
                         <p className="font-sans text-sm text-gray-600">Titulo: {question.recommendation.title}</p>
                         <p className="font-sans text-sm text-gray-600">Pasos: {question.recommendation.steps.length}</p>
-                        
+
                     </section>
 
                 </section>
