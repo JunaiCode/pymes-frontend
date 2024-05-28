@@ -49,7 +49,7 @@ export default function Page() {
     const [dimensionSelected, setDimensionSelected] = useState("-1");
     const [tagSelected, setTagSelected] = useState("-1");
     const [levelSelected, setLevelSelected] = useState("-1");
-    const [companySizeSelected, setCompanySizeSelected] = useState("Microempresa" as string)
+    const [companySizeSelected, setCompanySizeSelected] = useState("1")
     const router = useRouter();
     const [versionEnabled, setVersionEnabled] = useState(false);
     const [dimensionEnabled, setDimensionEnabled] = useState(false);
@@ -278,10 +278,7 @@ export default function Page() {
             alert("Favor de seleccionar un nivel, si no hay niveles favor de crear uno")
             return false
         }
-        if (companySizeSelected === "") {
-            alert("Favor de seleccionar un tamaño de empresa")
-            return false
-        }
+        
         if (options.length === 0) {
             alert("Favor de agregar al menos una opcion")
             return false
