@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { IoTrash, IoWarningSharp } from "react-icons/io5";
 
 const companySizeOptions = [
-    "Microempresa",
-    "Pequeña",
-    "Mediana"]
+    { label: "Microempresa", value: "1" },
+    { label: "Pequeña empresa", value: "2" },
+    { label: "Mediana empresa", value: "3" },
+]
 
 
 async function fetchModels() {
@@ -185,7 +186,7 @@ export default function Page() {
         for (let i = 0; i < options.length; i++) {
             optionsDTO.push({
                 description: options[i].option,
-                value: options[i].checked ? question.points : question.points + i + 1
+                value: options[i].checked ? question.points : -1 - i
             })
         }
 
@@ -396,11 +397,12 @@ export default function Page() {
                         />
                         <ComboBox
                             label="Tamaño de la empresa"
-                            optionsLabels={companySizeOptions}
-                            optionsValues={companySizeOptions}
+                            optionsLabels={companySizeOptions.map((option: any) => option.label)}
+                            optionsValues={companySizeOptions.map((option: any) => option.value)}
                             selected={companySizeSelected}
                             setSelected={setCompanySizeSelected}
                             enabled={true}
+                            
                         />
                         <p className="text-xl font-semibold mt-5">Opciones</p>
                         <p className="text-gray-700 text-sm">Ingresa las opciones de la pregunta y selecciona la respuesta correcta</p>
