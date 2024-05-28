@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoCloseCircleOutline, IoCheckmarkCircleOutline, IoPencil } from "react-icons/io5";
 
 type CompanyInfo = {
@@ -37,10 +37,24 @@ const Profile = () => {
     numberOfEmployees: 150,
     yearsInOperation: 10,
   });
-
+  
+  const baseURL = 'http://localhost:8080';
+  const string = localStorage.getItem("user");
+  const user = string ? JSON.parse(string) : null;
+  const companyId = user ? user.id : null;
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editedInfo, setEditedInfo] = useState<EditedInfo>({ ...companyInfo });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    /*
+    fetch(`${baseURL}/company/get/${companyId}`)
+      .then((response) => response.json())
+      .then((data) => setCompanyInfo(data))
+      .catch((error) => console.error(error));
+    */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleEditClick = () => {
     setEditMode(true);
