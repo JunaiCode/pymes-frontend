@@ -1,131 +1,94 @@
-import React, { PureComponent } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, Rectangle, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const data = [
-    {
-        name: 'Lunes',
-        uv: 50,
-        pv: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Martes',
-        uv: 30,
-        pv: 1398,
-        amt: 2210,
-    },
-    {
-        name: 'Miercoles',
-        uv: 20,
-        pv: 9800,
-        amt: 2290,
-    },
-    {
-        name: 'Jueves',
-        uv: 27,
-        pv: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Viernes',
-        uv: 18,
-        pv: 4800,
-        amt: 2181,
-    },
-    {
-        name: 'Sabado',
-        uv: 23,
-        pv: 3800,
-        amt: 2500,
-    },
-    {
-        name: 'Domingo',
-        uv: 34,
-        pv: 4300,
-        amt: 2100,
-    },
-];
+
 
 export default function AdminHome() {
-    let totalEvaluations = 520;
-    let userStats = [
-        {
-            name: 'Usuarios registrados',
-            value: 120
-        },
-        {
-            name: 'Usuarios recurrentes',
-            value: 20
-        },
-        {
-            name: 'Re-evaluaciones',
-            value: 10
-        },
-
-    ];
+   
     return (
-        <div className="h-full w-full flex flex-col items-start justify-center bg-light">
-            <div className="w-full p-10">
-                <p className="text-3xl font-sans font-bold">Dashboard</p>
-            </div>
-            <div className="w-full h-full flex flex-row  p-4">
-                <div className="h-full w-full flex flex-col bg-white mr-2 border rounded-lg shadow-lg p-4" >
-                    <p className="text-2xl font-sans font-bold">Evaluaciones recientes</p>
-                    <ResponsiveContainer
-                        width="100%"
-                        height="100%">
-                        <BarChart
-                            width={150}
-                            height={40}
-                            data={data}
-                            margin={{
-                                top: 50,
-                                bottom: 5,
-                            }}
-                        >
-                            <Legend />
-                            <Bar dataKey="uv" fill="#202f75" activeBar={<Rectangle fill="#202f75" radius={[5, 5, 0, 0]} />} />
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
-                <div className="h-full w-full flex flex-col" >
-                    <div className="h-fit w-full bg-white ml-2 border rounded-lg shadow-lg mb-2 p-4">
-                        <p className="text-2xl font-sans font-bold">Total de evaluaciones</p>
-                        <p className="text-2xl font-sans">{totalEvaluations}</p>
+        <div className="h-full w-full flex flex-col items-start justify-center bg-light_bg">
+            <div className="w-full h-full flex flex-row">
+                <div className="h-full w-full flex flex-col bg-light_bg border rounded-lg shadow-lg p-4">
+                    <p className="text-3xl font-sans font-bold mb-4">Bienvenido, Administrador</p>
+                    <p className="text-lg mb-10 font-sans">
+                        Esta plataforma se desarrolló para permitir la creación y edición de modelos de evaluación de transformación digital
+                        para empresas. En ella encontrarás las respectivas pantallas para crear modelos, versiones, dimensiones,
+                        niveles, tags y preguntas. Esta aplicación fue desarrollada teniendo en cuenta el modelo de madurez digital
+                        desarrollado por el Magister en Gerencia de proyectos Carlos Julio Peña Valencia en su tesis de grado de maestria
+                        en gerencia de proyectos de la Universidad ICESI.
+                    </p>
+                    <p className="text-xl font-sans font-bold mb-4">
+                        Para empezar a usar la herramienta por favor revisa el siguiente grafico donde se explica donde puedes encontrar
+                        las diferentes opciones de la plataforma
+                    </p>
+                    <div className="flex flex-row w-full h-full p-8">
+                        <FunctionalityCard
+                            title="MODELOS"
+                            description="Aquí podrás crear y editar los modelos de evaluación, cada modelo tiene su respectivas versiones. Dentro de la funcionalidad
+                            de modelos podrás ver las versiones activas actualmente. Siempre la ultima version que crees sera la version activa"
+                            number="01"
+                            backgroundColor="#812c82" />
+                        <FunctionalityCard
+                            title="VERSIONES"
+                            description="Las versiones son instancias de un modelo, cada modelo puede tener multiples versiones, cada version
+                            contiene las dimensiones, niveles, tags y preguntas que se evaluaran en la evaluación y para crear una nueva
+                            version deberas ingresar a la funcionalidad de modelos y seleccionar la opcion de crear version dentro del modelo
+                            que quieras"
+                            number="02"
+                            backgroundColor='#d82a35'
+                        />
+                        <FunctionalityCard
+                            title="DIMENSIONES"
+                            description="Las dimensiones son los aspectos que se evaluaran en la evaluación, cada dimension tiene un nombre y una descripcion
+                            y cada dimension puede tener multiples niveles, tags y preguntas asociadas"
+                            number="03"
+                            backgroundColor='#f78539'
+                        />
+                        <FunctionalityCard
+                            title="NIVELES"
+                            description="Los niveles son los diferentes estados de madurez que puede tener una empresa en una dimension, cada nivel tiene un nombre y una descripcion
+                            y cada nivel puede tener multiples tags y preguntas asociadas"
+                            number="04"
+                            backgroundColor='#f7b239'
+                        />
+                        <FunctionalityCard
+                            title="TAGS"
+                            description="Los tags son las etiquetas que se le asignan a las preguntas, cada tag tiene un nombre y una descripcion y cada tag puede tener multiples preguntas asociadas"
+                            number="05"
+                            backgroundColor='#39d83e'
+                        />
+                        <FunctionalityCard
+                            title="PREGUNTAS"
+                            description="Las preguntas son las que se le hacen a la empresa para evaluar su madurez digital, cada pregunta tiene un enunciado, un tipo de respuesta y una descripcion"
+                            number="06"
+                            backgroundColor='#4cbaba'
+                        />
                     </div>
-                    <div className="h-full w-full bg-white ml-2 border rounded-lg shadow-lg p-4">
-                        <p className="text-2xl font-sans font-bold">Estadisticas de los usuarios</p>
-                        <div className="flex flex-col w-full">
-                            {userStats.map((stat, index) => (
-                                <StatCard key={index} title={stat.name} value={stat.value.toString()} />
-                            ))}
-                        </div>
-                    </div>
                 </div>
             </div>
-
         </div>
     );
 }
 
-interface StatCardProps {
-    title: string;
-    value: string;
-}
-
-export function StatCard({ title, value }: StatCardProps) {
+export function FunctionalityCard(props: { title: string, description: string, number: string, backgroundColor: string }) {
     return (
-        <div className="h-fit w-full flex bg-white ml-2 border rounded-lg shadow-lg my-2">
-            <div className="flex w-3/4 h-full bg-slate-300 rounded-tl-lg rounded-bl-lg p-2">
-                <p className="text-2xl font-sans font-bold  ">{title}</p>
+        <div className="flex flex-col h-full border m-4 rounded-lg items-center justify-start max-w-60 bg-white">
+            <div className={`w-full flex items-center justify-center p-4 rounded-t-lg`}
+                style={{ backgroundColor: props.backgroundColor }}
+            >
+                <p className="text-xl font-sans text-white font-medium">{props.title}</p>
             </div>
-            <div className="flex items-center  justify-center w-1/4">
-                <p className="text-2xl font-sans">{value}</p>
+            <div className='w-full flex flex-col items-center justify-center'>
+                <p className="text-5xl mt-8 font-sans text-gray-400 font-thin">{props.number}</p>
+                <div className='w-1/3 mt-2 mb-8 border border-gray-400'></div>
             </div>
+            <div className='flex w-full h-full p-4'>
+                <p className="text-sm font-sans">{props.description}</p>
+            </div>
+            <div className='w-full h-2 rounded-b-lg'
+                style={{ backgroundColor: props.backgroundColor }}
+            >
+
+            </div>
+
         </div>
     );
 }
