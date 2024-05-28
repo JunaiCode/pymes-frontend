@@ -7,30 +7,37 @@ interface HistoryChartProps {
 }
 
 const HistoryChart: React.FC<HistoryChartProps> = ({ evaluationHistory }) => {
+  // Convert evaluation history to chart data
   const data = evaluationHistory.map(evaluation => {
-    const entry: any = { date: new Date(evaluation.date).toLocaleDateString() }; // Formatear la fecha
+    const result: any = { date: evaluation.date };
     evaluation.dimensionResults.forEach(dimension => {
-      entry[dimension.dimensionName] = dimension.levelValue;
+      result[dimension.dimensionName] = dimension.levelValue;
     });
-    return entry;
+    return result;
   });
-
-  const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#8dd1e1", "#d0ed57", "#a4de6c", "#d0ed57", "#ffc658"];
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <LineChart data={data}>
+      <LineChart
+        data={data}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
-        <YAxis />
+        <YAxis
+          tickCount={4}
+          tickFormatter={(tick) => tick.toString()}
+          domain={[0, 3]}
+        />
         <Tooltip />
         <Legend />
-        {evaluationHistory[0].dimensionResults.map((dimension, index) => (
-          <Line key={dimension.dimensionId} type="monotone" dataKey={dimension.dimensionName} stroke={colors[index % colors.length]} />
-        ))}
+        <Line type="monotone" dataKey="Procesos" stroke="#8884d8" />
+        <Line type="monotone" dataKey="Información" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="Tecnología" stroke="#ffc658" />
+        <Line type="monotone" dataKey="Personas" stroke="#ff7300" />
       </LineChart>
     </ResponsiveContainer>
   );
-};
+}
 
 export default HistoryChart;

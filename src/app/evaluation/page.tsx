@@ -6,22 +6,13 @@ import { useEffect, useState } from "react";
 import { getCompanyInfo } from '@/services/companyService';
 import { CompanyInfo } from '../../../utils/types';
 
-<<<<<<< HEAD
 const companyId = "5891e02d-6865-471b-ad0f-8d66e788288d";
-=======
- const string = localStorage.getItem("user");
- const user = string ? JSON.parse(string) : null;
- const companyId = user ? user.id : null;
- const baseUrl = "http://localhost:8080";
->>>>>>> a7a44b8a51bfddc24e922bde8500f3abed274a09
-
 const Page = () => {
     const [started, setStarted] = useState(false);
     const [buttonText, setButtonText] = useState("Empezar evaluación");
     const [evaluationExist, setEvaluationExist] = useState<CompanyInfo | null>(null);
 
     useEffect(() => {
-<<<<<<< HEAD
         const fetchData = async () => {
             try {
                 const data = await getCompanyInfo(companyId);
@@ -33,25 +24,6 @@ const Page = () => {
                 }
             } catch (error) {
                 console.error('La evaluación no existe:', error);
-=======
-        fetch(`${baseUrl}/company/${companyId}/results`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }).then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error("No se encontró la evaluación");
-            }
-        }).then((data) => {
-            if (data != null && data.status !== 'NOT_FOUND') {
-                setButtonText("Continuar evaluación");
-                setEvaluationExist(data);
-            } else {
-                console.log("La evaluación no existe.");
->>>>>>> a7a44b8a51bfddc24e922bde8500f3abed274a09
             }
         };
 

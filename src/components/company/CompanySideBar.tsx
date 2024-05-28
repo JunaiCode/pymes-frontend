@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useRouter } from "next/navigation";
 import {
   IoArrowBackOutline,
@@ -9,12 +9,17 @@ import {
   IoMapOutline,
 } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
-import { createContext, useState } from "react";
-import React, { useContext } from "react";
+import { createContext, useState, useContext } from "react";
+import React from "react";
 
-const SidebarContext = createContext({
+interface SidebarContextProps {
+  expanded: boolean;
+  setExpanded: (expanded: boolean) => void;
+}
+
+export const SidebarContext = createContext<SidebarContextProps>({
   expanded: true,
-  setExpanded: (expanded: boolean) => { },
+  setExpanded: () => {},
 });
 
 export default function CompanySideBar() {
@@ -24,19 +29,20 @@ export default function CompanySideBar() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     router.push("/");
-  }
+  };
+
   return (
-    <>
+    <SidebarContext.Provider value={{ expanded, setExpanded }}>
       <aside
-        className={`h-screen sticky left-0 top-0 flex flex-col m-0 bg-dark_bg transition-all duration-300 ease-in-out ${expanded ? "w-64" : "w-20"
-          }`}
+        className={`h-screen fixed top-0 left-0 flex flex-col m-0 bg-dark_bg transition-all duration-300 ease-in-out ${
+          expanded ? "w-64" : "w-20"
+        }`}
       >
         <div className="p-4 pb-8 flex justify-between items-center">
           <p
-            className={`font-sans font-bold text-white text-2xl mx-2
-                        overflow-hidden transition-all ${expanded ? "w-full" : "w-0"
-              }
-                    `}
+            className={`font-sans font-bold text-white text-2xl mx-2 overflow-hidden transition-all ${
+              expanded ? "w-full" : "w-0"
+            }`}
           >
             Logo
           </p>
@@ -52,48 +58,46 @@ export default function CompanySideBar() {
           </button>
         </div>
 
-        <SidebarContext.Provider value={{ expanded, setExpanded }}>
-          <ul className="flex flex-col flex-1 justify-between items-center ">
-            <div>
-              <SidebarItem
-                icon={<IoHomeOutline size={25} className="text-white" />}
-                text="Inicio"
-                onClick={() => router.push("/home")}
+        <ul className="flex flex-col flex-1 justify-between items-center">
+          <div>
+            <SidebarItem
+              icon={<IoHomeOutline size={25} className="text-white" />}
+              text="Inicio"
+              onClick={() => router.push("/home")}
+            />
+            <SidebarItem
+              icon={<IoReaderOutline size={25} className="text-white" />}
+              text="Evaluarse"
+              onClick={() => router.push("/evaluation")}
+            />
+            <SidebarItem
+              icon={<IoMapOutline size={25} className="text-white" />}
+              text="Hoja de ruta"
+              onClick={() => router.push("/roadmap")}
+            />
+            <SidebarItem
+              icon={<IoPersonOutline size={25} className="text-white" />}
+              text="Perfil"
+              onClick={() => router.push("/profile")}
+            />
+          </div>
+          <div className="p-4">
+            <button
+              onClick={handleLogout}
+              className={`flex flex-row ${
+                expanded ? "justify-between bg-primary" : "justify-center"
+              } items-center hover:bg-dark_bg_hover p-2 rounded-lg duration-100 px-3 transition-all`}
+            >
+              <IoIosLogOut
+                size={25}
+                className={`text-white ${expanded ? "mr-2" : ""}`}
               />
-              <SidebarItem
-                icon={<IoReaderOutline size={25} className="text-white" />}
-                text="Evaluarse"
-                onClick={() => router.push("/evaluation")}
-              />
-              <SidebarItem
-                icon={<IoMapOutline size={25} className="text-white" />}
-                text="Hoja de ruta"
-                onClick={() => router.push("/roadmap")}
-              />
-              <SidebarItem
-                icon={<IoPersonOutline size={25} className="text-white" />}
-                text="Perfil"
-                onClick={() => router.push("/profile")}
-              />
-            </div>
-            <div className="p-4">
-              <button
-                onClick={() => router.push("/")}
-                className={`flex flex-row ${
-                  expanded ? "justify-between bg-primary" : "justify-center"
-                } items-center hover:bg-dark_bg_hover p-2 rounded-lg duration-100 px-3 transition-all`}
-              >
-                <IoIosLogOut
-                  size={25}
-                  className={`text-white ${expanded ? "mr-2" : ""}`}
-                />
-                {expanded ? <p className="text-white text-lg ">Salir</p> : null}
-              </button>
-            </div>
-          </ul>
-        </SidebarContext.Provider>
+              {expanded ? <p className="text-white text-lg ">Salir</p> : null}
+            </button>
+          </div>
+        </ul>
       </aside>
-    </>
+    </SidebarContext.Provider>
   );
 }
 

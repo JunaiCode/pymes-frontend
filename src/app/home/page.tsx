@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
 import AdminHome from "@/components/admin/AdminHome";
 import CompanyHome from "@/components/company/CompanyHome";
 import PageTemplate from "@/components/ui/PageTemplate";
-import ComparisonWithSector from "@/components/company/ComparisonWithSector";
 import WelcomeScreen from "@/components/company/WelcomeScreen";
 import { useEffect, useState } from "react";
 import { getCompanyInfo } from '@/services/companyService';
@@ -48,7 +47,7 @@ const Page: React.FC = () => {
   const [hasCompletedEvaluation, setHasCompletedEvaluation] = useState(false);
 
   useEffect(() => {
-    // Utilizar datos ficticios #######################################################################################
+    // Utilizar datos ficticios
     setCompanyInfo(mockCompanyInfo);
     setHasCompletedEvaluation(mockCompanyInfo.currentEvaluation.length > 0);
   }, []);
@@ -63,7 +62,7 @@ const Page: React.FC = () => {
         <AdminHome />
       ) : (
         hasCompletedEvaluation ? (
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full h-full">
             <CompanyHome companyInfo={companyInfo} />
           </div>
         ) : (
