@@ -295,7 +295,8 @@ const MultiStepsForm = () => {
 
                 // Send data to backend
                 register(clone).then((data) => {
-                    localStorage.setItem('user', data.token);
+                    
+                    localStorage.setItem('user', JSON.stringify(data))
                     router.push('/home');
                 });
             }
