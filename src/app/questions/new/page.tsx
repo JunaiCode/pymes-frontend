@@ -185,7 +185,7 @@ export default function Page() {
         for (let i = 0; i < options.length; i++) {
             optionsDTO.push({
                 description: options[i].option,
-                value: options[i].checked ? question.points : 0
+                value: options[i].checked ? question.points : question.points + i + 1
             })
         }
 
