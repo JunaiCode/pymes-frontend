@@ -273,6 +273,8 @@ const Questionary = ({evaluationExist}:any) => {
           const newQuestions = questions.map((questionDimension: any) => {
             if (questionDimension.dimensionId === dimensionId) {
               return getNewQuestions;
+            }else{
+              return questionDimension;
             }
           });
           setQuestions(newQuestions);
