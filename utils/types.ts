@@ -11,15 +11,17 @@ export interface Evaluation {
   dimensionResults: DimensionResult[];
 }
 
+export interface CompanyType {
+  companyTypeId: string;
+  name: string;
+  description: string;
+}
+
 export interface CompanyInfo {
   name: string;
   employees: number;
-  companyType: {
-    companyTypeId: string;
-    name: string;
-    description: string;
-  };
+  companyType: CompanyType;
   economicSectorId: string;
-  currentEvaluation: DimensionResult[]; 
+  currentEvaluation: DimensionResult[];
   evaluationHistory: Evaluation[];
 }

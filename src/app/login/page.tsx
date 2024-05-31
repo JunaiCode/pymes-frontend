@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 async function login(data: any) {
-  
   const res = await fetch("http://localhost:8080/auth/login", {
     method: "POST",
     headers: {
@@ -33,11 +32,21 @@ const LoginPage = () => {
         alert(res.message)
         return
       }
-      localStorage.setItem('user', JSON.stringify(res))
-      alert('Bienvenido')
-      router.push('/home')
+      localStorage.setItem('user', JSON.stringify(res));
+
+      // Log the content of localStorage
+      const user = localStorage.getItem('user');
+      console.log('User data stored in localStorage:', user ? JSON.parse(user) : null);
+
+      alert('Bienvenido');
+      if(res.role === 'admin') {
+        router.push('/home');
+      } else if(res.role === 'company') {
+        router.push('/home');
+      } else {
+        console.error('Unknown user role:', res.role);
+      }
     })
-    
   }
 
   return (
@@ -54,7 +63,7 @@ const LoginPage = () => {
             <h3 className="text-gray-700">
               ¿Tu empresa no tiene cuenta?{" "}
               <b className="text-primary hover:underline cursor-pointer">
-                <a href="/register">Crea una aqui</a>
+                <a href="/register">Crea una aquí</a>
               </b>
             </h3>
           </div>
@@ -113,7 +122,6 @@ const LoginPage = () => {
           </div>
 
           <button
-            
             className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
             onClick={handleLogin}
           >

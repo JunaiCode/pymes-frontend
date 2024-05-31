@@ -7,7 +7,6 @@ const WelcomeScreen = () => {
 
   return (
     <div style={{ padding: '20px', display: 'flex', flexDirection: 'column' }}>
-      <input type="text" placeholder="Buscar" style={{ width: '100%', padding: '10px', marginBottom: '20px' }} />
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ flex: 1, paddingRight: '20px' }}>
           <h1 style={{ fontSize: '2.5em', fontWeight: 'bold', marginBottom: '20px' }}>Evalúe su madurez digital</h1>

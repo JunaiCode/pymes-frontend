@@ -1,13 +1,12 @@
 import { GetInfo } from '../../utils/communicator';
-import { CompanyInfo } from '../../utils/types';
 
-export const getCompanyInfo = async (companyId: string): Promise<CompanyInfo> => {
+export const getCompanyInfo = async (companyId: string) => {
   try {
     const data = await GetInfo(`/company/get/${companyId}`);
-    console.log('Company Info data:', data);
-    return data as CompanyInfo;
+    return data;
   } catch (error) {
-    console.error('Error fetching company info:', error);
+    console.error('Error in getCompanyInfo:', error); // <-- Log the error
     throw error;
   }
-};
+}
+

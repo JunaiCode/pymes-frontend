@@ -7,9 +7,12 @@ interface HistoryChartProps {
 }
 
 const HistoryChart: React.FC<HistoryChartProps> = ({ evaluationHistory }) => {
-  // Convert evaluation history to chart data
+  const dimensionNames = Array.from(new Set(evaluationHistory.flatMap(evaluation => 
+    evaluation.dimensionResults.map(dimension => dimension.dimensionName)
+  )));
+
   const data = evaluationHistory.map(evaluation => {
-    const result: any = { date: evaluation.date };
+    const result: any = { date: new Date(evaluation.date).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) };
     evaluation.dimensionResults.forEach(dimension => {
       result[dimension.dimensionName] = dimension.levelValue;
     });
@@ -31,10 +34,9 @@ const HistoryChart: React.FC<HistoryChartProps> = ({ evaluationHistory }) => {
         />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="Procesos" stroke="#8884d8" />
-        <Line type="monotone" dataKey="Información" stroke="#82ca9d" />
-        <Line type="monotone" dataKey="Tecnología" stroke="#ffc658" />
-        <Line type="monotone" dataKey="Personas" stroke="#ff7300" />
+        {dimensionNames.map((dimensionName, index) => (
+          <Line key={index} type="monotone" dataKey={dimensionName} stroke={`#${Math.floor(Math.random()*16777215).toString(16)}`} />
+        ))}
       </LineChart>
     </ResponsiveContainer>
   );
