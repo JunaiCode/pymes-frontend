@@ -22,7 +22,7 @@ export default function PageTemplate({ children }: { children: any }) {
     return (
       <div className="flex">
         <CompanySideBar />
-        <div className="ml-64 w-full p-4">
+        <div className="ml-64 w-full p-4 bg-light">
           {children}
         </div>
       </div>
