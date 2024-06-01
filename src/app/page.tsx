@@ -1,14 +1,16 @@
 import HomeSectionLanding from "@/components/HomeSection-Landing";
-import ModelSectionLanding from "@/components/ModelSection-Landing";
+import KeysLanding from "@/components/Keys-Landing";
+import MaturityLanding from "@/components/Maturity-Landing";
 import NavBar from "@/components/NavBar";
-import ToolSectionLanding from "@/components/ToolSection-Landing";
+import TripLanding from "@/components/TripLanding";
 function HomePage(){
     return (
         <div>
         <NavBar/>
         <HomeSectionLanding/>
-        <ModelSectionLanding/>
-        <ToolSectionLanding/>
+        <MaturityLanding/>
+        <KeysLanding/>
+        <TripLanding/>
         </div>
     )
 }
