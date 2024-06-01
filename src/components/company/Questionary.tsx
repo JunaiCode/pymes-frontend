@@ -348,7 +348,6 @@ const Questionary = ({evaluationExist}:any) => {
   };
 
   const handleFinishEvaluation = () => {
-    console.log("Finish evaluation");
     fetch(`${baseUrl}/evaluation/finish/${evaluationId}/version/${versionId}`, {
       method: "POST",
       headers: {
