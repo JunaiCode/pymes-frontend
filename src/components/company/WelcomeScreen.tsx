@@ -6,7 +6,7 @@ const WelcomeScreen = () => {
   const router = useRouter();
 
   return (
-    <div style={{ padding: '20px', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ padding: '20px', display: 'flex', flexDirection: 'column' }} className="w-full h-screen">
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div style={{ flex: 1, paddingRight: '20px' }}>
           <h1 style={{ fontSize: '2.5em', fontWeight: 'bold', marginBottom: '20px' }}>Evalúe su madurez digital</h1>
