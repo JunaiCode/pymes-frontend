@@ -9,7 +9,7 @@ const HomeSectionLanding = () => {
       <p className="mb-8 leading-relaxed">La transformación digital es un proceso estratégico en el que las empresas reconfiguran completamente sus modelos de negocio, operaciones y estructuras organizativas utilizando tecnologías disruptivas. No se trata sólo de adoptar nuevas herramientas digitales, sino de reimaginar toda la empresa para aprovechar al máximo el potencial de la tecnología.</p>
     </div>
     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-      <img className="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600"/>
+      <img className="object-cover object-center rounded" alt="hero" src="/assets/images/homeLanding.jpg"/>
     </div>
   </div>
 </section>

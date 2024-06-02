@@ -40,11 +40,11 @@ export default function CompanySideBar() {
       >
         <div className="p-4 pb-8 flex justify-between items-center">
           <p
-            className={`font-sans font-bold text-white text-2xl mx-2 overflow-hidden transition-all ${
+            className={`font-sans text-white text-2xl mx-2 overflow-hidden transition-all ${
               expanded ? "w-full" : "w-0"
             }`}
           >
-            Logo
+            EvoluTIC
           </p>
           <button
             className="hover:bg-secondary p-2 rounded-full transition-colors duration-100 ease-in-out"

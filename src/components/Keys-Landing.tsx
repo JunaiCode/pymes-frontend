@@ -8,7 +8,7 @@ const ToolSectionLanding = () => {
       <p className="mb-8 leading-relaxed">Hay varios aspectos clave que contribuyen a la madurez digital de una empresa. Esto incluye tener una estrategia clara que guíe el uso de la tecnología, una cultura organizativa que fomente la innovación y el aprendizaje, empleados capacitados en habilidades digitales, herramientas tecnológicas avanzadas y la capacidad de utilizar datos de manera inteligente para tomar decisiones informadas.</p>
     </div>
     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-      <img className="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600"/>
+      <img className="object-cover object-center rounded" alt="hero" src="/assets/images/keysLanding.jpg" width={720} height={600}/>
     </div>
   </div>
 </section>

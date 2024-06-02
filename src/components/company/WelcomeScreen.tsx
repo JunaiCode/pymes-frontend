@@ -21,9 +21,6 @@ const WelcomeScreen = () => {
             Evaluarse
           </button>
         </div>
-        <div>
-          <img src="https://dummyimage.com/800x1500" alt="Evalúe su madurez digital" style={{ width: '300px', height: 'auto' }} />
-        </div>
       </div>
     </div>
   );
