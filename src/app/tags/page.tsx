@@ -7,19 +7,19 @@ import { IoIosCreate } from "react-icons/io";
 import { useRouter } from "next/navigation";
 
 async function fetchModels() {
-    const res = await fetch('http://localhost:8080/model/get/all')
+    const res = await fetch('http://18.218.220.138:8081/model/get/all')
     const data = await res.json()
     return data
 }
 
 async function fetchVersions(modelId: string) {
-    const res = await fetch(`http://localhost:8080/model/get/versions/${modelId}`)
+    const res = await fetch(`http://18.218.220.138:8081/model/get/versions/${modelId}`)
     const data = await res.json()
     return data
 }
 
 async function fetchTags(dimensionId: string) {
-    const res = await fetch(`http://localhost:8080/tag/get/dimension/${dimensionId}`)
+    const res = await fetch(`http://18.218.220.138:8081/tag/get/dimension/${dimensionId}`)
     const data = await res.json()
     return data
 }

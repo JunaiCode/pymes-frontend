@@ -3,7 +3,7 @@ import PageTemplate from "@/components/ui/PageTemplate";
 import { useEffect, useRef, useState } from "react";
 
 async function fetchTag(id: string) {
-    const res = await fetch(`http://localhost:8080/tag/get/${id}`)
+    const res = await fetch(`http://18.218.220.138:8081/tag/get/${id}`)
     const data = await res.json()
     return data
 }
@@ -38,7 +38,7 @@ export default function Page({ params }: { params: { id: string } }) {
             redirect: "follow"
         };
 
-        fetch(`http://localhost:8080/tag/update/${params.id}`, requestOptions)
+        fetch(`http://18.218.220.138:8081/tag/update/${params.id}`, requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.error(error));
