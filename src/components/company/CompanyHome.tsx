@@ -4,9 +4,7 @@ import DimensionsCard from './DimensionsCard';
 import { IoConstructOutline, IoDesktopOutline, IoPeopleOutline } from "react-icons/io5";
 import { FaPuzzlePiece } from "react-icons/fa";
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer } from "recharts";
-import ComparisonWithSector from './ComparisonWithSector';
 import HistoryChart from './HistoryChart';
-import { IconType } from "react-icons";
 
 interface CompanyHomeProps {
   companyInfo: CompanyInfo;

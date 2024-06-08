@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 
 async function getModels() {
-    const res = await fetch('http://localhost:8080/model/get/all')
+    const res = await fetch('http://18.218.220.138:8081/model/get/all')
     const data = await res.json()
     return data
 }

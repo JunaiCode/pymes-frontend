@@ -9,20 +9,20 @@ import { useRouter } from "next/navigation";
 import CreateLevel from "@/components/admin/CreateLevel";
 
 async function fetchModels() {
-    const res = await fetch('http://localhost:8080/model/get/all')
+    const res = await fetch('http://18.218.220.138:8081/model/get/all')
     const data = await res.json()
     return data
 }
 
 async function fetchVersions(modelId: string) {
-    const res = await fetch(`http://localhost:8080/model/get/versions/${modelId}`)
+    const res = await fetch(`http://18.218.220.138:8081/model/get/versions/${modelId}`)
     const data = await res.json()
     console.log(data)
     return data
 }
 
 async function fetchLevels(dimensionId: string) {
-    const res = await fetch(`http://localhost:8080/level/dimension/${dimensionId}`)
+    const res = await fetch(`http://18.218.220.138:8081/level/dimension/${dimensionId}`)
     const data = await res.json()
     return data
 

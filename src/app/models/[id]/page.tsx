@@ -5,14 +5,14 @@ import CreateNewVersion from "@/components/admin/CreateNewVersion";
 import { useRouter } from "next/navigation";
 
 async function fetchModel(id: string) {
-    const res = await fetch(`http://localhost:8080/model/get/${id}`)
+    const res = await fetch(`http://18.218.220.138:8081/model/get/${id}`)
     const data = await res.json()
 
     return data
 }
 
 async function fetchVersions(id: string) {
-    const res = await fetch(`http://localhost:8080/model/get/versions/${id}`)
+    const res = await fetch(`http://18.218.220.138:8081/model/get/versions/${id}`)
     const data = await res.json()
     return data
 }

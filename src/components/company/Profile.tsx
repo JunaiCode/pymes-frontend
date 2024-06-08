@@ -29,7 +29,7 @@ const Profile = () => {
     numberOfEmployees: 0,
   });
   
-  const baseURL = 'http://localhost:8080';
+  const baseURL = 'http://18.218.220.138:8081';
   const string = localStorage.getItem("user");
   const user = string ? JSON.parse(string) : null;
   const companyId = user ? user.id : null;

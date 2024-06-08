@@ -3,13 +3,13 @@ import PageTemplate from "@/components/ui/PageTemplate";
 import { useEffect, useState } from "react";
 
 async function fetchDimension(id: string) {
-    const res = await fetch(`http://localhost:8080/dimension/get/${id}`)
+    const res = await fetch(`http://18.218.220.138:8081/dimension/get/${id}`)
     const data = await res.json()
     return data
 }
 
 async function fetchDimensionTags(dimensionId: string) {
-    const res = await fetch(`http://localhost:8080/tag/get/dimension/${dimensionId}`)
+    const res = await fetch(`http://18.218.220.138:8081/tag/get/dimension/${dimensionId}`)
     const data = await res.json()
     console.log(data)
     return data
@@ -42,14 +42,14 @@ export default function Page({ params }: { params: { id: string } }) {
 
         const raw = JSON.stringify(dimension);
 
-        const requestOptions = {
+        const requestOptions:any = {
             method: "PUT",
             headers: myHeaders,
             body: raw,
             redirect: "follow"
         };
 
-        fetch(`http://localhost:8080/dimension/update/${dimension.dimensionId}`, requestOptions)
+        fetch(`http://18.218.220.138:8081/dimension/update/${dimension.dimensionId}`, requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.error(error));

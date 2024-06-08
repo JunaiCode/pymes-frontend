@@ -70,7 +70,7 @@ const Questionary = ({evaluationExist}:any) => {
   const companyId = user ? user.id : null;
   const versionId = user ? user.actualVersion : null;
   const companyTypeId = user ? user.companyType : null;
-  const baseUrl = "http://localhost:8080";
+  const baseUrl = "http://18.218.220.138:8081";
 
   const evaluationResultToDTO = (evaluationResults: QuestionI[]) => {
     let resultsDTO: ResultsDTO[] = [];

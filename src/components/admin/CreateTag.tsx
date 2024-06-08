@@ -21,7 +21,7 @@ export default function CreateTag({ isOpen, onClose, dimensionId }: CreateTagPro
                 dimensionId: dimensionId
             }
             
-            fetch(`http://localhost:8080/tag/add`, {
+            fetch(`http://18.218.220.138:8081/tag/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

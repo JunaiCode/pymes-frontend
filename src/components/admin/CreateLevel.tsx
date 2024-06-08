@@ -25,7 +25,7 @@ export default function CreateLevel({ isOpen, onClose, selectedModel, selectedVe
                 value: parseInt(valueRef.current.value),
                 questions: []
             }
-            fetch(`http://localhost:8080/level/add/${dimensionId}`, {
+            fetch(`http://18.218.220.138:8081/level/add/${dimensionId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

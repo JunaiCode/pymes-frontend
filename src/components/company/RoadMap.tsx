@@ -29,7 +29,7 @@ interface Props {
 const string = localStorage.getItem("user");
 const user = string ? JSON.parse(string) : null;
 const companyId = user ? user.id : null;
-const baseUrl = "http://localhost:8080";
+const baseUrl = "http://18.218.220.138:8081";
 export const RoadMap = () => {
     const [roadMap, setRoadMap] = useState([] as Props[]);
     const [roadMapId, setRoadMapId] = useState("" as string);

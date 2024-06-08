@@ -4,7 +4,7 @@ import { Step } from './Step';
 import { useRouter } from 'next/navigation';
 
 async function register(data: any) {
-    const res = await fetch('http://localhost:8080/auth/register', {
+    const res = await fetch('http://18.218.220.138:8081/auth/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

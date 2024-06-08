@@ -8,7 +8,7 @@ interface props{
     finishDate: string;
     setFinishDate: any;
 }
-const baseUrl = "http://localhost:8080";
+const baseUrl = "http://18.218.220.138:8081";
 export const ProgressRoadMap = ({ percentage,finishDate,setFinishDate,startDate,actionPlanId }: any) => {
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [date, setDate] = useState(null);

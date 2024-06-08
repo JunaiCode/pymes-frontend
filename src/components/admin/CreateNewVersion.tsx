@@ -16,7 +16,7 @@ export default function CreateNewVersion({ isOpen, onClose,modelId }: CreateDime
                 levels: [],
                 dimensions: []
             }
-            fetch(`http://localhost:8080/model/add/version/${modelId}`, {
+            fetch(`http://18.218.220.138:8081/model/add/version/${modelId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -3,13 +3,13 @@ import PageTemplate from "@/components/ui/PageTemplate";
 import { useEffect, useState } from "react";
 
 async function fetchModel(id: string) {
-    const res = await fetch(`http://localhost:8080/model/get/${id}`)
+    const res = await fetch(`http://18.218.220.138:8081/model/get/${id}`)
     const data = await res.json()
     return data
 }
 
 async function fetchVersion(id: string) {
-    const res = await fetch(`http://localhost:8080/version/get/${id}`)
+    const res = await fetch(`http://18.218.220.138:8081/version/get/${id}`)
     const data = await res.json()
     return data
 }

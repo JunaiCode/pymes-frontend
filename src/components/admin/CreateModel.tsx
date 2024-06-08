@@ -17,7 +17,7 @@ export default function CreateModel({ isOpen, onClose }: CreateDimensionProps) {
             name: nameRef.current?.value,
             description: descriptionRef.current?.value
         }
-        fetch('http://localhost:8080/model/add', {
+        fetch('http://18.218.220.138:8081/model/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
