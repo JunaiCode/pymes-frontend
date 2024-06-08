@@ -19,7 +19,7 @@ export default function CreateDimension({ isOpen, onClose, selectedModel, select
                 description: descriptionRef.current.value,
                 levels: []
             }
-            fetch(`http://localhost:8080/dimension/add/${selectedVersion}`, {
+            fetch(`http://18.218.220.138:8081/dimension/add/${selectedVersion}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

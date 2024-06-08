@@ -84,7 +84,7 @@ const Questionary = ({evaluationExist}:any) => {
   };
 
   useEffect(() => {
-    if(typeof window === 'undefined') return;
+    if(typeof window !== 'undefined'){;
     const user = localStorage.getItem("user");
     if(user){
       setUser(JSON.parse(user));
@@ -92,6 +92,7 @@ const Questionary = ({evaluationExist}:any) => {
       setVersionId(JSON.parse(user).actualVersion);
       setCompanyTypeId(JSON.parse(user).companyType);
     }
+  }
   }, []);
 
   useEffect(() => {
