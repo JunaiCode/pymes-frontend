@@ -2,17 +2,24 @@
 
 import Questionary from "@/components/company/Questionary";
 import PageTemplate from "@/components/ui/PageTemplate";
-import { useEffect, useState } from "react";
-
- const string = localStorage.getItem("user");
- const user = string ? JSON.parse(string) : null;
- const companyId = user ? user.id : null;
- const baseUrl = "http://18.218.220.138:8081";
-
+import { useEffect, useState } from "react"; 
 const Page = () => {
     const [started, setStarted] = useState(false);
     const [buttonText, setButtonText] = useState("Empezar evaluación");
     const [evaluationExist, setEvaluationExist] = useState(null);
+    const [user, setUser] = useState(null);
+    const [companyId, setCompanyId] = useState("");
+    const baseUrl = "http://18.218.220.138:8081";
+    useEffect(() => {
+        if(typeof window !== 'undefined'){;
+        const user = localStorage.getItem("user");
+        if(user){
+          setUser(JSON.parse(user));
+          setCompanyId(JSON.parse(user).id);
+        }
+    }
+      }, []);
+
     useEffect(() => {
         fetch(`${baseUrl}/company/${companyId}/results`, {
             method: "GET",

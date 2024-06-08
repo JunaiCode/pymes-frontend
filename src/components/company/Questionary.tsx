@@ -84,6 +84,7 @@ const Questionary = ({evaluationExist}:any) => {
   };
 
   useEffect(() => {
+    if(typeof window === 'undefined') return;
     const user = localStorage.getItem("user");
     if(user){
       setUser(JSON.parse(user));

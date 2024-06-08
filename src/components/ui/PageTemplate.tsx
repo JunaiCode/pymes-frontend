@@ -1,13 +1,22 @@
 'use client';
+import { useEffect, useState } from 'react';
 import AdminSidebar from '../admin/AdminSidebar';
 import CompanySideBar from '../company/CompanySideBar';
 import { useRouter } from 'next/navigation';
 
 export default function PageTemplate({ children }: { children: any }) {
   let router = useRouter();
-  let string = localStorage.getItem("user");
-  let user = string ? JSON.parse(string) : null;
-  let userType = user ? user.role : null;
+  const [user, setUser] = useState(null);
+  const [userType, setUserType] = useState(null);
+  useEffect(() => {
+    if(typeof window !== 'undefined'){
+    const user = localStorage.getItem("user");
+    if(user){
+      setUser(JSON.parse(user));
+      setUserType(JSON.parse(user).role);
+    }
+  }
+  }, []);
   
   if (userType === 'admin') {
     return (

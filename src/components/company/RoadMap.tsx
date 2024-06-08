@@ -26,8 +26,6 @@ interface Props {
     dimensionId: string;
     recommendations: Recommendation[];
 }
-
-const baseUrl = "http://18.218.220.138:8081";
 export const RoadMap = () => {
     const [roadMap, setRoadMap] = useState([] as Props[]);
     const [roadMapId, setRoadMapId] = useState("" as string);
@@ -40,13 +38,16 @@ export const RoadMap = () => {
     const [user, setUser] = useState(null);
     const [companyId, setCompanyId] = useState(null);
     const router = useRouter();
-        
+    const baseUrl = "http://18.218.220.138:8081";
+    
     useEffect(() => {
+        if(typeof window !== 'undefined'){
         const user = localStorage.getItem("user");
         if(user){
           setUser(JSON.parse(user));
           setCompanyId(JSON.parse(user).id);
         }
+    }
       }, []);
 
     useEffect(() => {

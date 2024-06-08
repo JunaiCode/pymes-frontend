@@ -15,6 +15,7 @@ const Page: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if(typeof window != 'undefined'){
     const user = localStorage.getItem('user');
     if (user) {
       const parsedUser = JSON.parse(user);
@@ -30,6 +31,7 @@ const Page: React.FC = () => {
     } else {
       setLoading(false);
     }
+  }
   }, []);
 
 

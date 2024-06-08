@@ -37,11 +37,13 @@ const Profile = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    if(typeof window !== 'undefined'){
     const user = localStorage.getItem("user");
     if(user){
       setUser(JSON.parse(user));
       setCompanyId(JSON.parse(user).id);
     }
+  }
   }, []);
 
   useEffect(() => {
