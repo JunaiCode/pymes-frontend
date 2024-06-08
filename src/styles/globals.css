@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.img-login {
+  background-image: url("/assets/images/login.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.stepbar {
+  left: 3.4rem;
+  z-index: -1;
+}
+
+@media screen and (max-width: 382px){
+  .stepbar {
+    left: 2.4rem;
+  }
+}
+
+@media screen and (min-width: 1280px){
+  .stepbar {
+    padding-right: 8rem !important;
+  }
+  
+}
+
+@media screen and (min-width: 1787px){
+  .stepbar {
+    padding-right: 11rem !important;
+  }
+  
+}
+
+@media screen and (min-width: 2290px){
+  .stepbar {
+    padding-right: 13rem !important;
+  }
+  
+}
+
+.h-61 {
+  height: 15.2rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+.barbar{
+    position: sticky;
+    z-index: 1000;
+}
