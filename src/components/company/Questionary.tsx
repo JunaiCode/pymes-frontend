@@ -65,11 +65,10 @@ const Questionary = ({evaluationExist}:any) => {
   const totalPages = Math.ceil(evaluationResults.length / questionsPerPage);
   const router = useRouter();
   const [evaluationId, setEvaluationId] = useState("");
-  const string = localStorage.getItem("user");
-  const user = string ? JSON.parse(string) : null;
-  const companyId = user ? user.id : null;
-  const versionId = user ? user.actualVersion : null;
-  const companyTypeId = user ? user.companyType : null;
+  const [user, setUser] = useState(null);
+  const [companyId, setCompanyId] = useState(null);
+  const [versionId, setVersionId] = useState(null);
+  const [companyTypeId, setCompanyTypeId] = useState(null);
   const baseUrl = "http://18.218.220.138:8081";
 
   const evaluationResultToDTO = (evaluationResults: QuestionI[]) => {
@@ -83,6 +82,16 @@ const Questionary = ({evaluationExist}:any) => {
     });
     return resultsDTO;
   };
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if(user){
+      setUser(JSON.parse(user));
+      setCompanyId(JSON.parse(user).id);
+      setVersionId(JSON.parse(user).actualVersion);
+      setCompanyTypeId(JSON.parse(user).companyType);
+    }
+  }, []);
 
   useEffect(() => {
     questions.forEach((questionDimension: any) => {

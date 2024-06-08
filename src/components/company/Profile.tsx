@@ -30,12 +30,19 @@ const Profile = () => {
   });
   
   const baseURL = 'http://18.218.220.138:8081';
-  const string = localStorage.getItem("user");
-  const user = string ? JSON.parse(string) : null;
-  const companyId = user ? user.id : null;
+  const [user, setUser] = useState<any>(null);
+  const [companyId, setCompanyId] = useState<string>('');
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editedInfo, setEditedInfo] = useState<EditedInfo>({ ...companyInfo });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if(user){
+      setUser(JSON.parse(user));
+      setCompanyId(JSON.parse(user).id);
+    }
+  }, []);
 
   useEffect(() => {
     
